@@ -279,3 +279,521 @@
             - 초기값 ~ 최종값 -1(더 정확히, 최종값 전 값) 까지의 숫자 리스트 자동 생성
             - 초기값은 생략할 수 있으며, 생략 시 0으로 자동 세팅
             - 증가값은 생략할 수 있으며, 생략 시 1으로 자동 세팅
+        - list와 입력
+            - 문자열 -> 리스트 변환에는 split(), map() 등을 사용함
+            - 문자열.split() : 지정한 글자를 기준으로 문자열을 나누어, 리스트 형식으로 저장함
+            - 괄호 안에 아무 내용도 명시하지 않으면, 공백을 기준으로 문자열을 나눔
+            - 입력값이 숫자일 경우 -> split()에 더해 map()함수가 더 필요함
+            - **map(함수, 리스트) : 리스트의 각 값을 함수로 처리하는 함수**
+            - (중요) map으로 처리한 결과는 일회성이므로, 이를 저장하기 위해서는 list()로 감싸야 함
+            
+            ```c
+            num = list(map(int, input().split()))
+            
+            print(num)
+            
+            a, b, c = map(int, input().split())
+            
+            a = '부산 소프트웨어 마이스터 고등학교'
+            b = a.split()
+            ```
+            
+        - list comprehension
+            - 리스트 안에 for 문을 포함하는 문법 형태
+            - 보다 더욱 편리하게 리스트를 만들어 낼 수 있음
+            - [**표현식 for 항목 in 리스트 if 조건**] : 조건에 해당하는 리스트만 선별(필터링)
+        - 2차원 리스트
+            - 리스트 안에 리스트가 존재한다
+            - list comprehension을 통해 간단하게 구현 가능
+- 딕셔너리
+    - 개요
+        - 리스트 : 인덱스를 통해 리스트 값에 접근 → 내가 원하는 값의 인덱스를 알고 있어야함
+        - 딕셔너리 : key를 통해 값에 접근 → 내가 원하는 값의 key만 알고 있으면 됨
+        - 딕셔너리는 인덱스 대신에 key를 활용하는 리스트 라고 간단히 알고 있으면 됨
+        - 기본 구조 : {key 1 : value1, key2 : value2,…} 로 key 와 value 한 쌍의 모음이 여러개 있고 콤마로 구분됨
+    - 연산(1)
+        - 딕셔너리 추가 : 딕셔너리 이름[key 값] = value 값
+        - 참고 : key 값이 중복될 경우 최신 값으로 반영
+        - 참고 : key 값으로는 리스트는 올수 없음(key 값은 불변이어야 함)
+        - 딕셔너리 삭제 : del 딕셔너리 이름[key 값]
+    - 연산(2)
+        - key를 활용하여 value 얻기 : 딕셔너리 이름[key 값]
+        - 중요 : key 값으로 숫자가 들어갈 경우, 이는 딕셔너리의 인덱스를 가리키는 것이 아닌 key 값을 가리킴(애초에 인덱스로는 가리킬 수 없음)
+    - 연산(3)
+        - keys : 딕셔너리의 key만 모아 리스트를 반환함
+        - values : 딕셔너리의 value만 모아 리스트를 반환
+        - items : 딕셔너리의 key-value 쌍을 튜플로 묶은 값을 반환
+        - clear : 딕셔너리의 모든 요소 삭제
+        - get(key, param) : 딕셔너리 key에 해당하는 value값 반환. 만일 key가 없을 경우, None 또는 두 번째 매개 변수 반환
+        - pop(key) : 딕셔너리 key에 해당하는 value값 반환. 또한 해당 key-value 삭제
+- 튜플 자료형
+    - 여러 데이터를 한꺼번에 보관하는 자료형
+    - 리스트와 상당 유사(인덱싱, 슬라이싱, 선언 등…) 하지만, 아래부분에서 다름
+    - 리스트는 대괄호로 데이터를 묶어서 표현하지만, 튜플은 소괄호로 묶어서 표현함
+    - 소괄호 생략 가능, 1개의 요소만 가질때도 반드시 콤마 추가
+    - (중요) 리스트는 값의 생성, 수정, 삭제가 가능하지만 튜플은 불가하다
+    - 프로그래밍 중, 값이 변경되어야 한다. → 리스트 사용
+    - 프로그래밍 중, 값이 변경되면 안된다 → 튜플 사용
+    
+    ```python
+    t1 = ()
+    t2 = (1,) #요소가 1개 : 반드시 콤마 포함
+    t3 = (1, 2, 3)
+    t4 = 1, 2, 3 # 소괄호 생략 가능
+    
+    	print(t1 + t2) #튜플 더하기 가능, 이때 새로운 튜플을 만들어 냄
+    	print(t1 * 2) # 튜플 곱하기 가능, 이때 새로운 튜플을 만들어 냄
+    ```
+    
+- 집합 자료형
+    - 개요
+        - 집합 관련 연산을 다루기 위해 사용하는 자료형
+        - set 키워드를 통해 집합을 생성함
+        - 중괄호를 활용하여 생성
+        - 특징 : 중복 허용 하지 않음, 순서가 없음, 인덱싱 불가
+        
+        ```python
+        # 집합 자료형 : set(리스트)
+        
+        s1 = set([1, 2, 3])
+        
+        # 집합 자료형 : {}
+        s2 = {1, 2, 3, 4, 5}
+        
+        # 집합 자료형 : set("문자열")
+        s3 = set('hello')
+        ```
+        
+    - 연산
+        - 교집합(intersection, &) : 집합의 공통 값을 추출
+        - 합집합(union, |) : 집합의 모든 값(공통 값은 한번만 추출)
+        - 차집합(difference, -) : 집합의 공통 부분을 제거하여 나머지 부분만 추출
+        - 집합 값 추가하기 : add
+        - 값 여러개 추가하기 : update
+        - 집합 값 제거하기 : remove
+        
+        ```python
+        s1 = set([1, 2, 3, 4, 5, 6])
+        
+        s2 = set([4, 5, 6, 7, 8, 9])
+        
+        # 교집합 : 집합의 공통 부분만 추출
+        
+        print(s1&s2)
+        
+        print(s1.intersection(s2))
+        
+        print(s2.intersection(s1))
+        
+        # 합집합 : 집합의 공통 부분 포함 전체 추출
+        
+        print(s1|s2)
+        
+        print(s1.union(s2))
+        
+        print(s2.union(s1))
+        
+        # 차집합 : 집합의 공통 부분을 뺀, 내 집합을 반환
+        
+        print(s1-s2)
+        
+        print(s1.difference(s2))
+        
+        print(s2-s1)
+        
+        print(s2.difference(s1))
+        ```
+        
+        ```python
+        s1 = set([1, 2, 3])
+        
+        # 집합.add() : 집합에 하나의 값 추가
+        
+        s1.add(4)
+        
+        print(s1)
+        
+        # 집합.update() : 집합에 여러 개의 값을 한번에 추가
+        
+        s1.update([5,6,7])
+        
+        print(s1)
+        
+        # 집합.remove() : 집합에 특정 값 제거
+        
+        s1.remove(5)
+        
+        print(s1)
+        ```
+        
+        ```python
+        set1={1,2,3,4}
+        set2={2,3,4}
+        set3={2,3,4,5}
+        print(set1>set2)
+        print(set2.issubset(set1))
+        print(set2.issubset(set3))
+        print(set1.issubset(set3))
+        print(set1.issuperset(set2))
+        print(set3.issuperset(set2))
+        print(set1.issuperset(set3))
+        
+        ```
+        
+- 람다 표현식
+    - 개요
+        - 함수를 선언하는 또 다른 방식
+        - def, retur, 매개변수 모두 필요없이 단 할줄로 가능
+        - 람다 표현식으로 만든 함수 → 이 함수를 저장할 변수 하나만 있으면 호출 가능
+        - lambda 매개변수 : 반환할 동작으로 구성
+        
+        ```python
+        def add_ten(a) :
+          return a + 10
+         
+         print(add_ten(10))
+         
+         
+        add_10 = lambda x : x + 10
+        
+        print(add_10(10))
+        
+        print((lambda x : x + 10)(1))
+        ```
+        
+    - 활용
+        - map
+            - map(함수, 반복 가능 객체 —> 리스트, 튜플, 딕셔너리 말하는 것)
+            - 모든 요소에 동일한 함수를 적용하여 새로운 형태의 데이터 생성
+        - filter
+            - filter(함수, 반복 가능 객체 —> 리스트, 튜플, 딕셔너리 말하는것)
+            - 함수의 결과가 True인 요소만 남겨 새로운 반복 가능 객체 반환
+        - sorted
+            - sorted(반복 가능 객체, key = 함수, reverse)
+            - 반복 가능한 객체를 key에 명시된 함수에 따라 정렬을 수행, 결과를 새로운 객체로 반환
+- 언패킹 연산자(*)
+    - 리스트, 튜플, 딕셔너리 등 컬랙션 안에 있는 요소들을 하나하나 낱개로 흩뿌려줄 때 사용하는 연산자
+    
+    ```python
+    numbers = [1, 2, 3]
+    
+    print(numbers[0], numbers[1], numbers[2])
+    
+    print(*numbers)
+    ```
+    
+    - *args : 매개변수를 여러개 받겠다 라는 의미
+    - 이때 튜플 형태로 값을 받아서 처리함
+    - 매개변수 이름은 args가 아니어도 되지만, 관례적으로 사용
+    - 일반 매개변수와 사용할 수 있지만, 일반 매개변수가 먼저 와야 함
+    
+    ```python
+    # 함수 정의
+    def add(*args):
+        '''주어진 모든 수를 더하는 함수'''
+        total = 0
+        for num in args:
+            total += num
+        return total
+    
+    # 함수 호출
+    result = add(1, 2, 3, 4, 5)
+    print(result)  # 출력: 15
+    
+    result = add(1,2,3)
+    print(result)  # 출력: 6
+    
+    # 주의사항 : 가변 매개변수 다음으로 일반 매개변수가 올 수 없음
+    
+    # def add_mul(*args, choice) : 안됨!
+    ```
+    
+- 글로벌 변수와 지역 변수
+    - 변수의 범위
+        
+        ```python
+        x = 10          # 전역 변수
+        def foo():
+            print(x)    # 전역 변수 출력
+         
+        foo()
+        print(x)        # 전역 변수 출력
+        ```
+        
+        - 전역 변수(global variable) : 함수를 포함하여 파이썬 코드 전체에서 접근할 수 있는 변수
+        - 전역 범위(global scope) : 전역 변수에 접근할 수 있는 범위
+        
+        ```python
+        def foo():
+            x = 10      # foo의 지역 변수
+            print(x)    # foo의 지역 변수 출력
+        
+        foo()
+        print(x)  
+        ```
+        
+        - 지역 변수 : 변수를 만든 함수 안에서만 접근할 수 있고, 함수 바깥에서는 접근 불가
+        - 지역 범위 : 지역 변수에 접근할 수 있는 범위
+    - 변수값 다루기
+        
+        ```python
+        x = 10          # 전역 변수
+        def foo():
+            x = 20      # x는 foo의 지역 변수
+            print(x)    # foo의 지역 변수 출력
+         
+        foo()
+        print(x)        # 전역 변수 출력
+        ```
+        
+        - 이름이 x로 동일하지만, 함수 내부에서는 지역변수로 인식함
+        - 함수 내부에서 전역 변수를 수정 → global 변수 필요
+        
+        ```python
+        x = 10          # 전역 변수
+        def foo():
+            global x    # 전역 변수 x를 사용하겠다고 설정
+            x = 20      # x는 전역 변수
+            print(x)    # 전역 변수 출력
+         
+        foo()
+        print(x)        # 전역 변수 출력
+        ```
+        
+    - LEGB 규칙
+        - 파이썬에서 변수에 값을 바인딩하거나 변수의 값을 참조하는 경우 따르는 규칙
+        
+        ```python
+        # 실행결과 예측 1
+        
+        a = 10
+        
+        def test():
+            a = 20
+            print(a)
+        
+        test()
+        print(a)
+        
+        # 실행결과 예측 2
+        
+        a = 10
+        
+        def test():
+            global a
+            a = 20
+        
+        test()
+        print(a)
+        ```
+        
+        | 변수 | 의미 |
+        | --- | --- |
+        | L | Local의 약자로 함수 안을 의미합니다. |
+        | E | Enclosed function locals의 약자로 내부함수에서 자신의 외부 함수의 범위를 의미합니다. |
+        | G | Global의 약자로 함수 바깥 즉, 모듈 범위입니다. |
+        | B | Built-in의 약자로 open, range와 같은 파이썬 내장 함수들을 의미합니다. |
+    - 함수의 중첩
+        
+        ```python
+        def print_hello():
+            hello = 'Hello, world!'
+            def print_message():
+                print(hello)
+            print_message()
+         
+        print_hello()
+        ```
+        
+        - 바깥 함수(print_hello)에 선언된 지역 변수는 내부 함수(print_message)에서도 사용 가능
+        
+        ```python
+        def A():
+            x = 10        
+            def B():
+                x = 20    
+         
+            B()
+            print(x)      
+         
+        A()
+        ```
+        
+        - 의도 : 바깥쪽 함수 A의 지역 변수 x를 변경
+        - 실제 : 안쪽 함수 B에서 이름이 같은 지역 변수 x를 새로 생성
+        - 즉, 파이썬에서는 함수에서 변수를 만들면 항상 현재 함수의 지역 변수가 됨
+        - 해결 코드
+            
+            ```python
+            def A():
+                x = 10        # A의 지역 변수 x
+                def B():
+                    nonlocal x    # 현재 함수의 바깥쪽에 있는 지역 변수 사용
+                    x = 20        # A의 지역 변수 x에 20 할당
+             
+                B()
+                print(x)      # A의 지역 변수 x 출력
+             
+            A()
+            ```
+            
+        
+        ```python
+        def A():
+            x = 10
+            y = 100
+            def B():
+                x = 20
+                def C():
+                    nonlocal x
+                    nonlocal y
+                    x = x + 30
+                    y = y + 300
+                    print(x)
+                    print(y)
+                C()
+            B()
+         
+        A()
+        ```
+        
+    
+- 재귀 함수
+    - 재귀함수
+        - 개요
+            - 함수 내부에서 **자기 자신을 다시 호출**하는 구조
+            - 복잡한 문제를 더 작은 단위의 동일한 문제로 나누어 해결할 때 매우 유용
+        - 구조
+            - **기저 조건 (Base Case):** 재귀 호출을 멈추는 종료 조건
+            - **재귀 단계 (Recursive Step):** 문제를 더 작은 단위로 쪼개어 자기 자신을 호출
+        - 핵심
+            - 한 문제를 어떻게 사이즈가 작은 동일한 문제로 볼 것인가 핵심
+- 클래스와 객체
+    - 왜 클래스가 나오게 되었는가?
+        
+        ```python
+        # 단계 1 : 단일 변수로 관리
+        
+        # 학생이 늘어날 때마다 변수를 계속 추가해야 함
+        student1_score = 90
+        student2_score = 85
+        student3_score = 95
+        ```
+        
+        ```python
+        # 단계 2 : 리스트로 관리
+        
+        # 여러 데이터를 넣으면 인덱스만 보고 무엇인지 유추하기 어려움
+        student_info = ["권민세", 90, 100]
+        ```
+        
+        ```c
+        // 단계 3 : 구조체로 관리
+        // 개념적인 하나의 대상을 데이터로 표현 가능, 하지만 함수는 외부에 존
+        
+        struct Student {
+            char name[20];
+            int age;
+        };
+        
+        void printStudent(struct Student s) {
+            // 구조체 데이터를 출력하는 함수가 외부에 독립적으로 존재
+        }
+        ```
+        
+        ```python
+        # 단계 4 : 클래스와 객체 지향
+        
+        # 파이썬 예시: 데이터(name, age)와 기능(study)이 한 몸으로 묶임
+        class Student:
+            def __init__(self, name, age):
+                self.name = name  # 데이터
+                self.age = age    # 데이터
+        
+            def study(self):      # 기능 (메서드)
+                print(f"{self.name} 학생이 공부를 합니다.")
+        ```
+        
+    - 클래스의 구성요소
+        - 속성(클래스를 구성하는 변수)
+        - 메서드(클래스의 동작)
+        - 중요 : 클래스는 속성과 메서드를 명시만 해뒀을뿐, 실제 속성 값이 담기진 않음
+        - 실제 속성 값을 넣어 새로운 데이터를 만들어야 하며, 이를 객체라고 함
+        - 객체를 만드는 특별한 메서드를 생성자(init)라고 함
+        - 생성자가 없으면?
+            - 없어도 자동으로 생성함
+            
+            ```python
+            # 개발자가 이렇게만 적어도:
+            class student:
+            		
+            		name = ''
+            		kor = 0
+            		
+                def attack(self):
+                    print("공격!")
+            
+            # 파이썬은 내부적으로 아래처럼 해석:
+            class student:
+                def __init__(self):  # 눈에 안 보이는 기본 생성자 자동 삽입
+                    pass             # 아무 일도 하지 않고 통과
+            
+                def attack(self):
+                    print("공격!")
+                    
+                    
+            # 그러면 괄호에 아무것도 없이 생성자를 호출해야 함
+            
+            s1 = student()
+            
+            # s2 = student('안녕')
+            ```
+            
+        - 비공개 속성
+            - 외부에서 접근 불가능한 속성
+            
+            ```python
+            class student:
+              def __init__(self, name, money):
+                self.name = name
+                self.money = money
+              
+              def print_something(self):
+                print(f'내 이름은 {self.name} 이고 전 재산은 {self.money}원 입니다.')
+            
+              
+            s1 = student('민세', 100000000)
+            
+            s1.money = 0
+            
+            s1.print_something()
+            ```
+            
+            ```python
+            class student:
+              def __init__(self, name, money):
+                self.name = name
+                self.__money = money
+              
+              def print_something(self):
+                print(f'내 이름은 {self.name} 이고 전 재산은 {self.__money}원 입니다.')
+            
+              
+            s1 = student('민세', 100000000)
+            
+            s1.money = 0
+            s1.print_something()
+            ```
+            
+    - 상속(중요)
+        
+        상속(Inheritance)이란 기존에 이미 정의되어 있는 클래스의 모든 속성(변수)과 메서드를 새로운 클래스가 물려받아 그대로 사용하는 기능을 말합니다.
+        
+        - **부모 클래스 (Parent / Super / Base Class):** 물려주는 기존의 클래스
+        - **자식 클래스 (Child / Sub / Derived Class):** 물려받는 새로운 클래스
+        
+        ### 왜 상속을 사용할까요? (주요 장점)
+        
+        1. **코드의 재사용성 향상:** 공통된 특징을 부모 클래스에 한 번만 정의해 두면, 자식 클래스에서 똑같은 코드를 다시 작성할 필요가 없습니다.
+        2. **유지보수성 증대:** 공통 기능에 수정 사항이 생기면 부모 클래스만 수정하면 되므로 관리가 용이해집니다.
+        3. **확장성:** 부모의 기능을 바탕으로 자식 클래스에서 새로운 속성이나 메서드를 자유롭게 추가(확장)할 수 있습니다.
