@@ -58,7 +58,8 @@
 
 //     return 0;
 // }
-//1, 2, 쓰레기 값, 쓰레기 값, 쓰레기 값
+//1, 2, 쓰레기 값, 쓰레기 값, 쓰레기 값 -> 0으로 초기화
+
 
 //2번
 // int arr[4];
@@ -94,7 +95,7 @@
 
 //     return 0;
 // }
-// 20
+// 20 
 
 //6번
 // int arr[2][3] = {
@@ -106,7 +107,7 @@
 //7번
 // A. int *arr[5];
 // B. int (*arr)[5];
-// B번
+// B번 -> A번
 
 //8번
 // #include <stdio.h>
@@ -115,27 +116,58 @@
 //     arr++;
 //     printf("%d", &arr);
 // }
-// 상수라서 바꿀수 없음
+// 상수라서 바꿀수 없음 -> 포인터 변수가 아니라서 증감연산이 되지 않는다.
 
 //9번
 // char *str = "hello";
 // str[0] = 'H';
-// 읽기전용이라서 할수 없다.
+// 읽기전용이라서 할수 없다. -> 잘못된 접근입니다.
 
 //10번
-#include <stdio.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdlib.h>
 
-int main() {
-    int n = 5;
-    int *arr = malloc(n * sizeof(int));
+// int main() {
+//     int n = 5;
+//     int *arr = malloc(n * sizeof(int));
 
-    if (arr == NULL) {
-        return 1;
-    }
+//     if (arr == NULL) {
+//         return 1;
+//     }
 
-    // 메모리 해제
-    ___________;
+//     // 메모리 해제
+//     ___________;
 
-    return 0;
-}
+//     return 0;
+// } -> free(arr);
+
+// #include <stdio.h>
+// int main(void){
+// 	printf("Hello\n");
+// 	printf("World");
+// 	return 0;
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	printf(" \'Hello World\" ");
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	long long a;
+// 	double b;
+// 	char c;
+// 	scanf("%lld %lf %c", &a,&b,&c);
+// 	printf("%lld %.10lf %c", a, b, c);
+// 	return 0;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// int main() {
+// 	int a, b;
+// 	scanf("%d %d", &a, &b);
+// 	printf("%d\n%d\n%d", a&&b, a||b, !a);
+// 	return 0;
+// }
