@@ -172,13 +172,102 @@
 // 	return 0;
 // }
 
-#include <stdio.h>
-int main(void){
-    char arr[101];
-    fgets(arr, 100, stdin);
-    for(int i = 0; arr[i] != '\0' ; i++){
-        if(*(arr+i) != ' '){
-            printf("%c", *(arr+i));
-        }
-    }
-}
+// #include <stdio.h>
+// int main(void){
+//     char arr[101];
+//     fgets(arr, 100, stdin);
+//     for(int i = 0; arr[i] != '\0' ; i++){
+//         if(*(arr+i) != ' '){
+//             printf("%c", *(arr+i));
+//         }
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+// 	int called[24] = {0};
+// 	int count[24] = {0};
+// 	for(int i = 0; i < n; i++){
+// 		scanf("%d", &called[i]);
+// 	}
+// 	for(int j = 0; j < n; j++){
+// 		int number = called[j];
+//         if (number != 0) {
+// 		count[number - 1] += 1;
+//         }
+// 	}
+// 	for(int h = 0; h < 23; h++){
+// 		printf("%d ", count[h]);
+// 	}
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+//     scanf("%d", &n);
+//     int arr[n];
+//     for(int i = 0; i < n; i++){
+//         scanf("%d", &arr[i]);
+//     }
+//     for(int j = 0; j < n; j++){
+//         printf("%d\n", arr[j]);
+//     }
+//     for(int j = 0; j < n; j++){
+//         printf("%d\n", arr[j]);
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+//     int n;
+//     scanf("%d", &n);
+//     int arr[n];
+//     for(int u = 0; u < n; u++){
+//         scanf("%d", &arr[u]);
+//     }
+//     for(int i = 0; i < n; i++){
+//         for(int j = i; j < n; j++){
+//             printf("%d", arr[j]);
+//         }
+//         for(int h = 0; h < i; h++){
+//             printf("%d", arr[h]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+//     char arr[101];
+//     fgets(arr, 100, stdin);
+//     for(int i = 0; arr[i] != '\0'; i++){
+//         if(arr[i] != ' '){
+//             printf("%c", arr[i]);
+//         }
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+//     int n;
+//     scanf("%d", &n);
+//     char name[n];
+//     int score[n];
+//     for(int i = 0; i< n; i++){
+//         scanf("%s %d", name, score);
+//     }
+//     for(int j = 0; j < 3; j++){
+//         int max = 0, maxidx = 0;
+//         for(int h = 0; h < n; h++){
+//             if(max <= score[h]){
+//                 max = score[h];
+//                 maxidx = h;
+//             }
+//         }
+//         score[maxidx] = 0;
+//         printf("%s", name[maxidx]);
+//     }
+   
+// }
