@@ -171,3 +171,14 @@
 // 	printf("%d\n%d\n%d", a&&b, a||b, !a);
 // 	return 0;
 // }
+
+#include <stdio.h>
+int main(void){
+    char arr[101];
+    fgets(arr, 100, stdin);
+    for(int i = 0; arr[i] != '\0' ; i++){
+        if(*(arr+i) != ' '){
+            printf("%c", *(arr+i));
+        }
+    }
+}
