@@ -271,3 +271,63 @@
 //     }
    
 // }
+
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+// 	int arr[n];
+// 	for(int i = 0; i < n; i++){
+// 		scanf("%d", &arr[i]);
+// 	}
+// 	for(int i = n - 1; i >= 0; i--){
+// 		printf("%d ", arr[i]);
+// 	}
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+// 	int arr[n];
+// 	for(int i = 0; i < n; i++){
+// 		scanf("%d", &arr[i]);
+// 	}
+// 	for(int j = 0; j < n; j++){
+// 		for(int k = j; k < n; k++){
+// 			printf("%d ", arr[k]);
+// 		}
+// 		for(int h = 0; h < j; h++){
+// 			printf("%d ", arr[h]);
+// 		}
+//         printf("\n");
+// 	}
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	char arr[101];
+// 	fgets(arr, sizeof(arr), stdin);
+// 	for(int i = 0; arr[i] != '\0'; i++){
+// 		if(arr[i] != ' '){
+// 			printf("%c", arr[i]);
+// 		}
+// 	}
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	char a[100000];
+// 	scanf("%s", a);
+// 	int sumr = 0, suml = 0;
+// 	for(int i = 0; a[i] != '\0'; i++){
+// 		if(a[i] == '('){
+// 			suml += 1;
+// 		}
+// 		else if(a[i] == ')'){
+// 			sumr += 1;
+// 		}
+// 	}
+// 	printf("%d %d", suml, sumr);
+// }
