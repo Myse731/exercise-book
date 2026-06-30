@@ -331,3 +331,124 @@
 // 	}
 // 	printf("%d %d", suml, sumr);
 // }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+// 	int cards[n-1];
+// 	int sum1 = 0;
+// 	int sum2 = 0;
+// 	for(int i = 0; i < n - 1; i++){
+// 		scanf("%d", &cards[i]);
+// 	}
+// 	for(int j = 0; j < n - 1; j++){
+// 		sum1 += cards[j];
+// 	}
+// 	for(int k = 1; k < n+1; k++){
+// 		sum2 += k;
+// 	}
+// 	int sum3 = sum2 - sum1;
+// 	printf("%d", sum3);
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+// 	int arr[1000];
+// 	for(int i = 0; i < n; i++){
+// 		scanf("%d", &arr[i]);
+// 	}
+// 	for(int j = 0; j < n; j++){
+//         printf("%d: ", j+1);
+// 		for(int k = 0; k < n; k++){
+// 			if(k == j){
+// 				continue;
+// 			}
+// 			if(arr[j] > arr[k]){
+// 				printf("> ");
+// 			}
+// 			else if(arr[j] < arr[k]){
+// 				printf("< ");
+// 			}
+// 			else if(arr[j] == arr[k]){
+// 				printf("= ");
+// 			}
+// 		}
+//         printf("\n");
+// 	}
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	char arr[100];
+// 	scanf("%s", arr);
+// 	for(int i = 0; arr[i] != '\0'; i++){
+// 		if(arr[i] >= 65 && arr[i] <= 90){
+// 			arr[i] += 32;
+// 		}
+// 		else if(arr[i] >= 97 && arr[i] <= 122){
+// 			arr[i] -= 32;
+// 		}
+// 	}
+// 	printf("%s", arr);
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	char word[16];
+// 	scanf("%s", word);
+// 	if(word == 'love'){
+// 		printf("I Love you");
+// 	}
+// 	else{
+// 		printf("");
+// 	}
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	int add = 1;
+// 	scanf("%d", &n);
+// 	int arr[n][n];
+// 	for(int i = 0; i < n; i++){
+// 		for(int j = 0; j < n; j++){
+// 			arr[i][j] = add++;
+// 		}
+// 	}
+// 	for(int k = 0; k < n; k++){
+// 		for(int h = 0; h < n; h++){
+// 			printf("%d ", arr[k][h]);
+// 		}
+// 		printf("\n");
+// 	}
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+// 	int add = 1;
+// 	int arr[100][100];
+// 	for(int i = 0; i < n; i++){
+// 		if(i % 2 == 0){
+// 			for(int j = 0; j < n; j++){
+// 				arr[i][j] = add++;
+// 			}
+// 		}
+
+// 		else{
+// 			for(int j = n - 1; j >= 0; j--){
+// 				arr[i][j] = add++;
+// 			}
+// 		}
+// 	}
+// 	for(int i = 0; i < n; i++){
+// 		for(int j = 0; j < n; j++){
+// 			printf("%d ", arr[i][j]);
+// 		}
+// 		printf("\n");
+// 	}
+// }
