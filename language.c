@@ -452,3 +452,96 @@
 // 		printf("\n");
 // 	}
 // }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+//     int arr[n];
+//     for(int i = 0; i < n; i++){
+//         scanf("%d", &arr[i]);
+//     }
+//     int sums[n];
+//     int sum = 0;
+//     for(int j = 0; j < n; j++){
+//         sum += arr[j];
+//         sums[j] = sum;
+//     }
+//     for(int k = 0; k < n; k++){
+//         printf("%d ", sums[k]);
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+//     int n;
+//     scanf("%d", &n);
+//     int arr[n];
+//     for(int i = 0; i < n; i++){
+//         scanf("%d", &arr[i]);
+//     }
+//     int step[n/2];
+//     int add = 0;
+//     for(int j = 0; j < n; j += 2){
+//         if(arr[j] >= arr[j+1]){
+//             step[add++] =  arr[j];
+//         }
+//         else{
+//             step[add++] = arr[j+1];
+//         }
+//     }
+//     for(int k = 0; k < n / 2; k++){
+//         printf("%d ", step[k]);
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+//     int n;
+//     scanf("%d", &n);
+//     int arr[n][n];
+//     int add = 1;
+//     for(int i = 0; i < n; i++){
+//         for(int j = n - 1; j >= 0; j--){
+//             arr[i][j] = add++;
+//         }
+//     }
+//     for(int i = 0; i < n; i++){
+//         for(int j = 0; j < n; j++){
+//             printf("%d ", arr[i][j]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+//     int n,m;
+//     scanf("%d %d", &n, &m);
+//     int arr[n][m];
+//     int add = 1;
+//     for(int i = m - 1; i >= 0; i--){
+//         for(int j = 0; j < n; j++){
+//             arr[j][i] = add++;
+//         }
+//     }
+//     for(int i = 0; i < n; i++){
+//         for(int j = 0; j < m; j++){
+//             printf("%d ", arr[i][j]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// #include <stdio.h>
+// int main(void){
+//     int n;
+//     scanf("%d", &n);
+//     int arr[n][n];
+//     int add = 1;
+//     for(int i = 0; i < n; i++){
+//         for(int j = 0; j < n; j++){
+
+//         }
+//     }
+// }

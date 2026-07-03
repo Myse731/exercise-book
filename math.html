@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>행렬 성적 계산기</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+      background: #0f1117;
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #e0e0e0;
+    }
+    h1 {
+      text-align: center; color: #ffffff;
+      font-size: 1.9rem; margin-bottom: 8px;
+      font-weight: 700; letter-spacing: -0.5px;
+    }
+    .subtitle {
+      text-align: center; color: #6b7280;
+      margin-bottom: 36px; font-size: 0.95rem;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+    .card {
+      background: #1a1d27; border: 1px solid #2a2d3a;
+      border-radius: 16px; padding: 28px;
+      margin-bottom: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .card h2 {
+      font-size: 1rem; color: #a0aec0; margin-bottom: 20px;
+      border-left: 3px solid #3b82f6; padding-left: 12px;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .student-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    .student-table th {
+      background: #212436; color: #6b7280; padding: 12px 10px;
+      font-size: 0.8rem; text-align: center;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      border-bottom: 1px solid #2a2d3a;
+    }
+    .student-table td {
+      padding: 8px 6px; text-align: center;
+      border-bottom: 1px solid #1e2130;
+    }
+    .student-table input[type="number"],
+    .student-table input[type="text"] {
+      width: 100%; padding: 8px 10px;
+      background: #212436; border: 1px solid #2a2d3a;
+      border-radius: 8px; font-size: 0.95rem;
+      text-align: center; color: #e0e0e0;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .student-table input:focus {
+      outline: none; border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+
+    /* ── 학생 수 일괄 추가 박스 ── */
+    .bulk-add-box {
+      display: flex; align-items: center; gap: 12px;
+      background: #161b2e; border: 1px solid #1e3a5f;
+      border-radius: 12px; padding: 16px 20px;
+      margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .bulk-add-box label {
+      color: #9ca3af; font-size: 0.9rem; white-space: nowrap;
+    }
+    .bulk-add-box input {
+      width: 80px; padding: 8px 10px;
+      background: #212436; border: 1px solid #2a2d3a;
+      border-radius: 8px; font-size: 1rem;
+      text-align: center; color: #e0e0e0;
+    }
+    .bulk-add-box input:focus {
+      outline: none; border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    .bulk-hint {
+      font-size: 0.78rem; color: #4b5563;
+      margin-left: 4px;
+    }
+
+    .ratio-row {
+      display: flex; gap: 20px;
+      align-items: center; flex-wrap: wrap;
+    }
+    .ratio-group {
+      display: flex; align-items: center;
+      gap: 12px; flex: 1; min-width: 200px;
+    }
+    .ratio-group label {
+      font-weight: 500; color: #9ca3af;
+      white-space: nowrap; font-size: 0.9rem;
+    }
+    .ratio-group input {
+      width: 80px; padding: 8px 10px;
+      background: #212436; border: 1px solid #2a2d3a;
+      border-radius: 8px; font-size: 1rem;
+      text-align: center; color: #e0e0e0;
+    }
+    .ratio-group input:focus {
+      outline: none; border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    .ratio-sum { font-size: 0.85rem; color: #6b7280; margin-top: 10px; }
+    .btn-row {
+      display: flex; gap: 10px;
+      flex-wrap: wrap; margin-top: 14px;
+    }
+    button {
+      padding: 11px 22px; border: none;
+      border-radius: 10px; font-size: 0.95rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-calc { background: #3b82f6; color: white; flex: 1; }
+    .btn-calc:hover {
+      background: #2563eb;
+      box-shadow: 0 4px 16px rgba(59,130,246,0.35);
+      transform: translateY(-1px);
+    }
+    .btn-add {
+      background: #1e2d1e; color: #4ade80;
+      border: 1px solid #2d4a2d; font-size: 0.9rem;
+    }
+    .btn-add:hover { background: #243524; border-color: #4ade80; }
+    .btn-bulk {
+      background: #1a2540; color: #3b82f6;
+      border: 1px solid #1e3a5f; font-size: 0.9rem;
+    }
+    .btn-bulk:hover { background: #1e3060; border-color: #3b82f6; }
+    .btn-reset {
+      background: #2a1a1a; color: #f87171;
+      border: 1px solid #4a2222; font-size: 0.9rem;
+    }
+    .btn-reset:hover { background: #321e1e; border-color: #f87171; }
+    .btn-del {
+      background: #2a1a1a; color: #f87171;
+      border: 1px solid #4a2222; border-radius: 6px;
+      padding: 6px 10px; cursor: pointer;
+      font-size: 0.82rem; transition: all 0.2s;
+    }
+    .btn-del:hover { background: #3a2020; border-color: #f87171; }
+
+    .result-section { display: none; }
+    .efficiency-card {
+      background: #161b2e; border: 1px solid #1e3a5f;
+      border-radius: 16px; padding: 28px;
+      color: white; text-align: center; margin-bottom: 20px;
+    }
+    .efficiency-card h3 {
+      font-size: 0.85rem; margin-bottom: 24px; color: #6b7280;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .eff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .eff-item {
+      background: #1a2540; border: 1px solid #1e3a5f;
+      border-radius: 12px; padding: 20px 10px;
+    }
+    .eff-item .eff-num {
+      font-size: 2.2rem; font-weight: 800;
+      display: block; margin-bottom: 6px; color: #3b82f6;
+    }
+    .eff-item:nth-child(2) .eff-num { color: #f87171; }
+    .eff-item:nth-child(3) .eff-num { color: #4ade80; }
+    .eff-item .eff-label { font-size: 0.78rem; color: #6b7280; line-height: 1.5; }
+
+    .tab-bar { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 8px 16px; border-radius: 8px;
+      border: 1px solid #2a2d3a; background: #212436;
+      color: #6b7280; font-weight: 600; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn.active { background: #1e3a5f; color: #3b82f6; border-color: #1e4a7f; }
+    .tab-btn:hover:not(.active) { background: #252840; color: #a0aec0; }
+
+    .chart-panel { display: none; }
+    .chart-panel.active { display: block; }
+    .chart-wrap { position: relative; width: 100%; height: 320px; }
+
+    /* ── 그래프 설명 박스 (더 친절하게) ── */
+    .chart-desc {
+      background: #161b2e; border-radius: 8px;
+      padding: 12px 16px; font-size: 0.85rem;
+      color: #9ca3af; margin-bottom: 16px;
+      border-left: 3px solid #3b82f6; line-height: 1.7;
+    }
+    .chart-desc strong { color: #e0e0e0; }
+    .chart-desc .tag {
+      display: inline-block; border-radius: 4px;
+      padding: 1px 7px; font-size: 0.78rem;
+      font-weight: 700; margin: 0 2px;
+    }
+    .tag-red { background: rgba(248,113,113,0.2); color: #f87171; }
+    .tag-green { background: rgba(74,222,128,0.2); color: #4ade80; }
+    .tag-blue { background: rgba(59,130,246,0.2); color: #3b82f6; }
+    .tag-yellow { background: rgba(250,204,21,0.2); color: #facc15; }
+
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 20px;
+    }
+    @media (max-width:600px) { .compare-grid { grid-template-columns: 1fr; } }
+    .result-box { border-radius: 14px; padding: 22px; }
+    .result-box.no-matrix { background: #1f1a14; border: 1px solid #3d2e14; }
+    .result-box.with-matrix { background: #141f18; border: 1px solid #1a3d28; }
+    .result-box h3 {
+      font-size: 0.9rem; margin-bottom: 16px;
+      padding-bottom: 10px; border-bottom: 1px solid #2a2d3a; font-weight: 600;
+    }
+    .result-box.no-matrix h3 { color: #fb923c; }
+    .result-box.with-matrix h3 { color: #4ade80; }
+    .step-list { list-style: none; font-size: 0.82rem; color: #6b7280; margin-bottom: 14px; }
+    .step-list li {
+      padding: 5px 0; border-bottom: 1px solid #1e2130;
+      font-family: 'Courier New', monospace; line-height: 1.5;
+    }
+    .score-grid { display: flex; flex-direction: column; gap: 6px; }
+    .score-item {
+      display: flex; justify-content: space-between; align-items: center;
+      background: #212436; border: 1px solid #2a2d3a;
+      border-radius: 8px; padding: 10px 14px;
+    }
+    .score-item .name { font-weight: 500; color: #a0aec0; font-size: 0.9rem; }
+    .score-item .score { font-size: 1.05rem; font-weight: 700; color: #3b82f6; }
+    .matrix-formula {
+      background: #0f1117; border-radius: 10px;
+      padding: 16px; margin-bottom: 14px;
+      font-family: 'Courier New', monospace; font-size: 0.88rem;
+      color: #a0aec0; overflow-x: auto; border: 1px solid #2a2d3a;
+    }
+    .formula-title {
+      font-weight: 700; color: #3b82f6; margin-bottom: 12px;
+      font-family: 'Segoe UI', sans-serif; font-size: 0.85rem;
+    }
+    .matrix-line {
+      display: flex; align-items: center;
+      gap: 12px; flex-wrap: wrap; margin-top: 6px;
+    }
+    .matrix-bracket {
+      display: inline-flex; flex-direction: column;
+      border-left: 2px solid #3b82f6; border-right: 2px solid #3b82f6;
+      padding: 4px 12px; gap: 4px;
+    }
+    .matrix-row-val { font-size: 0.88rem; white-space: nowrap; color: #d1d5db; }
+    .op-sign { font-size: 1.3rem; font-weight: 700; color: #3b82f6; }
+    .error-msg {
+      background: #2a1515; color: #f87171; padding: 10px 14px;
+      border-radius: 8px; margin-top: 10px; font-size: 0.88rem;
+      border: 1px solid #4a2222; display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>📊 행렬 성적 계산기</h1>
+  <p class="subtitle">행렬 사용 vs 미사용 — 효율성을 직접 비교해보세요</p>
+
+  <!-- 학생 입력 카드 -->
+  <div class="card">
+    <h2>👤 학생 점수 입력</h2>
+
+    <!-- ★ 일괄 추가 박스 -->
+    <div class="bulk-add-box">
+      <label>👥 학생 수 입력</label>
+      <input type="number" id="bulkCount" min="1" max="50" value="1" />
+      <button class="btn-bulk" id="btnBulk">한번에 추가</button>
+      <span class="bulk-hint">※ 숫자를 입력하고 버튼을 누르면 그 수만큼 한꺼번에 추가됩니다</span>
+    </div>
+
+    <table class="student-table">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>지필평가 (점)</th>
+          <th>수행평가 (점)</th>
+          <th>삭제</th>
+        </tr>
+      </thead>
+      <tbody id="studentBody"></tbody>
+    </table>
+
+    <div class="btn-row">
+      <button class="btn-add" id="btnAdd">＋ 1명 추가</button>
+    </div>
+  </div>
+
+  <!-- 비율 설정 카드 -->
+  <div class="card">
+    <h2>⚖️ 반영 비율 설정</h2>
+    <div class="ratio-row">
+      <div class="ratio-group">
+        <label>지필평가 비율 (%)</label>
+        <input type="number" id="ratioA" value="60" min="0" max="100"/>
+      </div>
+      <div class="ratio-group">
+        <label>수행평가 비율 (%)</label>
+        <input type="number" id="ratioB" value="40" min="0" max="100"/>
+      </div>
+    </div>
+    <div class="ratio-sum" id="ratioSum">합계: 100% ✅</div>
+    <div class="error-msg" id="errMsg">⚠️ 비율의 합이 100%가 되어야 합니다!</div>
+    <div class="btn-row" style="margin-top:20px;">
+      <button class="btn-calc" id="btnCalc">🚀 계산 및 비교하기</button>
+      <button class="btn-reset" id="btnReset">↺ 초기화</button>
+    </div>
+  </div>
+
+  <!-- 결과 섹션 -->
+  <div class="result-section" id="resultSection">
+
+    <div class="efficiency-card">
+      <h3>⚡ 효율성 비교 요약</h3>
+      <div class="eff-grid">
+        <div class="eff-item">
+          <span class="eff-num" id="effStudents">-</span>
+          <span class="eff-label">학생 수</span>
+        </div>
+        <div class="eff-item">
+          <span class="eff-num" id="effNoMatrix">-번</span>
+          <span class="eff-label">행렬 미사용<br/>계산 횟수</span>
+        </div>
+        <div class="eff-item">
+          <span class="eff-num">1번</span>
+          <span class="eff-label">행렬 사용<br/>계산 횟수</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📈 효율성 그래프 비교</h2>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="calc">🔢 계산 횟수</button>
+        <button class="tab-btn" data-tab="score">🏅 학생별 점수</button>
+        <button class="tab-btn" data-tab="radar">🕸 점수 분포</button>
+        <button class="tab-btn" data-tab="time">⏱ 처리 시간</button>
+      </div>
+
+      <!-- 계산 횟수 탭 -->
+      <div class="chart-panel active" id="panel-calc">
+        <div class="chart-desc">
+          📌 이 그래프는 <strong>행렬을 쓸 때 vs 안 쓸 때</strong> 계산 횟수 차이를 보여줍니다.<br>
+          <span class="tag tag-red">🟥 빨간 막대</span> = 행렬 미사용 → 학생 수만큼 계산을 반복해야 함<br>
+          <span class="tag tag-green">🟢 초록 선</span> = 행렬 사용 → 학생이 몇 명이든 항상 <strong>딱 1번</strong>만 계산!
+        </div>
+        <div class="chart-wrap"><canvas id="chartCalc"></canvas></div>
+      </div>
+
+      <!-- 학생별 점수 탭 -->
+      <div class="chart-panel" id="panel-score">
+        <div class="chart-desc">
+          📌 각 학생의 점수를 한눈에 비교하는 그래프입니다.<br>
+          <span class="tag tag-blue">🟦 파란 막대</span> = 지필평가 점수 &nbsp;
+          <span class="tag tag-blue" style="background:rgba(139,92,246,0.2);color:#8b5cf6;">🟣 보라 막대</span> = 수행평가 점수<br>
+          <span class="tag tag-yellow">🟡 노란 선</span> = 행렬 계산으로 나온 <strong>최종 점수</strong>
+        </div>
+        <div class="chart-wrap"><canvas id="chartScore"></canvas></div>
+      </div>
+
+      <!-- 점수 분포 탭 -->
+      <div class="chart-panel" id="panel-radar">
+        <div class="chart-desc">
+          📌 거미줄 모양 그래프로 각 학생의 <strong>지필 / 수행 / 최종 점수</strong>를 비교합니다.<br>
+          넓게 퍼질수록 점수가 높은 것이고, 각 꼭짓점이 어떤 점수인지 축 이름을 확인하세요.
+        </div>
+        <div class="chart-wrap"><canvas id="chartRadar"></canvas></div>
+      </div>
+
+      <!-- 처리 시간 탭 -->
+      <div class="chart-panel" id="panel-time">
+        <div class="chart-desc">
+          📌 학생 수가 늘어날수록 처리 시간이 어떻게 달라지는지 보여주는 시뮬레이션입니다.<br>
+          <span class="tag tag-red">🟥 빨간 선</span> = 행렬 미사용 → 학생이 많아질수록 시간이 계속 늘어남<br>
+          <span class="tag tag-green">🟢 초록 선</span> = 행렬 사용 → 학생 수에 상관없이 거의 <strong>일정</strong>하게 유지됨
+        </div>
+        <div class="chart-wrap"><canvas id="chartTime"></canvas></div>
+      </div>
+    </div>
+
+    <div class="compare-grid">
+      <div class="result-box no-matrix">
+        <h3>❌ 행렬 미사용 — 개별 계산</h3>
+        <ul class="step-list" id="noMatrixSteps"></ul>
+        <div class="score-grid" id="noMatrixScores"></div>
+      </div>
+      <div class="result-box with-matrix">
+        <h3>✅ 행렬 사용 — 일괄 계산</h3>
+        <div class="matrix-formula" id="matrixFormula"></div>
+        <div class="score-grid" id="matrixScores"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🏆 최종 성적 결과표</h2>
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th>이름</th><th>지필 (점)</th>
+            <th>수행 (점)</th><th>최종 점수</th><th>등급</th>
+          </tr>
+        </thead>
+        <tbody id="resultBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  var chartCalcInst  = null;
+  var chartScoreInst = null;
+  var chartRadarInst = null;
+  var chartTimeInst  = null;
+
+  Chart.defaults.color       = '#6b7280';
+  Chart.defaults.borderColor = '#2a2d3a';
+
+  var students = [
+    { name:"김도윤", jipal:79,  suhaeng:100 },
+    { name:"이수진", jipal:85,  suhaeng:90  },
+    { name:"박민준", jipal:92,  suhaeng:80  },
+    { name:"최유리", jipal:70,  suhaeng:95  }
+  ];
+
+  /* ── 이벤트 연결 ── */
+  document.getElementById('btnAdd').addEventListener('click', function(){ addStudent(1); });
+  document.getElementById('btnBulk').addEventListener('click', bulkAdd);
+  document.getElementById('btnCalc').addEventListener('click', calculate);
+  document.getElementById('btnReset').addEventListener('click', resetAll);
+  document.getElementById('ratioA').addEventListener('input', updateRatioSum);
+  document.getElementById('ratioB').addEventListener('input', updateRatioSum);
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){ switchTab(this.getAttribute('data-tab')); });
+  });
+
+  /* ── 탭 전환 ── */
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-tab') === name);
+    });
+    document.querySelectorAll('.chart-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  /* ── 테이블 렌더 ── */
+  function renderTable() {
+    var tbody = document.getElementById("studentBody");
+    tbody.innerHTML = "";
+    for (var i = 0; i < students.length; i++) {
+      (function(idx){
+        var s  = students[idx];
+        var tr = document.createElement("tr");
+
+        var tdName = document.createElement("td");
+        var iName  = document.createElement("input");
+        iName.type = "text"; iName.value = s.name;
+        iName.addEventListener("input", function(){ students[idx].name = this.value; });
+        tdName.appendChild(iName);
+
+        var tdJ = document.createElement("td");
+        var iJ  = document.createElement("input");
+        iJ.type = "number"; iJ.value = s.jipal; iJ.min = 0; iJ.max = 100;
+        iJ.addEventListener("input", function(){ students[idx].jipal = Number(this.value); });
+        tdJ.appendChild(iJ);
+
+        var tdS = document.createElement("td");
+        var iS  = document.createElement("input");
+        iS.type = "number"; iS.value = s.suhaeng; iS.min = 0; iS.max = 100;
+        iS.addEventListener("input", function(){ students[idx].suhaeng = Number(this.value); });
+        tdS.appendChild(iS);
+
+        var tdDel = document.createElement("td");
+        var bDel  = document.createElement("button");
+        bDel.className = "btn-del"; bDel.textContent = "🗑";
+        bDel.addEventListener("click", function(){ deleteStudent(idx); });
+        tdDel.appendChild(bDel);
+
+        tr.appendChild(tdName); tr.appendChild(tdJ);
+        tr.appendChild(tdS);   tr.appendChild(tdDel);
+        tbody.appendChild(tr);
+      })(i);
+    }
+  }
+
+  /* ── 1명 추가 ── */
+  function addStudent(count) {
+    for (var k = 0; k < count; k++) {
+      students.push({ name:"학생"+(students.length+1), jipal:80, suhaeng:80 });
+    }
+    renderTable(); hideResult();
+  }
+
+  /* ── 일괄 추가 ── */
+  function bulkAdd() {
+    var n = parseInt(document.getElementById('bulkCount').value, 10);
+    if (isNaN(n) || n < 1) { alert("1 이상의 숫자를 입력하세요!"); return; }
+    if (n > 50) { alert("한번에 최대 50명까지 추가할 수 있습니다!"); return; }
+    addStudent(n);
+    document.getElementById('bulkCount').value = 1;
+  }
+
+  /* ── 삭제 ── */
+  function deleteStudent(i) {
+    if (students.length <= 1) { alert("최소 1명은 있어야 합니다!"); return; }
+    students.splice(i, 1); renderTable(); hideResult();
+  }
+
+  function hideResult() { document.getElementById("resultSection").style.display = "none"; }
+
+  function updateRatioSum() {
+    var a = Number(document.getElementById("ratioA").value);
+    var b = Number(document.getElementById("ratioB").value);
+    var sum = a + b;
+    var el  = document.getElementById("ratioSum");
+    var err = document.getElementById("errMsg");
+    el.textContent = "합계: " + sum + "% " + (sum===100 ? "✅" : "❌");
+    el.style.color = sum===100 ? "#4ade80" : "#f87171";
+    err.style.display = sum!==100 ? "block" : "none";
+  }
+
+  function getGrade(s){
+    if(s>=90)return"A"; if(s>=80)return"B";
+    if(s>=70)return"C"; if(s>=60)return"D"; return"F";
+  }
+  function gradeColor(g){
+    return {A:"#3b82f6",B:"#4ade80",C:"#facc15",D:"#fb923c",F:"#f87171"}[g]||"#a0aec0";
+  }
+  function destroyChart(c){ if(c) c.destroy(); }
+
+  function baseOptions(titleText){
+    return {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{ position:'top', labels:{ color:'#9ca3af', font:{size:12}, padding:16 } },
+        title:{ display:true, text:titleText, font:{size:14,weight:'bold'}, color:'#d1d5db', padding:{bottom:16} }
+      }
+    };
+  }
+
+  /* ── 그래프 1 : 계산 횟수 (버그 수정 ★) ── */
+  function drawCalcChart(n){
+    destroyChart(chartCalcInst);
+    var maxN = Math.max(n, 6);
+    var labels=[], noMat=[], mat=[];
+    for(var i=1; i<=maxN; i++){
+      labels.push(i+"명");
+      noMat.push(i);   // ← 이 data가 이전 코드에서 누락되었던 부분!
+      mat.push(1);
+    }
+    var opts = baseOptions('학생 수에 따른 계산 횟수 비교');
+    opts.scales = {
+      y:{ beginAtZero:true, grid:{color:'#1e2130'}, ticks:{color:'#6b7280',stepSize:1},
+          title:{display:true,text:'계산 횟수 (번)',color:'#6b7280'} },
+      x:{ grid:{color:'#1e2130'}, ticks:{color:'#6b7280'},
+          title:{display:true,text:'학생 수',color:'#6b7280'} }
+    };
+    chartCalcInst = new Chart(document.getElementById('chartCalc'),{
+      type:'bar',
+      data:{
+        labels:labels,
+        datasets:[
+          {
+            label:'행렬 미사용 — 학생 수만큼 반복 계산',
+            data: noMat,
+            backgroundColor:'rgba(248,113,113,0.7)',
+            borderColor:'#f87171',
+            borderWidth:1, borderRadius:4, order:2
+          },
+          {
+            label:'행렬 사용 — 항상 1번만 계산',
+            data: mat,
+            type:'line',
+            borderColor:'#4ade80',
+            backgroundColor:'rgba(74,222,128,0.1)',
+            borderWidth:2,
+            pointBackgroundColor:'#4ade80',
+            pointRadius:4, tension:0, order:1
+          }
+        ]
+      },
+      options: opts
+    });
+  }
+
+  /* ── 그래프 2 : 학생별 점수 ── */
+  function drawScoreChart(results){
+    destroyChart(chartScoreInst);
+    var labels=[], jipal=[], suhaeng=[], final_=[];
+    for(var i=0;i<results.length;i++){
+      labels.push(results[i].name);
+      jipal.push(results[i].jipal);
+      suhaeng.push(results[i].suhaeng);
+      final_.push(results[i].score);
+    }
+    var opts = baseOptions('학생별 점수 및 최종 점수 비교');
+    opts.scales = {
+      y:{ min:0, max:105, grid:{color:'#1e2130'}, ticks:{color:'#6b7280'},
+          title:{display:true,text:'점수',color:'#6b7280'} },
+      x:{ grid:{color:'#1e2130'}, ticks:{color:'#6b7280'} }
+    };
+    chartScoreInst = new Chart(document.getElementById('chartScore'),{
+      type:'bar',
+      data:{
+        labels:labels,
+        datasets:[
+          { label:'지필평가', data:jipal,
+            backgroundColor:'rgba(59,130,246,0.6)', borderColor:'#3b82f6',
+            borderWidth:1, borderRadius:4 },
+          { label:'수행평가', data:suhaeng,
+            backgroundColor:'rgba(139,92,246,0.6)', borderColor:'#8b5cf6',
+            borderWidth:1, borderRadius:4 },
+          { label:'최종 점수 (행렬 계산)', data:final_,
+            type:'line', borderColor:'#facc15',
+            backgroundColor:'rgba(250,204,21,0.1)',
+            borderWidth:2, pointBackgroundColor:'#facc15',
+            pointRadius:5, tension:0.3 }
+        ]
+      },
+      options:opts
+    });
+  }
+
+  /* ── 그래프 3 : 레이더 ── */
+  function drawRadarChart(results){
+    destroyChart(chartRadarInst);
+    var colors =['rgba(59,130,246,0.4)','rgba(139,92,246,0.4)',
+                 'rgba(248,113,113,0.4)','rgba(74,222,128,0.4)',
+                 'rgba(250,204,21,0.4)','rgba(34,211,238,0.4)'];
+    var borders=['#3b82f6','#8b5cf6','#f87171','#4ade80','#facc15','#22d3ee'];
+    var datasets=[];
+    for(var i=0;i<results.length;i++){
+      datasets.push({
+        label:results[i].name,
+        data:[results[i].jipal, results[i].suhaeng, results[i].score],
+        backgroundColor:colors[i%colors.length],
+        borderColor:borders[i%borders.length],
+        borderWidth:2, pointBackgroundColor:borders[i%borders.length]
+      });
+    }
+    var opts = baseOptions('학생별 점수 분포');
+    opts.scales = {
+      r:{ min:0, max:100,
+          ticks:{stepSize:20,color:'#6b7280',backdropColor:'transparent'},
+          grid:{color:'#2a2d3a'}, angleLines:{color:'#2a2d3a'},
+          pointLabels:{color:'#9ca3af',font:{size:12}} }
+    };
+    chartRadarInst = new Chart(document.getElementById('chartRadar'),{
+      type:'radar',
+      data:{ labels:['지필평가','수행평가','최종 점수'], datasets:datasets },
+      options:opts
+    });
+  }
+
+  /* ── 그래프 4 : 처리 시간 ── */
+  function drawTimeChart(){
+    destroyChart(chartTimeInst);
+    var points=[1,5,10,20,50,100,200,500];
+    var noMatT=[], matT=[], xLabels=[];
+    for(var i=0;i<points.length;i++){
+      xLabels.push(points[i]+"명");
+      noMatT.push(points[i]*0.5);
+      matT.push(0.5);
+    }
+    var opts = baseOptions('학생 수 증가에 따른 처리 시간 시뮬레이션');
+    opts.scales = {
+      y:{ beginAtZero:true, grid:{color:'#1e2130'}, ticks:{color:'#6b7280'},
+          title:{display:true,text:'처리 시간 (상대값)',color:'#6b7280'} },
+      x:{ grid:{color:'#1e2130'}, ticks:{color:'#6b7280'},
+          title:{display:true,text:'학생 수',color:'#6b7280'} }
+    };
+    chartTimeInst = new Chart(document.getElementById('chartTime'),{
+      type:'line',
+      data:{
+        labels:xLabels,
+        datasets:[
+          { label:'행렬 미사용 처리 시간', data:noMatT,
+            borderColor:'#f87171', backgroundColor:'rgba(248,113,113,0.1)',
+            borderWidth:2, fill:true, tension:0.3,
+            pointRadius:4, pointBackgroundColor:'#f87171' },
+          { label:'행렬 사용 처리 시간', data:matT,
+            borderColor:'#4ade80', backgroundColor:'rgba(74,222,128,0.1)',
+            borderWidth:2, fill:true, tension:0,
+            pointRadius:4, pointBackgroundColor:'#4ade80' }
+        ]
+      },
+      options:opts
+    });
+  }
+
+  /* ── 메인 계산 ── */
+  function calculate(){
+    var rA = Number(document.getElementById("ratioA").value)/100;
+    var rB = Number(document.getElementById("ratioB").value)/100;
+    if(Math.abs(rA+rB-1)>0.001){ alert("비율의 합이 100%가 되어야 합니다!"); return; }
+
+    var n=students.length, results=[];
+    for(var i=0;i<n;i++){
+      results.push({
+        name:students[i].name, jipal:students[i].jipal, suhaeng:students[i].suhaeng,
+        score: Math.round((students[i].jipal*rA + students[i].suhaeng*rB)*10)/10
+      });
+    }
+
+    /* 미사용 섹션 */
+    var steps = document.getElementById("noMatrixSteps");
+    var nScores = document.getElementById("noMatrixScores");
+    steps.innerHTML = ""; nScores.innerHTML = "";
+    for(var i=0;i<results.length;i++){
+      if(i<5){
+        var li = document.createElement("li");
+        li.textContent="["+( i+1)+"] "+results[i].name+": "+
+          results[i].jipal+"×"+rA+" + "+results[i].suhaeng+"×"+rB+" = "+results[i].score+"점";
+        steps.appendChild(li);
+      }
+    }
+    if(n>5){
+      var liM=document.createElement("li");
+      liM.textContent="... 총 "+n+"번 반복 계산 필요";
+      liM.style.color="#fb923c"; liM.style.fontWeight="700";
+      steps.appendChild(liM);
+    }
+    for(var i=0;i<results.length;i++){
+      var d=document.createElement("div"); d.className="score-item";
+      d.innerHTML='<span class="name">'+results[i].name+'</span><span class="score">'+results[i].score+'점</span>';
+      nScores.appendChild(d);
+    }
+
+    /* 행렬 수식 */
+    var formula=document.getElementById("matrixFormula");
+    var mScores=document.getElementById("matrixScores");
+    mScores.innerHTML="";
+    var xRows="", resRows="", limit=Math.min(n,4);
+    for(var i=0;i<limit;i++){
+      xRows  +='<div class="matrix-row-val">'+results[i].jipal+'&nbsp;&nbsp;'+results[i].suhaeng+'</div>';
+      resRows+='<div class="matrix-row-val">'+results[i].score+'점</div>';
+    }
+    if(n>4){ xRows+='<div class="matrix-row-val">...&nbsp;&nbsp;...</div>'; resRows+='<div class="matrix-row-val">...</div>'; }
+    formula.innerHTML=
+      '<div class="formula-title">📐 W × X = 결과</div>'+
+      '<div class="matrix-line">'+
+        '<div><div style="font-size:0.75rem;color:#6b7280;margin-bottom:4px;">가중치 W</div>'+
+        '<div class="matrix-bracket"><div class="matrix-row-val">'+rA+'&nbsp;&nbsp;'+rB+'</div></div></div>'+
+        '<span class="op-sign">×</span>'+
+        '<div><div style="font-size:0.75rem;color:#6b7280;margin-bottom:4px;">점수 X</div>'+
+        '<div class="matrix-bracket">'+xRows+'</div></div>'+
+        '<span class="op-sign">=</span>'+
+        '<div><div style="font-size:0.75rem;color:#6b7280;margin-bottom:4px;">최종점수</div>'+
+        '<div class="matrix-bracket">'+resRows+'</div></div>'+
+      '</div>'+
+      '<div style="margin-top:12px;font-size:0.8rem;color:#4ade80;font-weight:600;">✅ 단 1번의 행렬 곱셈으로 '+n+'명 전체 계산 완료</div>';
+    for(var i=0;i<results.length;i++){
+      var d2=document.createElement("div"); d2.className="score-item";
+      d2.innerHTML='<span class="name">'+results[i].name+'</span><span class="score">'+results[i].score+'점</span>';
+      mScores.appendChild(d2);
+    }
+
+    /* 요약 */
+    document.getElementById("effStudents").textContent=n+"명";
+    document.getElementById("effNoMatrix").textContent=n+"번";
+
+    /* 결과표 */
+    var tbody=document.getElementById("resultBody"); tbody.innerHTML="";
+    for(var i=0;i<results.length;i++){
+      var g=getGrade(results[i].score);
+      var tr=document.createElement("tr");
+      tr.innerHTML='<td style="font-weight:600;color:#d1d5db;">'+results[i].name+'</td>'+
+        '<td style="color:#9ca3af;">'+results[i].jipal+'</td>'+
+        '<td style="color:#9ca3af;">'+results[i].suhaeng+'</td>'+
+        '<td style="font-weight:700;color:#3b82f6;">'+results[i].score+'점</td>'+
+        '<td style="font-weight:800;font-size:1.1rem;color:'+gradeColor(g)+';">'+g+'</td>';
+      tbody.appendChild(tr);
+    }
+
+    /* 그래프 */
+    setTimeout(function(){
+      drawCalcChart(n);
+      drawScoreChart(results);
+      drawRadarChart(results);
+      drawTimeChart();
+    },100);
+
+    document.getElementById("resultSection").style.display="block";
+    document.getElementById("resultSection").scrollIntoView({behavior:"smooth"});
+  }
+
+  /* ── 초기화 ── */
+  function resetAll(){
+    students=[
+      {name:"김도윤",jipal:79, suhaeng:100},
+      {name:"이수진",jipal:85, suhaeng:90},
+      {name:"박민준",jipal:92, suhaeng:80},
+      {name:"최유리",jipal:70, suhaeng:95}
+    ];
+    document.getElementById("ratioA").value=60;
+    document.getElementById("ratioB").value=40;
+    document.getElementById("bulkCount").value=1;
+    updateRatioSum(); renderTable(); hideResult();
+  }
+
+  renderTable();
+  updateRatioSum();
+</script>
+</body>
+</html>
