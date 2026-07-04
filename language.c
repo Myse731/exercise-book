@@ -545,3 +545,46 @@
 //         }
 //     }
 // }
+
+// #include <stdio.h>
+// int main(void){
+// 	char words[9];
+// 	scanf("%s", words);
+// 	printf("%s", words);
+// }
+
+// #include <stdio.h>
+// int main(void){
+// 	char words[51];
+// 	fgets(words, 51, stdin);
+// 	int count = 0;
+// 	for(int i = 0; words[i] != '\0'; i++){
+// 		if((words[i] >= 'A' && words[i] <= 'Z') || (words[i] >= 'a' && words[i] <= 'z')){
+// 			continue;
+// 		}
+// 		count += 1;
+// 	}
+// 	printf("%d", count);
+// }
+
+
+// #include <stdio.h>
+
+// int odd_sum(int n);
+
+// int main() {
+// 	int n, i;
+// 	scanf("%d", &n);
+// 	printf("%d", odd_sum(n));
+// }
+
+// int odd_sum(int n){
+// 	int sum = 0;
+// 	if(n == 1){
+// 		return 1;
+// 	}
+// 	else if(n % 2 != 0){
+// 		return n + odd_sum(n-1);
+// 	}
+// 	return odd_sum(n-1);
+// }
