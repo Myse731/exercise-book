@@ -1,990 +1,1067 @@
-a = 2
+# a = 2
 
-a = a ** 2
+# a = a ** 2
 
-print(a)
+# print(a)
 
-#문제3
-a, b = map(int,input().split())
-tmp = a
-a = b
-b = tmp
-print(a,b)
+# #문제3
+# a, b = map(int,input().split())
+# tmp = a
+# a = b
+# b = tmp
+# print(a,b)
 
-#문제2
-a = input()
-b = 0
-for i in a:
-   b += int(i)
-print(b)
+# #문제2
+# a = input()
+# b = 0
+# for i in a:
+#    b += int(i)
+# print(b)
 
-a = 123
-one = a % 10
-a = a // 10
+# a = 123
+# one = a % 10
+# a = a // 10
 
-two = a % 10
-a = a // 10
+# two = a % 10
+# a = a // 10
 
-three = a % 10
-a = a // 10
+# three = a % 10
+# a = a // 10
 
-print(one + two + three)
+# print(one + two + three)
 
-#문제1
-a = int(input())
+# #문제1
+# a = int(input())
 
-a = 9
-print(bin(a))#bin == binary의 약자
+# a = 9
+# print(bin(a))#bin == binary의 약자
 
-a = 3
+# a = 3
 
-b = 2
-#복합 대입 연산자
-# a += b
-# a -= b
-# a *= b
-# a /= b
-# a //= b
-# a %= b
-
-#비교 연산자
-# print(a == b)
-# print(a != b)
-# print(a > b)
-# print(a >= b)
-# print(a < b)
-# print(a <= b)
-
-x = 'SKSAMSUNG'
-print(x[0:2],x[2:])
-
-#3주차 1차시 인덱싱 연습
-a = 010-1234-5678
-print
-
-#3주차 1차시 인덱싱 연습
-file_name = "report.pdf"
-print(file_name[:6]+".png")
-
-#3주차 1차시 인덱싱 연습a = "010-1234-5678"
-a1 = a.replace("1234","****")
-print(a1)
-print(a[:4]+"****"+a[8:])
-
-#3주차 1차시 인덱싱 연습
-a = "01012345678"
-print(a[:3]+"-"+a[3:7]+"-"+a[7:])
-
-card_number = "1234-5678-9012-3456"
-s= '****'
-
-print(f"결제카드:{s}-{s}-{s}{card_number[14:]}")
-
-#메서드 체이닝
-
-url = "  www.NAVER.com/blog  "
-
-
-print(f"연결주소:{url.strip()[:-5].lower().replace("www.", "https://")}")
-
-raw_name = " P ark gu n woo"
-print(f"성: {raw_name.upper().replace(' ','')[:4]} / 이름: {raw_name.upper().replace(' ','')[-6:]}")
-
-file_info = "20260316_test_report.pdf"
-print(f"작성일 : {file_info[:4]}년 {file_info[5:6]}월 {file_info[6:8]}일")
-print(f"확장자 : {file_info[21:].upper()} 문서")
-
-raw_data = "  2024-03-16  "
-print(f"{raw_data.strip()[:4]}년")
-
-# a = 10
 # b = 2
-# print(a & 1 == 0) 짝수 판별
-n = int(input())
-print(n & (n-1) == 0)
+# #복합 대입 연산자
+# # a += b
+# # a -= b
+# # a *= b
+# # a /= b
+# # a //= b
+# # a %= b
 
-a = input()
-print(f"{a[:2]}{a[-2:]}")
+# #비교 연산자
+# # print(a == b)
+# # print(a != b)
+# # print(a > b)
+# # print(a >= b)
+# # print(a < b)
+# # print(a <= b)
 
-a = input()
-b = input()
+# x = 'SKSAMSUNG'
+# print(x[0:2],x[2:])
 
-print(f"{a[0]}+{b[::]}+{a[1]}")
+# #3주차 1차시 인덱싱 연습
+# a = 010-1234-5678
+# print
 
-a = input()
-print(f"{'입력값 :'}{a}")
-if a == a[::-1]:
-  print(f"{a}{"는 펠린드롬인가요?"} {True}")
-else:
-  print(f"{False}")
+# #3주차 1차시 인덱싱 연습
+# file_name = "report.pdf"
+# print(file_name[:6]+".png")
 
-print(f"{(a := input())}, {a == a[::-1]}")
+# #3주차 1차시 인덱싱 연습a = "010-1234-5678"
+# a1 = a.replace("1234","****")
+# print(a1)
+# print(a[:4]+"****"+a[8:])
 
-a = int(input())
-if a >= 90:
-  print("A")
-elif 89>= a >= 80:
-  print("B")
-elif 79 >= a >= 70:
-  print("C")
-else:
-  print("F")
+# #3주차 1차시 인덱싱 연습
+# a = "01012345678"
+# print(a[:3]+"-"+a[3:7]+"-"+a[7:])
 
-a,b,c = map(int, input().split())
+# card_number = "1234-5678-9012-3456"
+# s= '****'
 
-print(max(a, b, c))
+# print(f"결제카드:{s}-{s}-{s}{card_number[14:]}")
 
-m = int(input())
-name = "부자" if m >= 50000 else"거지"
-##name = "부자" if m >= 50000 else("중산층" if m >= 30000 else "거지")
-print(name)
+# #메서드 체이닝
 
-a = input()
-b = input()
+# url = "  www.NAVER.com/blog  "
 
-if a == b:
-  result = '비겼습니다'
-elif (a == '가위' and b == '보') or (a == '바위' and b == '가위') or (a == '보' and b == '가위'):
-  result = 'a가 이겼습니다.'
-else :
-  result = 'b가 이겼습니다.'
 
-print(f'a : {a} , b : {b} , {result}')
+# print(f"연결주소:{url.strip()[:-5].lower().replace("www.", "https://")}")
 
+# raw_name = " P ark gu n woo"
+# print(f"성: {raw_name.upper().replace(' ','')[:4]} / 이름: {raw_name.upper().replace(' ','')[-6:]}")
 
-a = input()
-if a.islower() == True:
-  print(a.upper())
-else :
-  print(a.lower())
+# file_info = "20260316_test_report.pdf"
+# print(f"작성일 : {file_info[:4]}년 {file_info[5:6]}월 {file_info[6:8]}일")
+# print(f"확장자 : {file_info[21:].upper()} 문서")
 
-alp = 'abcdefghijklmnopqrstuvwxyz'
+# raw_data = "  2024-03-16  "
+# print(f"{raw_data.strip()[:4]}년")
 
-num = int(input())
+# # a = 10
+# # b = 2
+# # print(a & 1 == 0) 짝수 판별
+# n = int(input())
+# print(n & (n-1) == 0)
 
-txt = str(input())
+# a = input()
+# print(f"{a[:2]}{a[-2:]}")
 
-for i in range(len(txt)):
-  print(  alp[   (alp.find(txt[i]) + num) % 26  ], end='')
+# a = input()
+# b = input()
 
-# 후위 표기 코드
+# print(f"{a[0]}+{b[::]}+{a[1]}")
 
-txt = input()
+# a = input()
+# print(f"{'입력값 :'}{a}")
+# if a == a[::-1]:
+#   print(f"{a}{"는 펠린드롬인가요?"} {True}")
+# else:
+#   print(f"{False}")
 
-stack = []
+# print(f"{(a := input())}, {a == a[::-1]}")
 
-#첫 문자열이 숫자 -> append()
-for i in range(len(txt)):
+# a = int(input())
+# if a >= 90:
+#   print("A")
+# elif 89>= a >= 80:
+#   print("B")
+# elif 79 >= a >= 70:
+#   print("C")
+# else:
+#   print("F")
 
-  if txt[i] != '+' and txt[i] != '-' and txt[i] != '*' and txt[i] != '/' :
-    stack.append(int(txt[i]))
-  else :
-    op1 = stack.pop()
-    op2 = stack.pop()
-    if txt[i] == '+':
-      stack.append(op2 + op1)
-    elif txt[i] == '-':
-      stack.append(op2 - op1)
-    elif txt[i] == '*':
-      stack.append(op2 * op1)
-    else:
-      stack.append(op2/ op1)
+# a,b,c = map(int, input().split())
 
-print(stack.pop())
+# print(max(a, b, c))
 
-# 괄호 검사 코드
+# m = int(input())
+# name = "부자" if m >= 50000 else"거지"
+# ##name = "부자" if m >= 50000 else("중산층" if m >= 30000 else "거지")
+# print(name)
 
-txt = input()
-stack = []
-checked = True
+# a = input()
+# b = input()
 
-for i in txt:
-  if i == '(' or i == '[' or i == '{':
-    stack.append(i)
-  else :
-    if len(stack) == 0 :
-      checked = False
-      break
+# if a == b:
+#   result = '비겼습니다'
+# elif (a == '가위' and b == '보') or (a == '바위' and b == '가위') or (a == '보' and b == '가위'):
+#   result = 'a가 이겼습니다.'
+# else :
+#   result = 'b가 이겼습니다.'
 
-    atp = stack.pop()
+# print(f'a : {a} , b : {b} , {result}')
 
-    if atp != '(' and atp != '[' and atp != '{' :
-      checked = False
-      break
 
-if len(stack) != 0:
-  checked = False
+# a = input()
+# if a.islower() == True:
+#   print(a.upper())
+# else :
+#   print(a.lower())
 
-if checked == False:
-  print('에러')
-else :
-  print('통과')
+# alp = 'abcdefghijklmnopqrstuvwxyz'
 
-#합집합
-a = ['아이스크림','떡볶이','스시']
+# num = int(input())
 
-b = ['국밥', '라면', '아이스크림']
+# txt = str(input())
 
-c = []
+# for i in range(len(txt)):
+#   print(  alp[   (alp.find(txt[i]) + num) % 26  ], end='')
 
-for i in a + b:
-  if i not in c:
-    c.append(i)
+# # 후위 표기 코드
 
-print(c)
+# txt = input()
 
-#교집합
-a = ['아이스크림','떡볶이','스시']
+# stack = []
 
-b = ['국밥', '라면', '아이스크림']
+# #첫 문자열이 숫자 -> append()
+# for i in range(len(txt)):
 
-c = a[:]
+#   if txt[i] != '+' and txt[i] != '-' and txt[i] != '*' and txt[i] != '/' :
+#     stack.append(int(txt[i]))
+#   else :
+#     op1 = stack.pop()
+#     op2 = stack.pop()
+#     if txt[i] == '+':
+#       stack.append(op2 + op1)
+#     elif txt[i] == '-':
+#       stack.append(op2 - op1)
+#     elif txt[i] == '*':
+#       stack.append(op2 * op1)
+#     else:
+#       stack.append(op2/ op1)
 
-for i in c:
-  if i not in b:
-    a.remove(i)
+# print(stack.pop())
 
-print(a)
+# # 괄호 검사 코드
 
-#차집합
-a = ['아이스크림','떡볶이','스시']
+# txt = input()
+# stack = []
+# checked = True
 
-b = ['국밥', '라면', '아이스크림']
+# for i in txt:
+#   if i == '(' or i == '[' or i == '{':
+#     stack.append(i)
+#   else :
+#     if len(stack) == 0 :
+#       checked = False
+#       break
 
-c = a[:]
+#     atp = stack.pop()
 
-for i in c:
-  if i in b:
-    c.remove(i)
+#     if atp != '(' and atp != '[' and atp != '{' :
+#       checked = False
+#       break
 
-print(c)
+# if len(stack) != 0:
+#   checked = False
 
-#대칭 차집합
-a = ['아이스크림','떡볶이','스시']
+# if checked == False:
+#   print('에러')
+# else :
+#   print('통과')
 
-b = ['국밥', '라면', '아이스크림']
+# #합집합
+# a = ['아이스크림','떡볶이','스시']
 
-c = b[:]
+# b = ['국밥', '라면', '아이스크림']
 
-for i in a:
-  if i not in b:
-    c.append(i)
-    continue
-  if i in b:
-    c.remove(i)
+# c = []
 
-print(c)
+# for i in a + b:
+#   if i not in c:
+#     c.append(i)
 
-#대칭 차집합
-a = ['아이스크림', '떡볶이', '스시']
+# print(c)
 
-b = ['국밥', '라면', '아이스크림']
+# #교집합
+# a = ['아이스크림','떡볶이','스시']
 
+# b = ['국밥', '라면', '아이스크림']
 
-c = a[:]
+# c = a[:]
 
-d = b[:]
+# for i in c:
+#   if i not in b:
+#     a.remove(i)
 
-for i in c :
-  if i in b:
-    c.remove(i)
-print(c)
+# print(a)
 
+# #차집합
+# a = ['아이스크림','떡볶이','스시']
 
+# b = ['국밥', '라면', '아이스크림']
 
-for i in d :
-  if i in a:
-    d.remove(i)
-print(d)
+# c = a[:]
 
+# for i in c:
+#   if i in b:
+#     c.remove(i)
 
-print(c + d)
+# print(c)
 
-# todo 1 : 반복문을 활용하여 입력받은 값을 5번 출력해 봅시다.
-a = input()
-for i in range(4):
-  print(a)
+# #대칭 차집합
+# a = ['아이스크림','떡볶이','스시']
 
-# todo 2 : 정수 하나를 입력받아, 카운트다운 하는 프로그램을 만들어 봅시다.
-a = int(input())
-for i in range(a+1):
-  print(a)
-  a -= 1
-  if a == 0:
-    break
+# b = ['국밥', '라면', '아이스크림']
 
-# todo 3 : n!을 반복문을 통해 구현하세요. n!란, 1부터 n까지의 곱을 의미합니다.
-n = int(input())
-n_pack = 1
+# c = b[:]
 
-for i in range(1, n+1):
-  n_pack *= i
+# for i in a:
+#   if i not in b:
+#     c.append(i)
+#     continue
+#   if i in b:
+#     c.remove(i)
 
-print(n_pack)
+# print(c)
 
-#실습 1
-list_d = [[1 if(i+j) % 2 == 1
-           else 0
-           for i in range(5)]
-          for j in range(5)]
+# #대칭 차집합
+# a = ['아이스크림', '떡볶이', '스시']
 
-for rows in list_d:
-  print(rows)
+# b = ['국밥', '라면', '아이스크림']
 
-#실습 2
-list_d = [[1 if (i ==0 or j == 4 or i == 4 or j == 0) else 0 for i in range(5)] for j in range(5)]
-# i ==0 or j == 4 or i == 4 or j == 0
-for rows in list_d:
-  print(rows)
 
-#실습 3(시험에 x자 형태로 출력하는게 나옴)
-list_d = [[1 if i == j else 0 for i in range(5)] for j in range(5)]
+# c = a[:]
 
-for rows in list_d:
-  print(rows)
+# d = b[:]
 
-#실습 4
-list_d = [[1 if i >= j
-           else 0
-           for i in range(5)]
-          for j in range(5)]
+# for i in c :
+#   if i in b:
+#     c.remove(i)
+# print(c)
 
-for rows in list_d:
-  print(rows)
 
-#실습 5
-list_d = [[i * 4 + j for j in range(4)] for i in range(4)]
 
-for rows in list_d:
-  print(rows)
+# for i in d :
+#   if i in a:
+#     d.remove(i)
+# print(d)
 
-#미로
-maze = [
-    ['S', '0', '1', '0', '0'],
-    ['1', '0', '1', '1', '0'],
-    ['0', '0', '0', '0', '0'],
-    ['0', '1', '1', '1', '1'],
-    ['0', '0', '0', '0', 'E']
-]
 
-stack = [[0,0]]
-found = False
+# print(c + d)
 
+# # todo 1 : 반복문을 활용하여 입력받은 값을 5번 출력해 봅시다.
+# a = input()
+# for i in range(4):
+#   print(a)
 
-while len(stack) > 0 :
-  curr = stack.pop()
-  r = curr[0]
-  c = curr[1]
+# # todo 2 : 정수 하나를 입력받아, 카운트다운 하는 프로그램을 만들어 봅시다.
+# a = int(input())
+# for i in range(a+1):
+#   print(a)
+#   a -= 1
+#   if a == 0:
+#     break
 
-  if maze[r][c] == 'E':
-    found = True
-    break
+# # todo 3 : n!을 반복문을 통해 구현하세요. n!란, 1부터 n까지의 곱을 의미합니다.
+# n = int(input())
+# n_pack = 1
 
-  maze[r][c] ='2'
+# for i in range(1, n+1):
+#   n_pack *= i
 
-  directions =[[-1,0], [1,0], [0,-1], [0,1],[-1,-1], [1,-1], [1,1], [-1,1]]
+# print(n_pack)
 
-  for dr in directions:
-    nr = r + dr[0]
-    nc = c + dr[1]
-    if 0 <= nr < 5 and 0 <= nc < 5 :
-      if maze[nr][nc] == '0' or maze[nr][nc] == 'E' :
-        stack.append([nr, nc])
+# #실습 1
+# list_d = [[1 if(i+j) % 2 == 1
+#            else 0
+#            for i in range(5)]
+#           for j in range(5)]
 
-if found == True:
-  print("경로 탐색 완료")
-else :
-  print("경로 탐색 실패")
+# for rows in list_d:
+#   print(rows)
 
-for row in maze:
-    print(row)
+# #실습 2
+# list_d = [[1 if (i ==0 or j == 4 or i == 4 or j == 0) else 0 for i in range(5)] for j in range(5)]
+# # i ==0 or j == 4 or i == 4 or j == 0
+# for rows in list_d:
+#   print(rows)
 
-a = str(input())
-for i in a:
-    if i.islower():
-        print(i.upper(), end ='')
-    elif i.isupper():
-        print(i.lower(), end='')
+# #실습 3(시험에 x자 형태로 출력하는게 나옴)
+# list_d = [[1 if i == j else 0 for i in range(5)] for j in range(5)]
 
-names = ["Alice", "Bob", "Charlie"]
+# for rows in list_d:
+#   print(rows)
 
-names_dict = {name : len(name)   for name in names}
+# #실습 4
+# list_d = [[1 if i >= j
+#            else 0
+#            for i in range(5)]
+#           for j in range(5)]
 
-print(names_dict)
+# for rows in list_d:
+#   print(rows)
 
-name = ['merona', 'gugucon']
-price = [500, 1000]
+# #실습 5
+# list_d = [[i * 4 + j for j in range(4)] for i in range(4)]
 
-name_dict = {k : v * 2 for k,v in zip(name, price)}
-print(name_dict)
+# for rows in list_d:
+#   print(rows)
 
-name = ['merona', 'bibibic', 'shark bar']
-price = [300, 400, 250]
-jaego = [20, 3 , 100]
+# #미로
+# maze = [
+#     ['S', '0', '1', '0', '0'],
+#     ['1', '0', '1', '1', '0'],
+#     ['0', '0', '0', '0', '0'],
+#     ['0', '1', '1', '1', '1'],
+#     ['0', '0', '0', '0', 'E']
+# ]
 
-ice_bar = {'merona':{'price' : 300, 'jaego' : 20 }, 'bibibic' :{'price' : 400, 'jaego' : 3 }, 'shark bar':{'price': 250, 'jaego':100}}
-print(ice_bar['merona']['price'])
+# stack = [[0,0]]
+# found = False
 
-ice_bar = {'world_con':{'price' : 500,'jaego':7}}
 
-ice_bar2 = {'merona' : {'price' : 300, 'jaego' : 20}, 'bibibic' : {'price' : 400, 'jaego' : 3 }}
+# while len(stack) > 0 :
+#   curr = stack.pop()
+#   r = curr[0]
+#   c = curr[1]
 
-ice_bar.update(ice_bar2)
+#   if maze[r][c] == 'E':
+#     found = True
+#     break
 
-print(ice_bar['merona']['price'])
+#   maze[r][c] ='2'
 
+#   directions =[[-1,0], [1,0], [0,-1], [0,1],[-1,-1], [1,-1], [1,1], [-1,1]]
 
-icecream = {'탱크보이': 1200, '폴라포': 1200, '빵빠레': 1800, '월드콘': 1500, '메로나': 1000}
-new_product = {'팥빙수':2700, '아맛나':1000}
+#   for dr in directions:
+#     nr = r + dr[0]
+#     nc = c + dr[1]
+#     if 0 <= nr < 5 and 0 <= nc < 5 :
+#       if maze[nr][nc] == '0' or maze[nr][nc] == 'E' :
+#         stack.append([nr, nc])
 
-icecream.update(new_product)
+# if found == True:
+#   print("경로 탐색 완료")
+# else :
+#   print("경로 탐색 실패")
 
-print(icecream)
+# for row in maze:
+#     print(row)
 
-raw_data = [
-    ["Park", 85, 90, 78],
-    ["Kim", 92, 88, 95],
-    ["Lee", 78, 85, 88]
-]
+# a = str(input())
+# for i in a:
+#     if i.islower():
+#         print(i.upper(), end ='')
+#     elif i.isupper():
+#         print(i.lower(), end='')
 
-data_dict = {data[0] : data[1:]  for data in raw_data}
+# names = ["Alice", "Bob", "Charlie"]
 
-print(data_dict)
+# names_dict = {name : len(name)   for name in names}
 
-books_raw = [
-    ["파이썬 정복", "김철수", True],
-    ["데이터 분석", "이영희", False],
-    ["알고리즘 입문", "박민수", True]
-]
+# print(names_dict)
 
-books_dict = {book[0] : {'저자' : book[1], '대여가능여부':book[2]} for book in books_raw}
+# name = ['merona', 'gugucon']
+# price = [500, 1000]
 
-print(books_dict)
+# name_dict = {k : v * 2 for k,v in zip(name, price)}
+# print(name_dict)
 
-scores = {"철수": 75, "영희": 90, "민수": 85, "지수": 60}
+# name = ['merona', 'bibibic', 'shark bar']
+# price = [300, 400, 250]
+# jaego = [20, 3 , 100]
 
-sc_dict = {name : score for name, score in scores.items() if score >= 80}
+# ice_bar = {'merona':{'price' : 300, 'jaego' : 20 }, 'bibibic' :{'price' : 400, 'jaego' : 3 }, 'shark bar':{'price': 250, 'jaego':100}}
+# print(ice_bar['merona']['price'])
 
-print(sc_dict)
+# ice_bar = {'world_con':{'price' : 500,'jaego':7}}
 
-teams = {
-    "A팀": {"철수": 10, "영희": 20, "민세" : 50},
-    "B팀": {"민수": 15, "지수": 25, "영수" : 50}
-}
+# ice_bar2 = {'merona' : {'price' : 300, 'jaego' : 20}, 'bibibic' : {'price' : 400, 'jaego' : 3 }}
 
-team = input()
-print(sum(teams[team].values()))
+# ice_bar.update(ice_bar2)
 
-movies = {
-    "인셉션": [4, 5, 5],
-    "아바타": [3, 4]
-}
+# print(ice_bar['merona']['price'])
 
-mv = input()
 
-sc = int(input())
+# icecream = {'탱크보이': 1200, '폴라포': 1200, '빵빠레': 1800, '월드콘': 1500, '메로나': 1000}
+# new_product = {'팥빙수':2700, '아맛나':1000}
 
-if mv in movies:
-  movies[mv].append(sc)
-else:
-  movies[mv] = [sc]
+# icecream.update(new_product)
 
-avg = sum(movies[mv]) / len(movies[mv])
-print("평점 평균", avg)
+# print(icecream)
 
-import threading
-import time
+# raw_data = [
+#     ["Park", 85, 90, 78],
+#     ["Kim", 92, 88, 95],
+#     ["Lee", 78, 85, 88]
+# ]
 
-shared_counter = 0
+# data_dict = {data[0] : data[1:]  for data in raw_data}
 
-def increase():
-    global shared_counter
-    for _ in range(1000):
+# print(data_dict)
 
-        curr = shared_counter
-        time.sleep(0.000001)
-        shared_counter = curr + 1
+# books_raw = [
+#     ["파이썬 정복", "김철수", True],
+#     ["데이터 분석", "이영희", False],
+#     ["알고리즘 입문", "박민수", True]
+# ]
 
-def decrease():
-    global shared_counter
-    for _ in range(1000):
+# books_dict = {book[0] : {'저자' : book[1], '대여가능여부':book[2]} for book in books_raw}
 
-        curr = shared_counter
-        time.sleep(0.000001)
-        shared_counter = curr - 1
+# print(books_dict)
 
-thread1 = threading.Thread(target=increase)
-thread2 = threading.Thread(target=decrease)
+# scores = {"철수": 75, "영희": 90, "민수": 85, "지수": 60}
 
-thread1.start()
-thread2.start()
-thread1.join()
-thread2.join()
+# sc_dict = {name : score for name, score in scores.items() if score >= 80}
 
-print(shared_counter)
+# print(sc_dict)
 
-stack = []
+# teams = {
+#     "A팀": {"철수": 10, "영희": 20, "민세" : 50},
+#     "B팀": {"민수": 15, "지수": 25, "영수" : 50}
+# }
 
-txt = input()
+# team = input()
+# print(sum(teams[team].values()))
 
-for i in range(len(txt)):
-  if txt[i] != '+' and txt[i] != '-' and txt[i] != '*' and txt[i] != '/':
-    stack.append(int(txt[i]))
-  else:
-    op1 = stack.pop()
-    op2 = stack.pop()
-    if txt[i] == '+':
-      stack.apppend(op2 + op1)
-    elif txt[i] == '-':
-      stack.append(op2 - op1)
-    elif txt[i] == '*':
-      stack.append(op2 * op1)
-    elif txt[i] == '/':
-      stack.append(op2 / op1)
-print(stack.pop())
+# movies = {
+#     "인셉션": [4, 5, 5],
+#     "아바타": [3, 4]
+# }
 
-a,b,c = map(int,input().split( ))
+# mv = input()
 
-sum = a + b + c
-avg = sum / 3
-print(f"중간고사 평균 점수 : {avg}")
+# sc = int(input())
 
-# def add_ten(a):
-#   return a + 10
-# print(add_ten(10))
+# if mv in movies:
+#   movies[mv].append(sc)
+# else:
+#   movies[mv] = [sc]
 
-# y = lambda x : x + 10
-# print(y(10))
+# avg = sum(movies[mv]) / len(movies[mv])
+# print("평점 평균", avg)
 
-products = [
-    {"name": "감자", "price": 500},
-    {"name": "고구마", "price": 1200},
-    {"name": "양파", "price": 800}
-]
+# import threading
+# import time
 
-new_pro = sorted(products, key = lambda x : x ["price"])
-print(new_pro)
+# shared_counter = 0
 
-languages = ["python", "JavaScript", "C++", "react"]
+# def increase():
+#     global shared_counter
+#     for _ in range(1000):
 
-new_lang = sorted(languages, key = lambda x : -len(x))
+#         curr = shared_counter
+#         time.sleep(0.000001)
+#         shared_counter = curr + 1
 
-print(new_lang)
+# def decrease():
+#     global shared_counter
+#     for _ in range(1000):
 
-students = [("김철수", 80), ("이영희", 95), ("박민수박", 80)]
+#         curr = shared_counter
+#         time.sleep(0.000001)
+#         shared_counter = curr - 1
 
-new_stu = sorted(students, key = lambda x : (-x[1], len(x[0])))
+# thread1 = threading.Thread(target=increase)
+# thread2 = threading.Thread(target=decrease)
 
-print(new_stu)
+# thread1.start()
+# thread2.start()
+# thread1.join()
+# thread2.join()
 
-words = ["apple", "bat", "code", "atom", "car"]
+# print(shared_counter)
 
-new_words = sorted(words, key = lambda x : (len(x), x[0]))
+# stack = []
 
-print(new_words)
+# txt = input()
 
-dates = ["2024-03-01", "2023-12-25", "2024-01-01", "2023-05-05"]
+# for i in range(len(txt)):
+#   if txt[i] != '+' and txt[i] != '-' and txt[i] != '*' and txt[i] != '/':
+#     stack.append(int(txt[i]))
+#   else:
+#     op1 = stack.pop()
+#     op2 = stack.pop()
+#     if txt[i] == '+':
+#       stack.apppend(op2 + op1)
+#     elif txt[i] == '-':
+#       stack.append(op2 - op1)
+#     elif txt[i] == '*':
+#       stack.append(op2 * op1)
+#     elif txt[i] == '/':
+#       stack.append(op2 / op1)
+# print(stack.pop())
 
-new_date = sorted(dates, key = lambda x : (x.split('-')[1], x.split('-')[2]))
+# a,b,c = map(int,input().split( ))
 
-print(new_date)
+# sum = a + b + c
+# avg = sum / 3
+# print(f"중간고사 평균 점수 : {avg}")
 
-scores = [("A", 80, 90), ("B", 95, 70), ("C", 85, 85)]
+# # def add_ten(a):
+# #   return a + 10
+# # print(add_ten(10))
 
-new_score = sorted(scores, key = lambda x :(-(x[1] + x[2]), x[0]))
+# # y = lambda x : x + 10
+# # print(y(10))
 
-print(new_score)
+# products = [
+#     {"name": "감자", "price": 500},
+#     {"name": "고구마", "price": 1200},
+#     {"name": "양파", "price": 800}
+# ]
 
-posts = [
-    {"type": "free", "title": "안녕", "id": 1},
-    {"type": "notice", "title": "필독", "id": 2},
-    {"type": "free", "title": "질문", "id": 3}
-]
+# new_pro = sorted(products, key = lambda x : x ["price"])
+# print(new_pro)
 
-new_post = sorted(posts, key = lambda x : (-(x["type"]=='notice'), -x['id']))
+# languages = ["python", "JavaScript", "C++", "react"]
 
-print(new_post)
+# new_lang = sorted(languages, key = lambda x : -len(x))
 
-stores = [("호식이 두마리 치킨", 3, 4), ("도미노피자", -1, 2), ("버거킹", 5, 0), ("삼첩분식", 1, 1)]
+# print(new_lang)
 
-new_store = sorted(stores, key = lambda x : ((x[1] ** 2 + x[2] ** 2), len(x[0])))
+# students = [("김철수", 80), ("이영희", 95), ("박민수박", 80)]
 
-print(new_store)
+# new_stu = sorted(students, key = lambda x : (-x[1], len(x[0])))
 
-kt = {'지훈', '강현', '민세', '한성'}
-lotte = {'강현', '민세', '은체', '도윤'}
-hanwa = {'지훈', '한성', '지희', '민세'}
+# print(new_stu)
 
-print((kt & hanwa) - lotte)
+# words = ["apple", "bat", "code", "atom", "car"]
 
-dice1 = (1, 2, 3, 4, 5, 6)
-dice2 = (2, 3, 5, 7, 11, 13)
+# new_words = sorted(words, key = lambda x : (len(x), x[0]))
 
-sums = []
+# print(new_words)
 
-for i in dice1:
-  for j in dice2:
-    sums.append(i+j)
-print(set(sums))
+# dates = ["2024-03-01", "2023-12-25", "2024-01-01", "2023-05-05"]
 
-dice1 = (1, 2, 3, 4, 5, 6)
-dice2 = (2, 3, 5, 7, 11, 13)
+# new_date = sorted(dates, key = lambda x : (x.split('-')[1], x.split('-')[2]))
 
-sum_set = {i+j for i in dice1 for j in dice2}
-print(sum_set)
+# print(new_date)
 
-# 필수 역량
-required_skills = {"Python", "Git"}
+# scores = [("A", 80, 90), ("B", 95, 70), ("C", 85, 85)]
 
-# 지원자별 기술 스택 데이터
-applicants = {
-    "지훈": {"Python", "Java"},
-    "강현": {"Python", "Git", "C++"},
-    "민세": {"JavaScript", "Git"},
-    "한성": {"Python", "Linux"}
-}
-Yaho = []
-for i in applicants.keys():
-  if required_skills == applicants[i] & required_skills:
-    Yaho.append(i)
-print(Yaho)
+# new_score = sorted(scores, key = lambda x :(-(x[1] + x[2]), x[0]))
 
-# 필수 역량
-required_skills = {"Python", "Git"}
+# print(new_score)
 
-# 지원자별 기술 스택 데이터
-applicants = {
-    "지훈": {"Python", "Java"},
-    "강현": {"Python", "Git", "C++"},
-    "민세": {"JavaScript", "Git"},
-    "한성": {"Python", "Linux"}
-}
+# posts = [
+#     {"type": "free", "title": "안녕", "id": 1},
+#     {"type": "notice", "title": "필독", "id": 2},
+#     {"type": "free", "title": "질문", "id": 3}
+# ]
 
-# 부분 집합을 이용한 풀이
-yaho = [k for k, v in applicants.items() if v > required_skills]
+# new_post = sorted(posts, key = lambda x : (-(x["type"]=='notice'), -x['id']))
 
-print(yaho)
+# print(new_post)
 
-list_a = ["Alice@test.com", "bob@test.com", "ALICE@test.com", "charlie@test.com"]
-list_b = ["alice@test.com", "BOB@test.com", "david@test.com"]
+# stores = [("호식이 두마리 치킨", 3, 4), ("도미노피자", -1, 2), ("버거킹", 5, 0), ("삼첩분식", 1, 1)]
 
-new_a = set([i.lower() for i in list_a])
-new_b = set([i.lower() for i in list_b])
+# new_store = sorted(stores, key = lambda x : ((x[1] ** 2 + x[2] ** 2), len(x[0])))
 
-print(len(new_a & new_b))
+# print(new_store)
 
-ms_ma = 99
-ms_sc = 87.8
-ms_sa = 69.1
-ms_ds = 40
+# kt = {'지훈', '강현', '민세', '한성'}
+# lotte = {'강현', '민세', '은체', '도윤'}
+# hanwa = {'지훈', '한성', '지희', '민세'}
 
-ms_score = [99, 87.8, 69.1, 40]
+# print((kt & hanwa) - lotte)
 
-ms_score = {
-    '국어':99,
+# dice1 = (1, 2, 3, 4, 5, 6)
+# dice2 = (2, 3, 5, 7, 11, 13)
 
-}
+# sums = []
 
-class Student:
-  def __init__(self, name, math, money):
-    self.name = name
-    self.math = math
-    self.__money = money
+# for i in dice1:
+#   for j in dice2:
+#     sums.append(i+j)
+# print(set(sums))
 
-  def print_score(self):
-    print(f"이름 : {self.name} , ", end = ' ')
-    print(f"수학 성적 : {self.math} , ", end = ' ')
-    print(f"전 재산 : {self.__money}")
+# dice1 = (1, 2, 3, 4, 5, 6)
+# dice2 = (2, 3, 5, 7, 11, 13)
 
-s1 = Student('민세', 99, 100000)
-s2 = Student('태인', 90, 5000)
-s3 = Student('승곤', 90, 350000)
-s4 = Student('세영', 99, 34000)
+# sum_set = {i+j for i in dice1 for j in dice2}
+# print(sum_set)
 
-stu = [s1, s2, s3, s4]
+# # 필수 역량
+# required_skills = {"Python", "Git"}
 
-for i in stu:
-  i.print_score()
+# # 지원자별 기술 스택 데이터
+# applicants = {
+#     "지훈": {"Python", "Java"},
+#     "강현": {"Python", "Git", "C++"},
+#     "민세": {"JavaScript", "Git"},
+#     "한성": {"Python", "Linux"}
+# }
+# Yaho = []
+# for i in applicants.keys():
+#   if required_skills == applicants[i] & required_skills:
+#     Yaho.append(i)
+# print(Yaho)
 
-def fac(n):
-  if n == 1 : return 1
+# # 필수 역량
+# required_skills = {"Python", "Git"}
 
-  return n * fac(n-1)
+# # 지원자별 기술 스택 데이터
+# applicants = {
+#     "지훈": {"Python", "Java"},
+#     "강현": {"Python", "Git", "C++"},
+#     "민세": {"JavaScript", "Git"},
+#     "한성": {"Python", "Linux"}
+# }
 
-print(fac(5))
+# # 부분 집합을 이용한 풀이
+# yaho = [k for k, v in applicants.items() if v > required_skills]
 
-def asterisk(n):
-  if n >= 1:
-    asterisk(n // 2)
-    asterisk(n // 2)
+# print(yaho)
 
-  print("*", end="")
+# list_a = ["Alice@test.com", "bob@test.com", "ALICE@test.com", "charlie@test.com"]
+# list_b = ["alice@test.com", "BOB@test.com", "david@test.com"]
 
-asterisk(5)
+# new_a = set([i.lower() for i in list_a])
+# new_b = set([i.lower() for i in list_b])
 
-# 1. 피보나치 수열의 n번째 항을 구하는 재귀함수를 작성하세요.
+# print(len(new_a & new_b))
 
-# 피보나치 수열 : 1, 1, 2, 3, 5, 8, 13.... 과 같이 이전 항의 합으로 구성
+# ms_ma = 99
+# ms_sc = 87.8
+# ms_sa = 69.1
+# ms_ds = 40
 
+# ms_score = [99, 87.8, 69.1, 40]
 
+# ms_score = {
+#     '국어':99,
 
-# 2. a의 n 제곱을 구하는 함수를 재귀함수로 작성하세요.
+# }
 
-def nx(a, n):
-  if a == 1:
-    return 1
+# class Student:
+#   def __init__(self, name, math, money):
+#     self.name = name
+#     self.math = math
+#     self.__money = money
 
-  elif n == 1:
-    return a
+#   def print_score(self):
+#     print(f"이름 : {self.name} , ", end = ' ')
+#     print(f"수학 성적 : {self.math} , ", end = ' ')
+#     print(f"전 재산 : {self.__money}")
 
-  return a * nx(a, n-1)
+# s1 = Student('민세', 99, 100000)
+# s2 = Student('태인', 90, 5000)
+# s3 = Student('승곤', 90, 350000)
+# s4 = Student('세영', 99, 34000)
 
-print(nx(2, 3))
+# stu = [s1, s2, s3, s4]
 
-# 3. 1 + 1/2 + 1/3 + ..... + 1/n을 구하는 함수를 재귀함수로 작성하세요.
+# for i in stu:
+#   i.print_score()
 
-def ss(n):
-  if n == 1 or n == 0:
-    return 1
-  else :
-    return 1/n + ss(n-1)
+# def fac(n):
+#   if n == 1 : return 1
 
-print(ss(4))
+#   return n * fac(n-1)
 
-# 4. for문과 sum을 사용하지 않고, 리스트의 합을 구하는 재귀함수를 작성하세요.
+# print(fac(5))
 
+# def asterisk(n):
+#   if n >= 1:
+#     asterisk(n // 2)
+#     asterisk(n // 2)
 
-# 5. 문자열을 뒤집는 함수를 재귀함수로 작성하세요.
+#   print("*", end="")
 
-class Student:
+# asterisk(5)
 
-  c_name = "1학년 3반"
-  #공유되는 값(클래스 변수), 객체끼리 공유하는 것
+# # 1. 피보나치 수열의 n번째 항을 구하는 재귀함수를 작성하세요.
 
-  def __init__(self, name, pos):
-    self.name = name
-    self.pos = pos
+# # 피보나치 수열 : 1, 1, 2, 3, 5, 8, 13.... 과 같이 이전 항의 합으로 구성
 
-stu1 = Student("권민세", "반장")
-#객체끼리의 값은 독립되어 있다(인스턴스 변수), 생성자 안에 있는 변수
-stu2 = Student("박태인", "미남")
 
 
-Student.c_name = "2학년 1반"
+# # 2. a의 n 제곱을 구하는 함수를 재귀함수로 작성하세요.
 
-print(stu1.name, stu1.pos, Student.c_name)
+# def nx(a, n):
+#   if a == 1:
+#     return 1
 
-print(stu2.name, stu2.pos, Student.c_name)
+#   elif n == 1:
+#     return a
 
-class Account:
-  interest_rate = 0.02
+#   return a * nx(a, n-1)
 
-  def __init__(self, owner, balance):
-    self.owner = owner
-    self.balance = balance
+# print(nx(2, 3))
 
-  def deposit(self, amount):
-    self.balance += amount
+# # 3. 1 + 1/2 + 1/3 + ..... + 1/n을 구하는 함수를 재귀함수로 작성하세요.
 
-  def apply_interest(self):
-    self.balance += (self.balance) * Account.interest_rate
+# def ss(n):
+#   if n == 1 or n == 0:
+#     return 1
+#   else :
+#     return 1/n + ss(n-1)
 
-# 학테스트 코드
-acc = Account("권민세", 10000)
-acc.deposit(5000)
-acc.apply_interest()
-print(f"{acc.owner}님의 최종 잔액: {acc.balance}원")
-# 출력 결과 예시: 홍길동님의 최종 잔액: 15300.0원
+# print(ss(4))
 
-class Product:
+# # 4. for문과 sum을 사용하지 않고, 리스트의 합을 구하는 재귀함수를 작성하세요.
 
-  free_shipping_limit = 30000
 
-  def __init__(self, name, price):
-    self.name = name
-    self.price = price
+# # 5. 문자열을 뒤집는 함수를 재귀함수로 작성하세요.
 
-  def get_shipping_fee(self):
-    if self.price >= Product.free_shipping_limit:
-      return ("무료 배송 대상입니다.")
-    elif self.price < Product.free_shipping_limit:
-      return ("배송비 3,000원이 부과 됩니다")
+# class Student:
 
-p1 = Product("무선 마우스", 25000)
-p2 = Product("기계식 키보드", 45000)
+#   c_name = "1학년 3반"
+#   #공유되는 값(클래스 변수), 객체끼리 공유하는 것
 
-print(f"{p1.name}: {p1.get_shipping_fee()}") # 배송비 부과 안내 출력
-print(f"{p2.name}: {p2.get_shipping_fee()}") # 무료 배송 안내 출력
+#   def __init__(self, name, pos):
+#     self.name = name
+#     self.pos = pos
 
-class Bssm_one :
-  def __init__(self, name, score):
-    self.name = name
-    self.score = score
+# stu1 = Student("권민세", "반장")
+# #객체끼리의 값은 독립되어 있다(인스턴스 변수), 생성자 안에 있는 변수
+# stu2 = Student("박태인", "미남")
 
-  def get_score(self):
-    print(f'{self.name}의 평균은 {sum(self.score) / len(self.score)}')
 
-class OneThree(Bssm_one) :
+# Student.c_name = "2학년 1반"
 
-  def __init__(self, name, score, height):
-    super().__init__(name, score)
-    self.height = height
+# print(stu1.name, stu1.pos, Student.c_name)
+
+# print(stu2.name, stu2.pos, Student.c_name)
+
+# class Account:
+#   interest_rate = 0.02
+
+#   def __init__(self, owner, balance):
+#     self.owner = owner
+#     self.balance = balance
+
+#   def deposit(self, amount):
+#     self.balance += amount
+
+#   def apply_interest(self):
+#     self.balance += (self.balance) * Account.interest_rate
+
+# # 학테스트 코드
+# acc = Account("권민세", 10000)
+# acc.deposit(5000)
+# acc.apply_interest()
+# print(f"{acc.owner}님의 최종 잔액: {acc.balance}원")
+# # 출력 결과 예시: 홍길동님의 최종 잔액: 15300.0원
+
+# class Product:
+
+#   free_shipping_limit = 30000
+
+#   def __init__(self, name, price):
+#     self.name = name
+#     self.price = price
+
+#   def get_shipping_fee(self):
+#     if self.price >= Product.free_shipping_limit:
+#       return ("무료 배송 대상입니다.")
+#     elif self.price < Product.free_shipping_limit:
+#       return ("배송비 3,000원이 부과 됩니다")
+
+# p1 = Product("무선 마우스", 25000)
+# p2 = Product("기계식 키보드", 45000)
+
+# print(f"{p1.name}: {p1.get_shipping_fee()}") # 배송비 부과 안내 출력
+# print(f"{p2.name}: {p2.get_shipping_fee()}") # 무료 배송 안내 출력
+
+# class Bssm_one :
+#   def __init__(self, name, score):
+#     self.name = name
+#     self.score = score
+
+#   def get_score(self):
+#     print(f'{self.name}의 평균은 {sum(self.score) / len(self.score)}')
+
+# class OneThree(Bssm_one) :
+
+#   def __init__(self, name, score, height):
+#     super().__init__(name, score)
+#     self.height = height
   
-  def get_score(self):
-    super().get_score()
-    print('수고했다')
-    print(f'키는 : {self.height}')
+#   def get_score(self):
+#     super().get_score()
+#     print('수고했다')
+#     print(f'키는 : {self.height}')
 
-class OneFour(Bssm_one) :
+# class OneFour(Bssm_one) :
 
-  def get_score(self):
-    super().get_score()
-    print('얻드려라')
+#   def get_score(self):
+#     super().get_score()
+#     print('얻드려라')
 
   
-s1 = OneThree('민세', [80, 30, 100], 180)
+# s1 = OneThree('민세', [80, 30, 100], 180)
 
-s1.get_score()
+# s1.get_score()
 
-s2 = OneFour('한성',[70, 70, 70])
+# s2 = OneFour('한성',[70, 70, 70])
 
-s2.get_score()
+# s2.get_score()
 
 
-class Animal:
-  def __init__(self, name):
-    self.name = name
+# class Animal:
+#   def __init__(self, name):
+#     self.name = name
 
-  def make_sound(self):
-    print("동물이 소리를 냅니다")
+#   def make_sound(self):
+#     print("동물이 소리를 냅니다")
 
-class Dog(Animal):
+# class Dog(Animal):
   
-  def make_sound(self):
-    super().make_sound()
-    print(f"{self.name}가 멍멍! 짖습니다.")
+#   def make_sound(self):
+#     super().make_sound()
+#     print(f"{self.name}가 멍멍! 짖습니다.")
 
 
-class Cat(Animal):
-  def make_sound(self):
-    super().make_sound()
-    print(f"{self.name}가 야옹~ 하며 웁니다.")
+# class Cat(Animal):
+#   def make_sound(self):
+#     super().make_sound()
+#     print(f"{self.name}가 야옹~ 하며 웁니다.")
 
-# 테스트 코드
-dog = Dog("개죽이")
-cat = Cat("나비")
+# # 테스트 코드
+# dog = Dog("개죽이")
+# cat = Cat("나비")
 
-dog.make_sound()
-cat.make_sound()
+# dog.make_sound()
+# cat.make_sound()
 
-print(dog.name)
+# print(dog.name)
 
-class Beverage:
+# class Beverage:
 
-  def __init__(self, name, price):
-    self.name = name
-    self.price = price
+#   def __init__(self, name, price):
+#     self.name = name
+#     self.price = price
 
-  def get_info(self):
-    return f"{self.name} - {self.price}원"
+#   def get_info(self):
+#     return f"{self.name} - {self.price}원"
 
-class Coffee(Beverage):
-  def __init__(self, name, price, temperature='Hot'):
-    super().__init__(name, price)
-    self.temperature = temperature
+# class Coffee(Beverage):
+#   def __init__(self, name, price, temperature='Hot'):
+#     super().__init__(name, price)
+#     self.temperature = temperature
 
-  def get_info(self):
-    final_price = self.price
-    if self.temperature == "Ice":
-      final_price += 500
+#   def get_info(self):
+#     final_price = self.price
+#     if self.temperature == "Ice":
+#       final_price += 500
 
-    return f"[{self.temperature}] {self.name} - {final_price}원"
+#     return f"[{self.temperature}] {self.name} - {final_price}원"
 
-class BubbleTea(Beverage):
-  def __init__(self, name, price, has_pearl = False):
-    super().__init__(name, price)
-    self.has_pearl = has_pearl
+# class BubbleTea(Beverage):
+#   def __init__(self, name, price, has_pearl = False):
+#     super().__init__(name, price)
+#     self.has_pearl = has_pearl
 
-  def get_info(self):
-    final_price = self.price
-    if self.has_pearl:
-      return f"{self.name} (펄 추가) - {final_price}원"
-    else:
-      return f"{self.name} - {final_price}원"
+#   def get_info(self):
+#     final_price = self.price
+#     if self.has_pearl:
+#       return f"{self.name} (펄 추가) - {final_price}원"
+#     else:
+#       return f"{self.name} - {final_price}원"
 
-c = Coffee("아메리카노", 4000, "Ice")
-print(c.get_info())
+# c = Coffee("아메리카노", 4000, "Ice")
+# print(c.get_info())
 
-b = BubbleTea("타로 버블티", 5000, True)
-print(b.get_info())
+# b = BubbleTea("타로 버블티", 5000, True)
+# print(b.get_info())
 
-class FishBread:
-  total = 0
+# class FishBread:
+#   total = 0
 
-  def __init__(self, name, price):
-    self.name = name
-    self.price = price
-    FishBread.total += 1
+#   def __init__(self, name, price):
+#     self.name = name
+#     self.price = price
+#     FishBread.total += 1
 
-  @classmethod
-  def mak_pat_bread(cls): #cls는 self랑 비슷함
-    print('팥붕 만들기') 
-    return cls('팥붕', 600)
+#   @classmethod
+#   def mak_pat_bread(cls): #cls는 self랑 비슷함
+#     print('팥붕 만들기') 
+#     return cls('팥붕', 600)
 
 
-  @classmethod
-  def mak_sue_bread(cls): #cls는 self랑 비슷함
-    print('슈붕 만들기') 
-    return cls('슈붕', 1000)
+#   @classmethod
+#   def mak_sue_bread(cls): #cls는 self랑 비슷함
+#     print('슈붕 만들기') 
+#     return cls('슈붕', 1000)
 
-  @staticmethod
-  def cal_bags(count):
-    print(f'빵{count}개에 필요한 봉투 갯수 : {count//5}')
+#   @staticmethod
+#   def cal_bags(count):
+#     print(f'빵{count}개에 필요한 봉투 갯수 : {count//5}')
 
-b1 = FishBread.mak_pat_bread()
+# b1 = FishBread.mak_pat_bread()
 
-b2 = FishBread.mak_pat_bread()
+# b2 = FishBread.mak_pat_bread()
 
-b3 = FishBread.mak_pat_bread()
+# b3 = FishBread.mak_pat_bread()
 
-b4 = FishBread.mak_sue_bread()
+# b4 = FishBread.mak_sue_bread()
 
-FishBread.cal_bags(10)
+# FishBread.cal_bags(10)
 
-class Student:
-  total_students = 0
+# class Student:
+#   total_students = 0
 
-  def __init__(self, name, age):
-    self.name = name
-    self.age = age
-    Student.total_students += 1
+#   def __init__(self, name, age):
+#     self.name = name
+#     self.age = age
+#     Student.total_students += 1
   
-  @classmethod
-  def register_freshman(cls,name):
-    return cls(name, 8)
+#   @classmethod
+#   def register_freshman(cls,name):
+#     return cls(name, 8)
 
-  @staticmethod
-  def is_adult(age):
-    if age >= 20 :
-      return True
-    else :
-      return False
+#   @staticmethod
+#   def is_adult(age):
+#     if age >= 20 :
+#       return True
+#     else :
+#       return False
 
-class Pizza:
-  total_sales = 0
+# class Pizza:
+#   total_sales = 0
 
-  def __init__(self, name, price):
-    self.name = name
-    self.price = price
+#   def __init__(self, name, price):
+#     self.name = name
+#     self.price = price
 
-  @classmethod
-  def order_cheese_pizza(cls):
-    Pizza.total_sales += 15000
-    return cls("Cheese Pizza", 15000)
+#   @classmethod
+#   def order_cheese_pizza(cls):
+#     Pizza.total_sales += 15000
+#     return cls("Cheese Pizza", 15000)
     
-  @staticmethod
-  def calculate_delivery_fee(distance):
-    if distance >= 3:
-      return 5000
-    else :
-      return 3000
+#   @staticmethod
+#   def calculate_delivery_fee(distance):
+#     if distance >= 3:
+#       return 5000
+#     else :
+#       return 3000
+
+# class linkedlist:
+#   def __init__(self):
+#     self.head = None
+#     self.size = 0
+
+#   def isEmpty(self):
+#     return self.head is None
+
+#   def create_node(self, data, link = None):
+#     return {'data':data, 'next':link}
+
+#   def display(self):
+#     current_node = self.head
+#     while current_node:
+#       print(current_node['data'], end= '->')
+#       current_node = current_node['next']
+#     print("None")
+
+#   def insert(self, data, target = None):
+#     new_node = self.create_node(data)
+#     if self.isEmpty():
+#       self.head = new_node
+#       self.size += 1
+#       return
+#     if target == None:
+#       new_node['next'] = self.head
+#       self.head = new_node
+#       self.size += 1
+#       return
+#     current_node = self.head
+#     while current_node:
+#       if current_node['data'] == target:
+#         new_node['next'] = current_node['next']
+#         current_node['next'] = new_node
+#         self.size += 1
+#         return
+#       current_node = current_node['next']
+#     print(f"Target '{target}' not found in the list")
+
+#   def delete(self, target):
+#     if self.isEmpty():
+#       print('Empty')
+#       return
+#     prev_node = None
+#     current_node = self.head
+#     while current_node:
+#       if current_node['data'] == target:
+#         if prev_node == None:
+#           self.head = self.head['next']
+#         else:
+#           prev_node['next'] = current_node['next']
+#           self.size -= 1
+#           return
+#       prev_node, current_node = current_node, current_node['next']
+#     print(f"Target '{target}' not found in the list")
+
+#   def append(self, data):
+
+
+
+# ll = linkedlist()
+# ll.insert('a')
+# ll.insert('c')
+# ll.display()
+# ll.insert('b','c')
+# ll.display()
+# ll.delete('b')
+# ll.display()
+# ll.delete('c')
+# ll.display()
+# ll.delete('a')
+# ll.display()
+# ll.append('x')
+# ll.append('z')
+# ll.insert('y', 'x')
+# ll.display()
