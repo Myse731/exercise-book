@@ -282,3 +282,31 @@
 //         }
 //     }
 // }
+
+// #include <stdio.h>
+// int main(void){
+// 	int n;
+// 	scanf("%d", &n);
+// 	int arr[1000];
+// 	for(int i = 0; i < n; i++){
+// 		scanf("%d", &arr[i]);
+// 	}
+// 	for(int j = 0; j < n; j++){
+//         printf("%d: ", j+1);
+// 		for(int k = 0; k < n; k++){
+// 			if(k == j){
+// 				continue;
+// 			}
+// 			if(arr[j] > arr[k]){
+// 				printf("> ");
+// 			}
+// 			else if(arr[j] < arr[k]){
+// 				printf("< ");
+// 			}
+// 			else if(arr[j] == arr[k]){
+// 				printf("= ");
+// 			}
+// 		}
+//         printf("\n");
+// 	}
+// }
