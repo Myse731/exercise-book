@@ -150,3 +150,88 @@
 #     print(b)
 # else:
 #     print(c)
+
+#1153
+# a, b = map(int, input().split())
+# if a > b:
+#     print('>')
+# elif a < b:
+#     print('<')
+# elif a == b:
+#     print('=')
+
+#1154
+# a, b = map(int, input().split())
+# if a >= b:
+#     print(a - b)
+# elif a <= b:
+#     print(b - a)
+
+#1155
+# a = int(input())
+# if a % 7 == 0:
+#     print('multiple')
+# else:
+#     print('not multiple')
+
+# 1156
+# a = int(input())
+# if a % 2 == 0:
+#     print('even')
+# else:
+#     print('odd')
+
+#1157
+# a = float(input())
+# if a >= 50 and a <= 60:
+#     print('win')
+# else:
+#     print('lose')
+
+#1158
+# a = int(input())
+# if a >= 30 and a <= 40:
+#     print('win')
+# elif a >= 60 and a <= 70:
+#     print('win')
+# else:
+#     print('lose')
+
+#1159
+# a = int(input())
+# if (a >= 50 and a <= 70) or a % 6 == 0:
+#     print('win')
+# else:
+#     print('lose')
+
+#1160
+# a = int(input())
+# if a % 2 != 0:
+#     print('oh my god')
+# else:
+#     print('enjoy')
+
+# 1161
+# a, b = map(int, input().split())
+# if a % 2 == 0 and b % 2 == 0:
+#     print('짝수+짝수=',end = '')
+# elif a % 2 == 0 and b % 2 != 0:
+#     print('짝수+홀수=', end = '')
+# elif a % 2 != 0 and b % 2 == 0:
+#     print('홀수+짝수=', end = '')
+# else:
+#     print('홀수+홀수=', end = '')
+
+# sum = a + b
+# if sum % 2 == 0:
+#     print('짝수')
+# else:
+#     print('홀수')
+
+#1162
+# a, b, c = map(int,input().split())
+# sum = a - b + c
+# if sum % 10 == 0:
+#     print('대박')
+# else:
+#     print('그럭저럭')
