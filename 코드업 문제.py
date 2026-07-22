@@ -244,3 +244,13 @@ if ((sum / 100) % 10) % 2 == 0:
     print("대박")
 else:
     print("그럭저럭")
+
+##오류 수정 1163
+y, m, d = map(int,input().split())
+sum = y + m + d
+result = (sum // 100) % 10
+
+if result % 2 == 0:
+    print("대박")
+else:
+    print("그럭저럭")
