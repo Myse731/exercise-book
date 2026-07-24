@@ -236,21 +236,134 @@
 # else:
 #     print('그럭저럭')
 
-##1163
-y, m, d = map(int,input().split())
-sum = (y+m+d)
+#1163
+# y, m, d = map(int,input().split())
+# sum = (y+m+d)
 
-if ((sum / 100) % 10) % 2 == 0:
-    print("대박")
-else:
-    print("그럭저럭")
+# if ((sum / 100) % 10) % 2 == 0:
+#     print("대박")
+# else:
+#     print("그럭저럭")
 
-##오류 수정 1163
-y, m, d = map(int,input().split())
-sum = y + m + d
-result = (sum // 100) % 10
+#오류 수정 1163
+# y, m, d = map(int,input().split())
+# sum = y + m + d
+# result = (sum // 100) % 10
 
-if result % 2 == 0:
-    print("대박")
-else:
-    print("그럭저럭")
+# if result % 2 == 0:
+#     print("대박")
+# else:
+#     print("그럭저럭")
+
+#1164
+# car_h = 170
+
+# t1, t2, t3 = map(int,input().split())
+
+# if(car_h < t1 and car_h < t2 and car_h < t3):
+#     print('PASS')
+# else:
+#     print('CRASH')
+
+#1165
+# nt, our_sc = map(int,input().split())
+# result = our_sc
+# i = nt
+# while True:
+#     result += 1
+#     nt += 5
+#     if nt >= 90:
+#         break
+# print(result)
+
+#1166
+# y = int(input())
+
+# if(y % 400 == 0):
+#     print("Leap")
+# elif(y % 4 == 0 and y % 100 != 0):
+#     print("Leap")
+# else:
+#     print("Normal")
+
+#1167
+# a, b, c = list(map(int,input().split()))
+# minl = min(a, b, c)
+# maxl = max(a, b, c)
+# sum = a + b + c
+# print(sum -(maxl+minl))
+
+#1168
+# y, g = map(str,input().split())
+# result = 0
+# if(g == '1' or g == '2'):
+#     result = 1900 + int(y[:2])
+#     age = 2012 - result + 1
+#     print(age)
+# elif(g == '3' or g == '4'):
+#     result = 2000 + int(y[:2])
+#     age = 2012 - result + 1
+#     print(age)
+
+#1169
+# age = int(input())
+# gender = 0
+# if(13 - age >= 0):
+#     gender = 3
+# else:
+#     gender = 1
+
+# y = (2012 - age) + 1
+# print(f"{y % 100} {gender}")
+
+#1170
+# g, c, n = map(int,input().split())
+
+# if(n >= 10):
+#     print(f"{g}{c}{n}")
+# else:
+#     print(f"{g}{c}0{n}")
+
+#1171
+# g, c, n = map(int,input().split())
+
+# 1 1 1, 1 1 2, 1 1 3, 1 2 1, 1 2 2, 1 2 3
+# if(c // 10 > 0):
+#     if(n >= 100):
+#         print(f"{g}{c}{n}")
+#     elif(n >=10):
+#         print(f"{g}{c}0{n}")
+#     else:
+#         print(f"{g}{c}00{n}")
+   
+# else:
+#     if(n >= 100):
+#          print(f"{g}0{c}{n}")
+#     elif(n >=10):
+#         print(f"{g}0{c}0{n}")
+#     else:
+#         print(f"{g}0{c}00{n}")
+
+#1172
+# a, b, c = list(map(int,input().split()))
+
+# suml = a + b + c
+# maxl = max(a, b, c)
+# minl = min(a, b, c)
+
+# mid = suml - (maxl+minl)
+
+# print(f"{minl} {mid} {maxl}")
+
+#1173
+# si, bun = map(int,input().split())
+# if(si != 0):
+#     if(bun >= 30):
+#         print(f"{si} {bun - 30}")
+#     else:
+#         print(f"{si - 1} {(60 + bun) - 30}")
+# else:
+#     if(bun >= 30):
+#         print(f"{si} {bun - 30}")
+#     else:
+#         print(f"{24 - 1} {(60 + bun) - 30}")
