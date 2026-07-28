@@ -205,3 +205,32 @@ for month, day, name in events:
 	result.append(name)
 
 print(*result)
+
+#11번
+n, m = map(int,input().split())
+
+up = 1
+
+nums = []
+num_sum = []
+
+for i in range(n):
+	nums = list(map(int, input().split()))
+
+	num_sum.append(sum(nums))
+	
+
+print(*num_sum)
+
+#12번
+n, m = map(int,input().split())
+
+nums = []
+sums = [0] * m
+
+for i in range(n):
+	nums = list(map(int, input().split()))
+	for j in range(m):
+		sums[j] += nums[j]
+
+print(*sums)
