@@ -367,3 +367,198 @@
 #         print(f"{si} {bun - 30}")
 #     else:
 #         print(f"{24 - 1} {(60 + bun) - 30}")
+
+#1175
+# n = int(input())
+
+# if(n % 7 == 0 or n % 7 == 6):
+#     print("주말")
+# else:
+#     print("주중")
+
+#1180
+# n = int(input())
+
+# result = (n % 100) * 10 + (n // 10)
+
+# result_num = (result * 2) % 100
+# print(result_num)
+
+# if(result_num <= 50):
+#     print("GOOD")
+# else:
+#     print("OH MY GOD")
+
+#1201
+# n = int(input())
+
+# if(n > 0):
+#     print("양수")
+# elif(n == 0):
+#     print("0")
+# else:
+#     print("음수")
+
+#1202
+# n = int(input())
+
+# if(n >= 90):
+#     print("A")
+# elif(n >= 80):
+#     print("B")
+# elif(n >= 70):
+#     print("C")
+# elif(n >= 60):
+#     print("D")
+# else:
+#     print("F")
+
+#1203
+# bmi = int(input())
+
+# if(bmi <= 10):
+#     print("정상")
+# elif(bmi <= 20):
+#     print("과체중")
+# elif(bmi > 20):
+#     print("비만")
+
+#1204
+# n = int(input())
+# if((n % 10 == 1 or n % 10 == 2 or n % 10 == 3) and n // 10 == 1 ):
+#     print(f"{n}th")
+
+# elif(n % 10 == 1):
+#     print(f"{n}st")
+# elif(n % 10 == 2):
+#     print(f"{n}nd")
+# elif(n % 10 == 3):
+#     print(f"{n}rd")
+# else:
+#     print(f"{n}th")
+
+#1205
+# n, m = map(int,input().split())
+
+# result = [
+# n + m,
+# n - m,
+# m - n,
+# n * m,
+# n ** m,
+# m ** n
+# ]
+
+# if(m != 0):
+#     result.append(n / m)
+# if(n != 0):
+#     result.append(m / n)
+
+# max_value = max(result)
+# print(f"{max_value:.6f}")
+
+#1206
+# n, m = map(int, input().split())
+
+# if(m % n == 0):
+#     print(f"{n}*{m//n}={m}")
+# elif(n % m == 0):
+#     print(f"{m}*{n//m}={n}")
+# else:
+#     print("none")
+
+#1207
+# yout = list(map(int,input().split()))
+
+# count = 0
+# for i in range(4):
+#     if(yout[i] == 1):
+#         count += 1
+# if(count == 0):
+#     print("모")
+# elif(count == 1):
+#     print("도")
+# elif(count == 2):
+#     print("개")
+# elif(count == 3):
+#     print("걸")
+# elif(count == 4):
+#     print("윷")
+
+#1210
+# menus = {
+#     "치즈버거": 400,
+#     "야채버거": 340,
+#     "우유": 170,
+#     "계란말이": 100,
+#     "샐러드": 70
+# }
+
+# n, m = map(int, input().split())
+# caloy = menus[n] + menus[m]
+
+# if(caloy > 500):
+#     print("angry")
+# elif(caloy <= 500):
+#     print("no angry")
+
+#1212
+# a, b, c = map(int, input().split())
+# max_n = max(a, b, c)
+
+# sum_n = (a + b + c) - max_n
+
+# if(max_n < sum_n):
+#     print("yes")
+# else:
+#     print("no")
+
+#1214
+# y, m = map(int, input().split())
+# yun = 0
+# if((y % 400 == 0) or (y % 4 == 0 and y % 100 != 0)):
+#     yun = 1
+
+# if(m <= 7):
+#     if(m == 2 and yun == 1):
+#         print("29")
+#     elif(m == 2 and yun == 0):
+#         print("28")
+#     elif(m % 2 == 0):
+#         print("30")
+#     elif(m % 2 != 0):
+#         print("31")
+# elif(m > 7):
+#     if(m % 2 == 0):
+#         print("31")
+#     else:
+#         print("30")
+
+#1216
+# a, b, c = map(int, input().split())
+
+# advert_profit = b - c
+
+# if advert_profit > a:
+#     print("advertise")
+# elif advert_profit < a:
+#     print("do not advertise")
+# else:
+#     print("does not matter")
+
+#1218
+# a, b, c = map(int, input().split())
+# max_n = max(a, b, c)
+# sum_n= a + b + c
+
+# if max_n < (sum_n - max_n):
+#     if a == b == c:
+#         print("정삼각형")
+#     elif a == b or b == c or c == a:
+#         print("이등변삼각형")
+#     elif a**2 + b**2 == c**2 or a**2 + c**2 == b**2 or b**2 + c**2 == a**2:
+#         print("직각삼각형")
+#     else:
+#         print("삼각형")
+# else:
+#     print("삼각형아님")
