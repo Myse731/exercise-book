@@ -562,3 +562,117 @@
 #         print("삼각형")
 # else:
 #     print("삼각형아님")
+
+#1222
+# time, score1, score2 = map(int,input().split())
+
+# while True:
+#     if(time >= 90):
+#         break
+#     score1 += 1
+#     time += 5
+
+# if(score1 > score2):
+#     print("win")
+# elif(score1 < score2):
+#     print("lose")
+# else:
+#     print("same")
+
+#1224
+# a, b, c, d = map(int, input().split())
+
+# if(a / b  >  c / d):
+#     print(">")
+# elif(a / b  <  c / d):
+#     print("<")
+# else:
+#     print("=")
+
+#1226
+# lotto = list(map(int, input().split()))
+# my_lotto = list(map(int, input().split()))
+
+# main_lotto = lotto[:6]
+
+# count = 0
+# bonus = 0
+
+# for i in my_lotto:
+#     if(i in main_lotto):
+#         count += 1
+
+# if(lotto[6] in my_lotto):
+#     bonus +=1
+
+# if(count == 6):
+#     print("1")
+# elif(count == 5 and bonus == 1):
+#     print("2")
+# elif(count == 5):
+#     print("3")
+# elif(count == 4):
+#     print("4")
+# elif(count == 3):
+#     print("5")
+# elif(count <= 2):
+#     print("0")
+
+#1228
+# ki, kg = map(float, input().split())
+
+# pyojun = (ki - 100) * 0.9
+# biman = (kg - pyojun) * 100 / pyojun
+
+# if(biman <= 10):
+#     print("정상")
+# elif(biman <= 20):
+#     print("과체중")
+# elif(biman > 20):
+#     print("비만")
+
+#1229
+# ki, kg = map(float, input().split())
+# pyo = 0
+
+# if(ki < 150):
+#     pyo = ki - 100
+# elif(ki < 160):
+#     pyo = (ki - 150)/2 + 50
+# elif(ki >= 160):
+#     pyo = (ki - 100) * 0.9
+# biman = (kg - pyo) * 100 / pyo
+
+# if(biman <= 10):
+#     print("정상")
+# elif(biman <= 20):
+#     print("과체중")
+# elif(biman > 20):
+#     print("비만")
+
+#1230
+# a, b, c = map(int, input().split())
+# if(a <= 170):
+#     print(f"CRASH {a}")
+# elif(b <= 170):
+#     print(f"CRASH {b}")
+# elif(c <= 170):
+#     print(f"CRASH {c}")
+# else:
+#     print("PASS")
+
+#1231
+expr = input().strip()
+
+if '+' in expr:
+    a, b = map(int, expr.split('+'))
+    print(a + b)
+elif '-' in expr:
+    a, b = map(int, expr.split('-'))
+    print(a - b)
+elif '*' in expr:
+    a, b = map(int, expr.split('*'))
+    print(a * b)
+elif '/' in expr:
+    a, b = map(int, expr.split('/'))
+    print(f"{a / b:.2f}")
