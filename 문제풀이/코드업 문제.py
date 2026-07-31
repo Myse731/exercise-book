@@ -662,17 +662,17 @@
 #     print("PASS")
 
 #1231
-expr = input().strip()
+# expr = input().strip()
 
-if '+' in expr:
-    a, b = map(int, expr.split('+'))
-    print(a + b)
-elif '-' in expr:
-    a, b = map(int, expr.split('-'))
-    print(a - b)
-elif '*' in expr:
-    a, b = map(int, expr.split('*'))
-    print(a * b)
-elif '/' in expr:
-    a, b = map(int, expr.split('/'))
-    print(f"{a / b:.2f}")
+# if '+' in expr:
+#     a, b = map(int, expr.split('+'))
+#     print(a + b)
+# elif '-' in expr:
+#     a, b = map(int, expr.split('-'))
+#     print(a - b)
+# elif '*' in expr:
+#     a, b = map(int, expr.split('*'))
+#     print(a * b)
+# elif '/' in expr:
+#     a, b = map(int, expr.split('/'))
+#     print(f"{a / b:.2f}")

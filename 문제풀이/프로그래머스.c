@@ -356,33 +356,243 @@
 //     return result;
 // }
 
-#include <stdio.h>
-#define LEN_INPUT 11
+// #include <stdio.h>
+// #define LEN_INPUT 11
 
-int main(void) {
-    char s1[LEN_INPUT];
-    scanf("%10s", s1);
+// int main(void) {
+//     char s1[LEN_INPUT];
+//     scanf("%10s", s1);
     
-    for(int i = 0; s1[i] != '\0'; i++){
-        printf("%c\n", s1[i]);
-    }
+//     for(int i = 0; s1[i] != '\0'; i++){
+//         printf("%c\n", s1[i]);
+//     }
 
-    return 0;
+//     return 0;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// int solution(const char* str1, const char* str2) {
+//     for(int i = 0; str2[i] != '\0'; i++){
+//         int j;
+//         for(j = 0; str1[j] != '\0'; j++){
+//             if(str2[i+j] != str1[j]){
+//                 break;
+//             }
+//         }
+//         if(str1[j] == '\0'){
+//             return 1;
+//         }
+//     }
+//     return 0;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// char* solution(const char* my_string, int index_list[], size_t index_list_len) {
+//     // return 값은 malloc 등 동적 할당을 사용해주세요. 할당 길이는 상황에 맞게 변경해주세요.
+//     char* answer = (char*)malloc(sizeof(char) * (index_list_len + 1));
+//     for(int i = 0; i < index_list_len; i++){
+//         answer[i] = my_string[index_list[i]];
+//     }
+//     answer[index_list_len] = '\0';
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// char* solution(const char* my_string, int n) {
+//     char* answer = (char*)malloc(sizeof(char) * (n+1));
+//     for(int i = 0; i < n; i++){
+//         answer[i] = my_string[i];
+//     }
+//     answer[n] = '\0';
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// // num_list_len은 배열 num_list의 길이입니다.
+// int* solution(int num_list[], size_t num_list_len) {
+//     int* answer = (int*)malloc(sizeof(int) * (num_list_len + 1));
+//     int n = num_list_len;
+//     int last = num_list[n - 1];
+//     int prev = num_list[n - 2];
+//     int new;
+//     if(last > prev){
+//         new = last - prev;
+//     }
+//     else{
+//         new = last * 2;
+//     }
+//     for(int i = 0; i < n+1; i++){
+//         if(i == n){
+//             answer[i] = new;
+//             break;
+//         }
+//         answer[i] = num_list[i];
+//     }
+    
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+// #include <string.h>
+// // str_list_len은 배열 str_list의 길이입니다.
+// // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// char* solution(const char* str_list[], size_t str_list_len, const char* ex) {
+//     char* answer = (char*)malloc(sizeof(char) * 2001);
+//     answer[0] = '\0';
+    
+//     for(int i = 0; i < str_list_len; i++){
+//         if(strstr(str_list[i], ex) == NULL){
+//             strcat(answer, str_list[i]);
+//         }
+//     }
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// // arr_len은 배열 arr의 길이입니다.
+// int* solution(int arr[], size_t arr_len){
+//     int count = 0;
+//     for(int i = 0; i < arr_len; i++){
+//         count += arr[i];
+//     }
+//     int* answer = (int*)malloc(sizeof(int) * count);
+//     int idx = 0;
+//     for(int i = 0; i < arr_len; i++){
+//         for(int j = 0; j < arr[i]; j++){
+//             answer[idx++] = arr[i];
+//         }
+//     }
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// // num_list_len은 배열 num_list의 길이입니다.
+// int solution(int num_list[], size_t num_list_len) {
+//     int answer = -1;
+//     for(int i = 0; i < num_list_len; i++){
+//         if(num_list[i] < 0){
+//             return i;
+//         }
+//     }
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// // arr_len은 배열 arr의 길이입니다.
+// int* solution(int arr[], size_t arr_len, int k) {
+//     int* answer = (int*)malloc(sizeof(int) * arr_len);
+//     for(int i = 0; i < arr_len; i++){
+//         if(k % 2 != 0){
+//             answer[i] = arr[i] * k;
+//         }
+//         else{
+//             answer[i] = arr[i] + k;
+//         }
+//     }
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// int solution(const char* my_string, const char* is_suffix) {
+//     int my_len = strlen(my_string);
+//     int suf_len = strlen(is_suffix);
+    
+//     if(suf_len > my_len){
+//         return 0;
+//     }
+    
+//     int start_idx = my_len - suf_len;
+//     for(int i = 0; i < suf_len; i++){
+//         if (my_string[start_idx + i] != is_suffix[i]) {
+//             return 0;
+//         }
+//     }
+//     return 1;
+// }
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+char* solution(const char* myString) {
+    int len = strlen(myString);
+    char* answer = (char*)malloc(sizeof(char) *  (len + 1));
+    for(int i = 0; myString[i] != '\0'; i++){
+        if(myString[i] >= 97){
+            answer[i] = myString[i] - 32;
+        }
+        else{
+            answer[i] = myString[i];
+        }
+    }
+    answer[len] = '\0';
+    return answer;
 }
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
-int solution(const char* str1, const char* str2) {
-    for(int i = 0; str2[i] != '\0'; i++){
-        int j;
-        for(j = 0; str1[j] != '\0'; j++){
-            if(str2[i+j] != str1[j]){
-                break;
-            }
+int solution(int a, int b) {
+    int answer = 0;
+    if(a % 2 != 0 && b % 2 != 0){
+        answer = (a * a) + (b * b);
+    }
+    else if(a % 2 != 0 || b % 2 != 0){
+        answer = 2 * (a + b);
+    }
+    else if(a % 2 == 0 && b % 2 == 0){
+        if(a > b){
+            answer = a - b;
         }
-        if(str1[j] == '\0'){
+        else{
+            answer = b - a;
+        }
+    }
+    return answer;
+}
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+int solution(int num_list[], size_t num_list_len, int n) {
+    for(int i = 0; i < num_list_len; i++){
+        if(num_list[i] == n){
             return 1;
         }
     }
@@ -393,27 +603,72 @@ int solution(const char* str1, const char* str2) {
 #include <stdbool.h>
 #include <stdlib.h>
 
-char* solution(const char* my_string, int index_list[], size_t index_list_len) {
-    // return 값은 malloc 등 동적 할당을 사용해주세요. 할당 길이는 상황에 맞게 변경해주세요.
-    char* answer = (char*)malloc(sizeof(char) * (index_list_len + 1));
-    for(int i = 0; i < index_list_len; i++){
-        answer[i] = my_string[index_list[i]];
+// arr_len은 배열 arr의 길이입니다.
+// delete_list_len은 배열 delete_list의 길이입니다.
+int* solution(int arr[], size_t arr_len, int delete_list[], size_t delete_list_len) {
+    int* answer = (int*)malloc(sizeof(int) * arr_len);
+    int idx = 0;
+    for(int i = 0; i < arr_len; i++){
+        int count = 0;
+        for(int j = 0; j < delete_list_len; j++){
+            if(arr[i] == delete_list[j]){
+                count += 1;
+            }
+        }
+        if(count == 0){
+            answer[idx++] = arr[i]; 
+        }
     }
-    answer[index_list_len] = '\0';
     return answer;
 }
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
+
+char* solution(int n) {
+    char* answer = (char*)malloc(sizeof(char) * 12);
+    sprintf(answer, "%d", n);
+    return answer;
+}
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
-char* solution(const char* my_string, int n) {
-    char* answer = (char*)malloc(sizeof(char) * (n+1));
-    for(int i = 0; i < n; i++){
-        answer[i] = my_string[i];
+char* solution(const char* n_str) {
+    int len = strlen(n_str);
+    int start = 0;
+    for(int i = 0; i < len; i++){
+        if(n_str[i] != '0'){
+            start = i;
+            break;
+        }
     }
-    answer[n] = '\0';
+    int new_len = len - start;
+    char* answer = (char*)malloc(sizeof(char) * (new_len+1));
+    for(int i = 0; i < new_len; i++){
+        answer[i] = n_str[start + i];
+    }
+    answer[new_len] = '\0';
+    return answer;
+}
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+int solution(const char* num_str) {
+    int answer = 0;
+    int len = strlen(num_str);
+    for(int i = 0; i < len; i++){
+        answer += (int)num_str[i] - '0';
+    }
     return answer;
 }
 
@@ -423,25 +678,49 @@ char* solution(const char* my_string, int n) {
 
 // num_list_len은 배열 num_list의 길이입니다.
 int* solution(int num_list[], size_t num_list_len) {
-    int* answer = (int*)malloc(sizeof(int) * (num_list_len + 1));
-    int n = num_list_len;
-    int last = num_list[n - 1];
-    int prev = num_list[n - 2];
-    int new;
-    if(last > prev){
-        new = last - prev;
+    int* answer = (int*)malloc(sizeof(int) * (num_list_len - 5));
+    for(int i = 0; i < num_list_len - 1; i++){
+        for(int j = 0; j < num_list_len - i - 1; j++){
+            if (num_list[j] > num_list[j + 1]) {
+            int temp = num_list[j];
+            num_list[j] = num_list[j + 1];
+            num_list[j + 1] = temp;
+            }
+        }
+    }
+    for (int i = 5; i < num_list_len; i++) {
+        answer[i - 5] = num_list[i]; // answer[0]부터 차곡차곡 저장됨
+    }
+    return answer;
+}
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+// arr_len은 배열 arr의 길이입니다.
+int* solution(int arr[], size_t arr_len, int n) {
+    int* answer = (int*)malloc(sizeof(int) * arr_len);
+    if(arr_len % 2 == 0){
+        for(int i = 0; i < arr_len; i++){
+            if(i % 2 != 0){
+                answer[i] = arr[i] + n;
+            }
+            else{
+                answer[i] = arr[i];
+            }
+        }
     }
     else{
-        new = last * 2;
-    }
-    for(int i = 0; i < n+1; i++){
-        if(i == n){
-            answer[i] = new;
-            break;
+        for(int j = 0; j < arr_len; j++){
+            if(j % 2 == 0){
+                answer[j] = arr[j] + n;
+            }
+            else{
+                answer[j] = arr[j];
+            }
         }
-        answer[i] = num_list[i];
     }
-    
     return answer;
 }
 
@@ -449,91 +728,19 @@ int* solution(int num_list[], size_t num_list_len) {
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-// str_list_len은 배열 str_list의 길이입니다.
+
 // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
-char* solution(const char* str_list[], size_t str_list_len, const char* ex) {
-    char* answer = (char*)malloc(sizeof(char) * 2001);
-    answer[0] = '\0';
-    
-    for(int i = 0; i < str_list_len; i++){
-        if(strstr(str_list[i], ex) == NULL){
-            strcat(answer, str_list[i]);
-        }
-    }
-    return answer;
-}
-
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
-// arr_len은 배열 arr의 길이입니다.
-int* solution(int arr[], size_t arr_len){
-    int count = 0;
-    for(int i = 0; i < arr_len; i++){
-        count += arr[i];
-    }
-    int* answer = (int*)malloc(sizeof(int) * count);
-    int idx = 0;
-    for(int i = 0; i < arr_len; i++){
-        for(int j = 0; j < arr[i]; j++){
-            answer[idx++] = arr[i];
-        }
-    }
-    return answer;
-}
-
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
-// num_list_len은 배열 num_list의 길이입니다.
-int solution(int num_list[], size_t num_list_len) {
-    int answer = -1;
-    for(int i = 0; i < num_list_len; i++){
-        if(num_list[i] < 0){
-            return i;
-        }
-    }
-    return answer;
-}
-
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
-// arr_len은 배열 arr의 길이입니다.
-int* solution(int arr[], size_t arr_len, int k) {
-    int* answer = (int*)malloc(sizeof(int) * arr_len);
-    for(int i = 0; i < arr_len; i++){
-        if(k % 2 != 0){
-            answer[i] = arr[i] * k;
+char* solution(const char* my_string, const char* alp) {
+    int len = strlen(my_string);
+    char* answer = (char*)malloc(sizeof(char) * (len+1));
+    for(int i = 0; i < len; i++){
+        if(my_string[i] == alp[0]){
+            answer[i] = my_string[i] - 32;
         }
         else{
-            answer[i] = arr[i] + k;
+            answer[i] = my_string[i];
         }
     }
+    answer[len] = '\0';
     return answer;
-}
-
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
-// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
-int solution(const char* my_string, const char* is_suffix) {
-    int my_len = strlen(my_string);
-    int suf_len = strlen(is_suffix);
-    
-    if(suf_len > my_len){
-        return 0;
-    }
-    
-    int start_idx = my_len - suf_len;
-    for(int i = 0; i < suf_len; i++){
-        if (my_string[start_idx + i] != is_suffix[i]) {
-            return 0;
-        }
-    }
-    return 1;
 }
