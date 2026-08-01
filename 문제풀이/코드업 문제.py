@@ -676,3 +676,68 @@
 # elif '/' in expr:
 #     a, b = map(int, expr.split('/'))
 #     print(f"{a / b:.2f}")
+
+# #1251
+# for i in range(1, 101):
+# 	print(f"{i}", end = ' ')
+
+# #1252
+# n = int(input())
+
+# for i in range(1, n+1):
+# 	print(f"{i}", end = ' ')
+
+# #1253
+# a, b, = map(int, input().split())
+
+# if(a > b):
+# 	for i in range(b, a+1):
+# 		print(f"{i}", end = ' ')
+# else:
+# 	for j in range(a, b+1):
+# 		print(f"{j}", end = ' ')
+
+#1254
+# a,b = input().split()
+# for i in range(ord(a), ord(b) + 1):
+# 	print(f"{chr(i)}", end = ' ')
+
+#1255
+# a, b = map(float, input().split())
+# while a <= b + 0.0001:
+#     print(f"{a:.2f}", end = ' ')
+#     a += 0.01
+
+#1256
+# n = int(input())
+# for i in range(n):
+#     print("*", end = '')
+
+#1257
+# a, b = map(int, input().split())
+# for i in range(a, b +1):
+#     if(i % 2 != 0):
+#         print(f"{i}", end = ' ')
+
+#1258
+# n = int(input())
+# sum = 0
+# for i in range(1, n + 1):
+#     sum += i
+# print(f"{sum}")
+
+#1259
+# n = int(input())
+# sum = 0
+# for i in range(1, n+1):
+#     if(i % 2 == 0):
+#         sum += i
+# print(sum)
+
+#1260
+a, b = map(int, input().split())
+sum = 0
+for i in range(a, b+1):
+    if(i % 3 == 0):
+        sum += i
+print(sum)
