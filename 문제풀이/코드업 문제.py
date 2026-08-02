@@ -735,9 +735,35 @@
 # print(sum)
 
 #1260
-a, b = map(int, input().split())
-sum = 0
-for i in range(a, b+1):
-    if(i % 3 == 0):
-        sum += i
-print(sum)
+# a, b = map(int, input().split())
+# sum = 0
+# for i in range(a, b+1):
+#     if(i % 3 == 0):
+#         sum += i
+# print(sum)
+
+#1283
+n = int(input())
+m = int(input())
+nums = list(map(int, input().split()))
+
+result = 0
+tuza = 0
+
+tuza = float(n)
+
+for i in range(m):
+    tuza = tuza * (1 + nums[i] / 100)
+
+result = tuza - n
+last_result = float(f"{result:.0f}")
+
+if last_result == 0 :
+    print(0)
+    print("same")
+elif last_result > 0:
+    print(f"{result:.0f}")
+    print("good")
+else:
+    print(f"{result:.0f}")
+    print("bad")
