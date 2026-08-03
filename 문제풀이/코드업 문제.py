@@ -743,27 +743,193 @@
 # print(sum)
 
 #1283
-n = int(input())
-m = int(input())
-nums = list(map(int, input().split()))
+# n = int(input())
+# m = int(input())
+# nums = list(map(int, input().split()))
 
-result = 0
-tuza = 0
+# result = 0
+# tuza = 0
 
-tuza = float(n)
+# tuza = float(n)
 
-for i in range(m):
-    tuza = tuza * (1 + nums[i] / 100)
+# for i in range(m):
+#     tuza = tuza * (1 + nums[i] / 100)
 
-result = tuza - n
-last_result = float(f"{result:.0f}")
+# result = tuza - n
+# last_result = float(f"{result:.0f}")
 
-if last_result == 0 :
-    print(0)
-    print("same")
-elif last_result > 0:
-    print(f"{result:.0f}")
-    print("good")
-else:
-    print(f"{result:.0f}")
-    print("bad")
+# if last_result == 0 :
+#     print(0)
+#     print("same")
+# elif last_result > 0:
+#     print(f"{result:.0f}")
+#     print("good")
+# else:
+#     print(f"{result:.0f}")
+#     print("bad")
+
+#1284
+# def is_prime(a):
+#     if(a <= 1):
+#         return False
+#     for i in range(2, int(a**0.5)+1):
+#         if(a % i == 0):
+#             return False
+#     return True
+
+# n = int(input())
+# p = 0
+# for i in range(2, int(n**0.5)+1):
+#     if(n % i == 0):
+#         p = i
+#         break
+
+# if p == 0:
+#     print("wrong number")
+# else:
+#     q = n//p
+#     if(is_prime(p) and is_prime(q)):
+#         if(p > q):
+#             print(f"{q} {p}")
+#         else:
+#             print(f"{p} {q}")
+#     else:
+#         print("wrong number")
+    
+#1285
+# nums = str(input())
+# result = 0
+# num = 0
+# op = '+'
+
+# for i in nums:
+#     if i.isdigit():
+#         num = num * 10 + int(i)
+#     else:
+#         if op == '+':
+#             result += num
+#         elif op == '-':
+#             result -= num
+#         elif op == '*':
+#             result *= num
+#         elif op == '/':
+#             result //= num
+
+#         op = i
+#         num = 0
+# print(result)
+
+#1286
+# nums = []
+# for i in range(5):
+#     nums.append(int(input()))
+
+# print(f"{max(nums)}\n{min(nums)}")
+
+#1287
+# n = int(input())
+
+# for i in range(1,10):
+#     print('*' * (i * n))
+
+#1294
+# amho = input()
+# cizo = ''
+# for i in range(len(amho)):
+#     if amho[i] == ' ':
+#         cizo += ' '
+#     else:
+#         bibun = (ord(amho[i]) - ord('a') + 3) % 26 + ord('a')
+#         cizo += chr(bibun)
+# print(f"{cizo}")
+#1675
+# amho = input()
+# cizo = ''
+# for i in range(len(amho)):
+#     if amho[i] == ' ':
+#         cizo += ' '
+#     else:
+#         bibun = (ord(amho[i]) - ord('a') - 3) % 26 + ord('a')
+#         cizo += chr(bibun)
+# print(f"{cizo}")
+
+#5079
+# n = int(input())
+# topyo = input()
+# ct_a = 0
+# ct_b = 0
+# for i in topyo:
+#     if(i == 'A'):
+#         ct_a += 1
+#     else:
+#         ct_b += 1
+
+# if(ct_a > ct_b):
+#     print('A')
+# elif(ct_a == ct_b):
+#     print("Tie")
+# else:
+#     print('B')
+
+#1261
+# n = map(int, input().split())
+# for i in n:
+#     if(i % 5 == 0):
+#         print(i)
+#         break
+# else:
+#     print(0)
+
+#1272
+# nums = map(int, input().split())
+# result = 0
+# for i in nums:
+#     if(i % 2 != 0):
+#         result += (i+1) // 2
+#     else:
+#         result += (i // 2) * 10
+
+# print(result)
+
+#1274
+# n = int(input())
+# is_prime = True
+
+# for i in range(2, n):
+#     if(n % i == 0):
+#         is_prime = False
+#         break
+# if is_prime:
+#     print("prime")
+# else:
+#     print("not prime")
+
+#1281
+# n, m = map(int, input().split())
+# result = 0
+# answer = ''
+# for i in range(n, m+1):
+#     if i == n:
+#         if(i % 2 == 0):
+#             result -= i
+#             answer += '-' + str(i)
+#         else:
+#             result += i
+#             answer += str(i)
+#     else:
+#         if(i % 2 == 0):
+#             result -= i
+#             answer += '-' + str(i)
+#         else:
+#             result += i
+#             answer += '+' + str(i)
+# print(f"{answer}={result}")
+
+#1282
+# n = int(input())
+
+# t = int((n - 1) ** 0.5)
+
+# k = n - (t ** 2)
+
+# print(k, t)
