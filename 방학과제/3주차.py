@@ -119,6 +119,25 @@ for i in range(n):
 for j in result:
 	print(f"{j}")
 
+#8번
+n =  int(input())
+queue = []
+result = []
+
+for i in range(n):
+	cmd = input().split()
+	if cmd[0] == 'PUSH':
+		queue.append(cmd[1])
+	elif cmd[0] == 'POP':
+		result.append(queue.pop(0))
+	elif cmd[0] == 'FRONT':
+		result.append(queue[0])
+	elif cmd[0] == 'SIZE':
+		result.append(len(queue))
+
+for i in result:
+	print(i)
+
 #9번
 count = 0
 a = input()
@@ -150,3 +169,33 @@ for i in range(n):
 		stack.append(sold[i])
 
 print(sum(stack))
+
+#11번
+n = int(input())
+stack = []
+
+for i in range(n):
+	cmd = input().split()
+	if cmd[0] == 'TYPE':
+		stack.append(cmd[1])
+	elif cmd[0] == 'UNDO':
+		stack.pop()
+
+result = ''
+for i in stack:
+	result += i
+
+print(result)
+
+#12번
+n = int(input())
+nums = list(map(int, input().split()))
+
+stack_nums = []
+sum = 0
+
+for i in nums:
+	sum += i
+	stack_nums.append(sum)
+
+print(*stack_nums)
