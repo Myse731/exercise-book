@@ -998,3 +998,40 @@ int solution(int a[], size_t a_len, int b[], size_t b_len) {
     }
     return answer;
 }
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+char* solution(const char* s) {
+    char * answer;
+    int len = strlen(s);
+    if(len % 2 == 0){
+        answer = (char*)malloc(3);
+    }
+    else{
+        answer = (char*)malloc(2);
+    }
+    int idx = 0;
+    if(len % 2 != 0){
+        for(int i = 0; s[i] != '\0'; i++){
+            if(i == (len / 2)){
+                answer[idx] = s[i];
+                idx++;
+            }
+        }
+    }
+    else{
+        for(int j = 0; s[j] != '\0'; j++){
+            if(j == (len /2 -1) || j == (len /2)){
+                answer[idx] = s[j];
+                idx++;
+            }
+        }
+    }
+    answer[idx] = '\0';
+    return answer;
+}
+
