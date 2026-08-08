@@ -745,259 +745,337 @@
 //     return answer;
 // }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-long long solution(int a, int b) {
-    long long result = 0;
-    if(a > b){
-        for(int i = b; i <= a; i++){
-            result += i;
-        }
-    }
-    else{
-        for(int j = a; j <= b; j++){
-            result += j;
-        }
-    }
-    return result;
-}
+// long long solution(int a, int b) {
+//     long long result = 0;
+//     if(a > b){
+//         for(int i = b; i <= a; i++){
+//             result += i;
+//         }
+//     }
+//     else{
+//         for(int j = a; j <= b; j++){
+//             result += j;
+//         }
+//     }
+//     return result;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
-int solution(const char* s) {
-    int answer = 0;
-    int buho = 1;
-    int start = 0;
-    if(s[0] == '+'){
-        start = 1;
-    }
-    else if(s[0] == '-'){
-        start = 1;
-        buho = -1;
-    }
-    for(int i = start; s[i] != '\0'; i++){
-        answer = answer * 10 + (s[i] - '0');
-    }
-    return answer * buho;
-}
+// // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// int solution(const char* s) {
+//     int answer = 0;
+//     int buho = 1;
+//     int start = 0;
+//     if(s[0] == '+'){
+//         start = 1;
+//     }
+//     else if(s[0] == '-'){
+//         start = 1;
+//         buho = -1;
+//     }
+//     for(int i = start; s[i] != '\0'; i++){
+//         answer = answer * 10 + (s[i] - '0');
+//     }
+//     return answer * buho;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-int solution(int n) {
-    int answer = 0;
-    for(int i = 1; i <= n; i++){
-        if(n % i == 0){
-            answer += i;
-        }
-    }
-    return answer;
-}
+// int solution(int n) {
+//     int answer = 0;
+//     for(int i = 1; i <= n; i++){
+//         if(n % i == 0){
+//             answer += i;
+//         }
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-int solution(int n) {
-    int answer = 0;
-    while(n > 0){
-        answer += n % 10;
-        n /= 10;
-    }
-    return answer;
-}
+// int solution(int n) {
+//     int answer = 0;
+//     while(n > 0){
+//         answer += n % 10;
+//         n /= 10;
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-int* solution(long long n) {
-    int idx = 0;
-    int* answer = (int*)malloc(sizeof(int) * 15);
-    while(n > 0){
-        answer[idx] = n % 10;
-        idx++;
-        n /= 10;
-    }
-    return answer;
-}
+// int* solution(long long n) {
+//     int idx = 0;
+//     int* answer = (int*)malloc(sizeof(int) * 15);
+//     while(n > 0){
+//         answer[idx] = n % 10;
+//         idx++;
+//         n /= 10;
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-long long solution(long long n) {
-    long long answer = 0;
-    long long x = 1;
-    while(x * x < n){
-        x++;
-    }
-    if(x * x == n){
-        return (x+1) * (x+1);
-    }
-    else{
-        return -1;
-    }
-    return answer;
-}
+// long long solution(long long n) {
+//     long long answer = 0;
+//     long long x = 1;
+//     while(x * x < n){
+//         x++;
+//     }
+//     if(x * x == n){
+//         return (x+1) * (x+1);
+//     }
+//     else{
+//         return -1;
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-char* solution(int num) {
-    if(num % 2 == 0){
-        return "Even";
-    }
-    else{
-        return "Odd";
-    }
-}
+// char* solution(int num) {
+//     if(num % 2 == 0){
+//         return "Even";
+//     }
+//     else{
+//         return "Odd";
+//     }
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-// arr_len은 배열 arr의 길이입니다.
-double solution(int arr[], size_t arr_len) {
-    double answer = 0;
-    for(int i = 0; i < arr_len; i++){
-        answer += arr[i];
-    }
-    answer /= arr_len;
-    return answer;
-}
+// // arr_len은 배열 arr의 길이입니다.
+// double solution(int arr[], size_t arr_len) {
+//     double answer = 0;
+//     for(int i = 0; i < arr_len; i++){
+//         answer += arr[i];
+//     }
+//     answer /= arr_len;
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-bool solution(int x) {
-    bool answer = true;
-    int result = 0;
-    int temp = x;
-    while(temp > 0){
-        result += temp % 10;
-        temp /= 10;
-    }
-    if(x % result != 0){
-        answer = false;
-    }
-    return answer;
-}
+// bool solution(int x) {
+//     bool answer = true;
+//     int result = 0;
+//     int temp = x;
+//     while(temp > 0){
+//         result += temp % 10;
+//         temp /= 10;
+//     }
+//     if(x % result != 0){
+//         answer = false;
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-int solution(int n) {
-    int answer = 0;
-    for(int i = 1; i < n; i++){
-        if(n % i == 1){
-            answer = i;
-            break;
-        }
-    }
-    return answer;
-}
+// int solution(int n) {
+//     int answer = 0;
+//     for(int i = 1; i < n; i++){
+//         if(n % i == 1){
+//             answer = i;
+//             break;
+//         }
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-// absolutes_len은 배열 absolutes의 길이입니다.
-// signs_len은 배열 signs의 길이입니다.
-int solution(int absolutes[], size_t absolutes_len, bool signs[], size_t signs_len) {
-    int answer = 0;
-    for(int i = 0; i < absolutes_len; i++){
-        if(signs[i] == true){
-            answer += absolutes[i];
-        }
-        else if(signs[i] == false){
-            answer += (absolutes[i] * -1);
-        }
-    }
-    return answer;
-}
+// // absolutes_len은 배열 absolutes의 길이입니다.
+// // signs_len은 배열 signs의 길이입니다.
+// int solution(int absolutes[], size_t absolutes_len, bool signs[], size_t signs_len) {
+//     int answer = 0;
+//     for(int i = 0; i < absolutes_len; i++){
+//         if(signs[i] == true){
+//             answer += absolutes[i];
+//         }
+//         else if(signs[i] == false){
+//             answer += (absolutes[i] * -1);
+//         }
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-// numbers_len은 배열 numbers의 길이입니다.
-int solution(int numbers[], size_t numbers_len) {
-    int answer = 0;
-    for(int i = 0; i < 10; i++){
-        answer += i;
-    }
-    for(int j = 0; j < numbers_len; j++){
-        answer -= numbers[j];
-    }
-    return answer;
-}
+// // numbers_len은 배열 numbers의 길이입니다.
+// int solution(int numbers[], size_t numbers_len) {
+//     int answer = 0;
+//     for(int i = 0; i < 10; i++){
+//         answer += i;
+//     }
+//     for(int j = 0; j < numbers_len; j++){
+//         answer -= numbers[j];
+//     }
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-int solution(int num) {
-    long long n = num;
-    int count = 0;
-    while (n != 1) {
-        if (count == 500) {
-            return -1;
-        }
+// int solution(int num) {
+//     long long n = num;
+//     int count = 0;
+//     while (n != 1) {
+//         if (count == 500) {
+//             return -1;
+//         }
         
-        if (n % 2 == 0) {
-            n /= 2;
-        } else {
-            n = n * 3 + 1;
-        }
-        count++;
-    }
+//         if (n % 2 == 0) {
+//             n /= 2;
+//         } else {
+//             n = n * 3 + 1;
+//         }
+//         count++;
+//     }
     
-    return count;
-}
+//     return count;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+// #include <string.h>
 
-char* solution(const char* phone_number) {
-    char* answer = (char*)malloc(sizeof(char) * 21);
-    int len = strlen(phone_number);
-    for(int i = 0; i < len; i++){
-        if(i < len - 4){
-            answer[i] = '*';
-        }
-        else{
-            answer[i] = phone_number[i];
-        }
-    }
-    answer[len] = '\0';
-    return answer;
-}
+// char* solution(const char* phone_number) {
+//     char* answer = (char*)malloc(sizeof(char) * 21);
+//     int len = strlen(phone_number);
+//     for(int i = 0; i < len; i++){
+//         if(i < len - 4){
+//             answer[i] = '*';
+//         }
+//         else{
+//             answer[i] = phone_number[i];
+//         }
+//     }
+//     answer[len] = '\0';
+//     return answer;
+// }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
 
-// a_len은 배열 a의 길이입니다.
-// b_len은 배열 b의 길이입니다.
-int solution(int a[], size_t a_len, int b[], size_t b_len) {
-    int answer = 0;
-    for(int i = 0; i < a_len; i++){
-        answer += a[i] * b[i];
-    }
-    return answer;
-}
+// // a_len은 배열 a의 길이입니다.
+// // b_len은 배열 b의 길이입니다.
+// int solution(int a[], size_t a_len, int b[], size_t b_len) {
+//     int answer = 0;
+//     for(int i = 0; i < a_len; i++){
+//         answer += a[i] * b[i];
+//     }
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// char* solution(const char* s) {
+//     char * answer;
+//     int len = strlen(s);
+//     if(len % 2 == 0){
+//         answer = (char*)malloc(3);
+//     }
+//     else{
+//         answer = (char*)malloc(2);
+//     }
+//     int idx = 0;
+//     if(len % 2 != 0){
+//         for(int i = 0; s[i] != '\0'; i++){
+//             if(i == (len / 2)){
+//                 answer[idx] = s[i];
+//                 idx++;
+//             }
+//         }
+//     }
+//     else{
+//         for(int j = 0; s[j] != '\0'; j++){
+//             if(j == (len /2 -1) || j == (len /2)){
+//                 answer[idx] = s[j];
+//                 idx++;
+//             }
+//         }
+//     }
+//     answer[idx] = '\0';
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// char* solution(int n) {
+//     char* answer = (char*)malloc(sizeof(char) * (n * 3) + 1);
+//     answer[0] = '\0';
+//     for(int i = 0; i < n; i++){
+//         if(i % 2== 0){
+//             strcat(answer, "수");
+//         }
+//         else{
+//             strcat(answer, "박");
+//         }
+//     }
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// int solution(int left, int right) {
+//     int answer = 0;
+//     for(int i = left; i <= right; i++){
+//         int count = 0;
+//         for(int j = 1; j <= i; j++){
+//             if(i % j == 0){
+//                 count++;
+//             }
+//         }
+//         if(count % 2 == 0){
+//             answer += i;
+//         }
+//         else{
+//             answer -= i;
+//         }
+//     }
+//     return answer;
+// }
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -1006,32 +1084,19 @@ int solution(int a[], size_t a_len, int b[], size_t b_len) {
 
 // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
 char* solution(const char* s) {
-    char * answer;
     int len = strlen(s);
-    if(len % 2 == 0){
-        answer = (char*)malloc(3);
-    }
-    else{
-        answer = (char*)malloc(2);
-    }
-    int idx = 0;
-    if(len % 2 != 0){
-        for(int i = 0; s[i] != '\0'; i++){
-            if(i == (len / 2)){
-                answer[idx] = s[i];
-                idx++;
+    char temp;
+    char* answer = (char*)malloc(sizeof(char) * (len+1));
+    strcpy(answer, s);
+    for(int i = 0; i < len - 1; i++){
+        for(int j = i + 1; j < len; j++){
+            if(answer[i] < answer[j]){
+                temp = answer[i];
+                answer[i] = answer[j];
+                answer[j] = temp;
             }
         }
     }
-    else{
-        for(int j = 0; s[j] != '\0'; j++){
-            if(j == (len /2 -1) || j == (len /2)){
-                answer[idx] = s[j];
-                idx++;
-            }
-        }
-    }
-    answer[idx] = '\0';
+    answer[len] = '\0';
     return answer;
 }
-
