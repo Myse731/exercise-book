@@ -1077,26 +1077,80 @@
 //     return answer;
 // }
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+// #include <string.h>
 
-// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
-char* solution(const char* s) {
-    int len = strlen(s);
-    char temp;
-    char* answer = (char*)malloc(sizeof(char) * (len+1));
-    strcpy(answer, s);
-    for(int i = 0; i < len - 1; i++){
-        for(int j = i + 1; j < len; j++){
-            if(answer[i] < answer[j]){
-                temp = answer[i];
-                answer[i] = answer[j];
-                answer[j] = temp;
-            }
+// // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// char* solution(const char* s) {
+//     int len = strlen(s);
+//     char temp;
+//     char* answer = (char*)malloc(sizeof(char) * (len+1));
+//     strcpy(answer, s);
+//     for(int i = 0; i < len - 1; i++){
+//         for(int j = i + 1; j < len; j++){
+//             if(answer[i] < answer[j]){
+//                 temp = answer[i];
+//                 answer[i] = answer[j];
+//                 answer[j] = temp;
+//             }
+//         }
+//     }
+//     answer[len] = '\0';
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+
+// long long solution(int price, int money, int count) {
+//     long long answer = 0;
+//     long long sum_price = 0;
+//     for(int i = 1; i <= count; i++){
+//         sum_price += (long long)price * i;
+//     }
+//     if(money < sum_price){
+//         answer = sum_price - money;
+//     }
+//     else{
+//         answer = 0;
+//     }
+//     return answer;
+// }
+
+// #include <stdio.h>
+// #include <stdbool.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// // 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+// bool solution(const char* s) {
+//     int len = strlen(s);
+//     bool answer = true;
+//     if(len != 4 && len != 6){
+//         return false;
+//     }
+//     for(int i = 0; i < len; i++){
+//         if(s[i] < '0' || s[i] > '9'){
+//             return false;
+//         }
+//     }
+//     return answer;
+// }
+
+#include <stdio.h>
+
+int main(void) {
+    int a;
+    int b;
+    scanf("%d %d", &a, &b);
+    for(int i = 0; i < b; i++){
+        for(int j = 0; j < a; j++){
+            printf("*");
         }
+        printf("\n");
     }
-    answer[len] = '\0';
-    return answer;
+    return 0;
 }
