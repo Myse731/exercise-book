@@ -935,14 +935,14 @@
 # print(k, t)
 
 #1357
-n = int(input())
-h = 2 * n - 1
-count = 1
-for i in range(1, n+1):
-    print("*" * i)
-for j in range(n-1, 0, -1):
-    print("*" * j)
-    
+# n = int(input())
+# h = 2 * n - 1
+# count = 1
+# for i in range(1, n+1):
+#     print("*" * i)
+# for j in range(n-1, 0, -1):
+#     print("*" * j)
+
 #1358
 # n = int(input())
 # h = (n//2)+1
