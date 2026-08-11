@@ -153,7 +153,32 @@ new_nums = nums[-m:] + nums[:-m]
 print(*new_nums)
 
 #11번
+n = int(input())
+add = 1
+cards = []
+for i in range(n):
+	cards.append(add)
+	add += 1
 
+while len(cards) != 1:
+	cards.pop(0)
+	nc = cards.pop(0)
+	cards.append(nc)
+
+print(*cards)
+
+#11번 수정버전
+n = int(input())
+add = 1
+cards = []
+for i in range(1, n + 1):
+	cards.append(i)
+
+while len(cards) != 1:
+	cards.pop(0)
+	cards.append(cards.pop(0))
+
+print(*cards)
 
 #12번
 n = int(input())
