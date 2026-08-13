@@ -950,3 +950,100 @@
 #     space = (n//2) - i
 #     star = (2*i) + 1
 #     print(" " * space + "*" * star)
+
+#1361
+# n = int(input())
+# for i in range(n):
+#     if(n == 1):
+#         print("**")
+#         break
+#     print(' ' * i, end = '')
+#     print("**")
+
+#1365
+# n = int(input())
+# for i in range(1, n+1):
+#     for j in range(1, n+1):
+#         if i == 1 or i == n or j == 1 or j == n or i + j == n + 1 or i == j:
+#             print("*", end = '')
+#         else:
+#             print(" ", end = '')
+#     print()
+
+#1367
+# n = int(input())
+# for i in range(n):
+#     print(' ' * (n - 1 - i), end = '')
+#     print("*" * n)
+
+#1368
+# h, k, lr = input().split()
+# h = int(h)
+# k = int(k)
+# if lr == 'L':
+#     for i in range(h):
+#         print(' ' * i + '*' * k)
+# elif lr == 'R':
+#     for j in range(h):
+#         print(' ' * (h - 1 - j) + '*' * k)
+
+#1370
+# h, r = map(int, input().split())
+# for i in range(r):
+#     for j in range(h):
+#         print(' ' * j + '*')
+#     for k in range(h-2, -1, -1):
+#         print(' ' * k + '*')
+
+#1371
+# n = int(input())
+# h = n * 2
+# for i in range(1, h + 1):
+#     for j in range(1, h +1):
+#         if i + j == n + 1:
+#             print("*", end = '')
+#         elif j - i == n:
+#             print("*", end = '')
+#         elif i - j == n:
+#             print("*", end = '')
+#         elif i + j == 3 * n + 1:
+#             print("*", end = '')
+#         else:
+#             print(' ', end = '')
+#     print()
+
+#1380
+# n = int(input())
+# for i in range(1, 7):
+#     for j in range(1, 7):
+#         if i + j == n:
+#             print(f"{i} {j}")
+
+#3122
+# n = int(input())
+
+# for i in range(n):
+#     space = ' ' * (n - 1 - i)
+#     stars = '*' * (2 * i + 1)
+#     print(space+stars+space)
+
+# for j in range(n-2, -1, -1):
+#     space = ' ' * (n - 1 - j)
+#     stars = '*' * (2 * j + 1)
+#     print(space+stars+space)
+
+#1677
+# w, h = map(int, input().split())
+
+# for i in range(1, h + 1):
+#     for j in range(1, w + 1):
+#         if (i == 1 or i == h) and (j == 1 or j == w):
+#             print('+', end='')
+#         elif i == 1 or i == h:
+#             print('-', end='')
+#         elif j == 1 or j == w:
+#             print('|', end='')
+#         else:
+#             print(' ', end='')
+#     print()
+

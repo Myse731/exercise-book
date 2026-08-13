@@ -231,3 +231,14 @@ for item in data:
     # apple : 2, banana : 1, cherry : 1
 total_items = sum(inventory.values()) # -> inventory에 있는 키의 값들을 반환후 sum 함수로 합쳐서 total_items에 저장
 print(total_items) # -> 4
+
+# + 문제풀이날에 못풀겠는 문제
+#1382
+
+for i in range(1, 10):
+    for dan in range(2, 6):
+        res = f"{dan * i:2d}"
+        if dan == 5:
+            print(f"{dan} x {i} = {res}") # => 5일때 출력후 공백업이 줄을 바꾼다
+        else:
+            print(f"{dan} x {i} = {res}", end="\t") # => 다 출력한 후에 탭으로 옆에 둔다
