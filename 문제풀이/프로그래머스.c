@@ -1140,17 +1140,111 @@
 //     return answer;
 // }
 
-#include <stdio.h>
+// #include <stdio.h>
 
-int main(void) {
-    int a;
-    int b;
-    scanf("%d %d", &a, &b);
-    for(int i = 0; i < b; i++){
-        for(int j = 0; j < a; j++){
-            printf("*");
+// int main(void) {
+//     int a;
+//     int b;
+//     scanf("%d %d", &a, &b);
+//     for(int i = 0; i < b; i++){
+//         for(int j = 0; j < a; j++){
+//             printf("*");
+//         }
+//         printf("\n");
+//     }
+//     return 0;
+// }
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+int solution(const char* t, const char* p){
+    int count = 0;
+    int p_len = strlen(p);
+    int t_len = strlen(t);
+    
+    for(int i = 0; i <= t_len - p_len; i++){
+        if(strncmp(&t[i], p, p_len) <= 0){
+            count++;
         }
-        printf("\n");
     }
-    return 0;
+    return count;
 }
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+// number_len은 배열 number의 길이입니다.
+int solution(int number[], size_t number_len) {
+    int count = 0;
+    for(int i = 0; i < number_len - 2; i++){
+        for(int j = i + 1; j < number_len - 1; j++){
+            for(int k = j + 1; k < number_len; k++){
+                if(number[i] + number[j] + number[k] == 0){
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+// 파라미터로 주어지는 문자열은 const로 주어집니다. 변경하려면 문자열을 복사해서 사용하세요.
+char* solution(const char* s) {
+    int len = strlen(s);
+    int idx = 0;
+    char* answer = (char*)malloc(sizeof(char) * (len+1));
+    int word_idx = 0;
+    
+    for(int i = 0; i < len; i++){
+        if(s[i] == ' '){
+            answer[i] = ' ';
+            word_idx = 0;
+        }
+        else{
+            if(word_idx % 2 == 0){
+                answer[i] = toupper(s[i]);
+            }
+            else{
+                answer[i] = tolower(s[i]);
+            }
+            word_idx++;
+        }
+    }
+    answer[len] = '\0';
+    return answer;
+}
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+int solution(int n) {
+    int base3[100]; 
+    int len = 0;  
+    
+    while (n > 0) {
+        base3[len++] = n % 3; 
+        n /= 3;              
+    }
+
+    long long answer = 0;
+    long long power = 1; 
+
+    for (int i = len - 1; i >= 0; i--) {
+        answer += base3[i] * power;
+        power *= 3; 
+    }
+    return answer;
+}
+

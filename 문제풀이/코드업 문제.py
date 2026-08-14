@@ -1047,3 +1047,12 @@
 #             print(' ', end='')
 #     print()
 
+#1093 => C언어나 다른언어로만 풀수있는 문제여서 정답인지는 모르겠다;;
+# n = int(input())
+# num_list = [0] * 23
+# nums = map(int, input().split())
+
+# for i in nums:
+#     num_list[i - 1] += 1
+
+# print(*num_list)
