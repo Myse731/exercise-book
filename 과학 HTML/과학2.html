@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>원소 탈출: 주기율표 던전</title>
+<style>
+:root{
+  --bg-deep:#0d1117;
+  --bg-panel:#161b22;
+  --bg-card:#1c2333;
+  --border:#2d3548;
+  --accent:#7c9eff;
+  --accent-dim:#4a5a8a;
+  --gold:#e0b45a;
+  --danger:#e0667a;
+  --success:#6fd39a;
+  --text-main:#e6e9f0;
+  --text-dim:#8891a5;
+  --metal:#e08a5a;
+  --nonmetal:#5a9ee0;
+  --metalloid:#a86fe0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Malgun Gothic','Pretendard',-apple-system,sans-serif;
+  background:radial-gradient(ellipse at top,#151b2c 0%,#0a0d16 70%);
+  color:var(--text-main);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+#app{max-width:1200px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column;}
+
+/* ===== 헤더 ===== */
+.header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 22px;background:linear-gradient(135deg,var(--bg-panel),#1a2030);
+  border:1px solid var(--border);border-radius:14px;margin-bottom:18px;
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.header h1{font-size:20px;letter-spacing:1px;font-weight:700;}
+.header h1 span{color:var(--accent);}
+.header-stats{display:flex;gap:16px;font-size:13px;color:var(--text-dim);}
+.header-stats b{color:var(--gold);}
+
+/* ===== 화면 전환 ===== */
+.screen{display:none;flex:1;animation:fadeIn .35s ease;}
+.screen.active{display:flex;flex-direction:column;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== 맵 화면 ===== */
+.map-title{text-align:center;margin-bottom:6px;}
+.map-title h2{font-size:24px;font-weight:700;}
+.map-title p{color:var(--text-dim);font-size:13px;margin-top:4px;}
+
+.periodic-map{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  margin-top:24px;
+}
+.stage-card{
+  background:linear-gradient(150deg,var(--bg-panel),var(--bg-card));
+  border:1px solid var(--border);border-radius:16px;padding:20px;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .25s, box-shadow .25s, border-color .25s;
+}
+.stage-card:hover{transform:translateY(-6px);border-color:var(--accent-dim);box-shadow:0 10px 30px rgba(124,158,255,.15);}
+.stage-card.locked{opacity:.4;cursor:not-allowed;pointer-events:none;}
+.stage-card.cleared::after{
+  content:'✓ 클리어';position:absolute;top:14px;right:14px;
+  font-size:11px;color:var(--success);background:rgba(111,211,154,.12);
+  padding:3px 8px;border-radius:20px;
+}
+.stage-badge{
+  display:inline-block;font-size:11px;color:var(--text-dim);
+  background:rgba(255,255,255,.05);padding:3px 10px;border-radius:20px;margin-bottom:10px;
+}
+.stage-card h3{font-size:18px;margin-bottom:6px;}
+.stage-card p{font-size:12px;color:var(--text-dim);line-height:1.5;margin-bottom:12px;}
+.stage-elements{display:flex;gap:6px;}
+.mini-elem{
+  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;background:var(--bg-deep);border:1px solid var(--border);
+}
+
+/* ===== 전투 화면 ===== */
+.battle-arena{
+  display:flex;flex-direction:column;gap:14px;flex:1;
+}
+.arena-top{display:flex;justify-content:space-between;gap:20px;}
+.party-zone, .enemy-zone{
+  flex:1;background:var(--bg-panel);border:1px solid var(--border);border-radius:16px;padding:16px;
+}
+.zone-label{font-size:12px;color:var(--text-dim);margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;}
+.unit-row{display:flex;gap:12px;flex-wrap:wrap;}
+
+.card{
+  width:110px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+  padding:10px 8px;text-align:center;cursor:pointer;position:relative;
+  transition:transform .2s, border-color .2s, box-shadow .2s;
+  user-select:none;
+}
+.card:hover{transform:translateY(-4px);}
+.card.selected{border-color:var(--accent);box-shadow:0 0 0 2px rgba(124,158,255,.3);}
+.card.stunned{opacity:.4;filter:grayscale(1);}
+.card.dead{opacity:.15;pointer-events:none;}
+.card .symbol{font-size:26px;font-weight:800;}
+.card .name{font-size:11px;color:var(--text-dim);margin:2px 0 6px;}
+.card .type-tag{
+  font-size:9px;padding:2px 6px;border-radius:10px;display:inline-block;margin-bottom:6px;
+}
+.type-metal{background:rgba(224,138,90,.15);color:var(--metal);}
+.type-nonmetal{background:rgba(90,158,224,.15);color:var(--nonmetal);}
+.type-metalloid{background:rgba(168,111,224,.15);color:var(--metalloid);}
+.card .hpbar-bg{height:5px;background:#0d1117;border-radius:4px;overflow:hidden;margin-bottom:4px;}
+.card .hpbar-fill{height:100%;background:linear-gradient(90deg,var(--danger),var(--success));transition:width .3s;}
+.card .stats{font-size:10px;color:var(--text-dim);display:flex;justify-content:space-between;}
+
+.enemy-unit .symbol{font-size:34px;}
+.enemy-unit{width:150px;}
+
+/* 결합 슬롯 */
+.combine-zone{
+  background:linear-gradient(135deg,#1a1f30,#151a28);
+  border:1px dashed var(--accent-dim);border-radius:16px;padding:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.slot-group{display:flex;gap:10px;align-items:center;}
+.slot{
+  width:70px;height:90px;border:1px solid var(--border);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;
+  background:var(--bg-deep);color:var(--text-dim);
+}
+.slot.filled{border-color:var(--accent);color:var(--text-main);}
+.plus{color:var(--text-dim);font-size:18px;}
+.arrow{color:var(--accent);font-size:20px;}
+
+.action-buttons{display:flex;gap:10px;}
+.btn{
+  padding:10px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;
+  transition:filter .2s, transform .15s;
+}
+.btn:active{transform:scale(.96);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#5a78d0);color:#fff;}
+.btn-secondary{background:var(--bg-card);color:var(--text-main);border:1px solid var(--border);}
+.btn-danger{background:linear-gradient(135deg,var(--danger),#c04a5e);color:#fff;}
+.btn:hover{filter:brightness(1.12);}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+
+.battle-log{
+  background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;
+  padding:12px 16px;height:110px;overflow-y:auto;font-size:12px;color:var(--text-dim);line-height:1.7;
+}
+.battle-log .entry-success{color:var(--success);}
+.battle-log .entry-fail{color:var(--danger);}
+.battle-log .entry-info{color:var(--accent);}
+
+/* 결합 이펙트 */
+.bond-flash{
+  position:fixed;inset:0;background:rgba(124,158,255,.08);pointer-events:none;
+  z-index:999;opacity:0;transition:opacity .3s;
+}
+.bond-flash.show{opacity:1;}
+
+/* ===== 도감 화면 ===== */
+.dex-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:16px;
+}
+.dex-card{
+  background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:12px;
+  text-align:center;cursor:pointer;transition:transform .2s;
+}
+.dex-card:hover{transform:translateY(-3px);}
+.dex-card.undiscovered{opacity:.25;filter:grayscale(1);cursor:default;}
+.dex-card .symbol{font-size:22px;font-weight:800;}
+.dex-card .num{font-size:9px;color:var(--text-dim);}
+
+.dex-detail{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:1000;
+}
+.dex-detail.show{display:flex;}
+.dex-detail-box{
+  background:var(--bg-panel);border:1px solid var(--border);border-radius:18px;padding:28px;max-width:420px;width:90%;
+}
+.dex-detail-box h2{font-size:26px;margin-bottom:4px;}
+.dex-detail-box .sub{color:var(--text-dim);font-size:13px;margin-bottom:16px;}
+.dex-detail-box .info-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);}
+.dex-detail-box .flavor{margin-top:14px;font-size:12px;color:var(--text-dim);line-height:1.6;background:var(--bg-deep);padding:12px;border-radius:10px;}
+
+/* 네비게이션 */
+.nav-bar{display:flex;gap:10px;margin-bottom:16px;}
+.nav-btn{
+  padding:8px 16px;border-radius:10px;background:var(--bg-panel);border:1px solid var(--border);
+  color:var(--text-dim);cursor:pointer;font-size:13px;transition:.2s;
+}
+.nav-btn.active, .nav-btn:hover{background:var(--bg-card);color:var(--text-main);border-color:var(--accent-dim);}
+
+/* 시작화면 */
+.start-screen{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;
+}
+.start-screen h1{font-size:38px;font-weight:800;letter-spacing:2px;}
+.start-screen h1 span{color:var(--accent);}
+.start-screen p{color:var(--text-dim);max-width:500px;line-height:1.7;font-size:14px;}
+.start-orbit{
+  width:120px;height:120px;border:1px solid var(--border);border-radius:50%;position:relative;margin-bottom:10px;
+}
+.start-orbit::before{
+  content:'⚛';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:50px;color:var(--accent);animation:spin 6s linear infinite;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* 승리/패배 오버레이 */
+.result-overlay{
+  position:fixed;inset:0;background:rgba(5,7,12,.88);display:none;align-items:center;justify-content:center;z-index:1001;
+}
+.result-overlay.show{display:flex;}
+.result-box{text-align:center;}
+.result-box h2{font-size:36px;margin-bottom:10px;}
+.result-box.win h2{color:var(--success);}
+.result-box.lose h2{color:var(--danger);}
+.result-box p{color:var(--text-dim);margin-bottom:20px;}
+.reward-list{display:flex;gap:10px;justify-content:center;margin-bottom:20px;}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+@media(max-width:800px){
+  .periodic-map{grid-template-columns:repeat(2,1fr);}
+  .dex-grid{grid-template-columns:repeat(3,1fr);}
+  .arena-top{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<div class="bond-flash" id="bondFlash"></div>
+
+<div id="app">
+  <div class="header">
+    <h1>원소 탈출: <span>주기율표 던전</span></h1>
+    <div class="header-stats">
+      <div>안정도 포인트 <b id="statPoints">0</b></div>
+      <div>도감 <b id="dexCount">0/16</b></div>
+    </div>
+  </div>
+
+  <!-- 시작 화면 -->
+  <div class="screen active" id="screen-start">
+    <div class="start-screen">
+      <div class="start-orbit"></div>
+      <h1>원소 탈출<span>:</span> 주기율표 던전</h1>
+      <p>카오스 던전에 갇힌 원소 정령들을 이끌고 탈출하라.<br>
+      원소들을 결합하여 안정된 화합물을 만들고, 옥텟 규칙의 힘으로 몬스터를 물리치세요.</p>
+      <button class="btn btn-primary" style="padding:14px 32px;font-size:15px;" onclick="startGame()">게임 시작</button>
+    </div>
+  </div>
+
+  <!-- 맵 화면 -->
+  <div class="screen" id="screen-map">
+    <div class="nav-bar">
+      <div class="nav-btn active" onclick="showScreen('map')">던전 맵</div>
+      <div class="nav-btn" onclick="showScreen('dex')">원소 도감</div>
+    </div>
+    <div class="map-title">
+      <h2>주기율표 던전</h2>
+      <p>각 층은 주기율표의 족(Group)을 테마로 합니다. 원소를 결합해 화합물의 힘을 얻으세요.</p>
+    </div>
+    <div class="periodic-map" id="mapContainer"></div>
+  </div>
+
+  <!-- 도감 화면 -->
+  <div class="screen" id="screen-dex">
+    <div class="nav-bar">
+      <div class="nav-btn" onclick="showScreen('map')">던전 맵</div>
+      <div class="nav-btn active" onclick="showScreen('dex')">원소 도감</div>
+    </div>
+    <div class="map-title">
+      <h2>원소 도감</h2>
+      <p>전투에서 승리하여 새로운 원소를 발견하세요.</p>
+    </div>
+    <div class="dex-grid" id="dexContainer"></div>
+  </div>
+
+  <!-- 전투 화면 -->
+  <div class="screen" id="screen-battle">
+    <div class="battle-arena">
+      <div class="arena-top">
+        <div class="party-zone">
+          <div class="zone-label">내 원소 파티</div>
+          <div class="unit-row" id="partyRow"></div>
+        </div>
+        <div class="enemy-zone">
+          <div class="zone-label">던전 몬스터</div>
+          <div class="unit-row" id="enemyRow"></div>
+        </div>
+      </div>
+
+      <div class="combine-zone">
+        <div class="slot-group">
+          <div class="slot" id="slotA">?</div>
+          <div class="plus">+</div>
+          <div class="slot" id="slotB">?</div>
+          <div class="arrow">→</div>
+          <div class="slot" id="slotResult">?</div>
+        </div>
+        <div class="action-buttons">
+          <button class="btn btn-secondary" onclick="clearSlots()">선택 초기화</button>
+          <button class="btn btn-primary" id="bondBtn" onclick="attemptBond()" disabled>결합 시도</button>
+          <button class="btn btn-danger" id="soloAttackBtn" onclick="soloAttack()" disabled>단독 공격</button>
+        </div>
+      </div>
+
+      <div class="battle-log" id="battleLog"></div>
+
+      <div style="display:flex;justify-content:space-between;">
+        <button class="btn btn-secondary" onclick="fleeStage()">← 던전에서 나가기</button>
+        <div style="font-size:12px;color:var(--text-dim);align-self:center;" id="turnIndicator">Turn 1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 도감 상세 모달 -->
+<div class="dex-detail" id="dexDetail">
+  <div class="dex-detail-box" id="dexDetailBox"></div>
+</div>
+
+<!-- 결과 오버레이 -->
+<div class="result-overlay" id="resultOverlay">
+  <div class="result-box" id="resultBox"></div>
+</div>
+
+<script>
+/* ============================================================
+   데이터베이스: 원소 16개
+============================================================ */
+const ELEMENTS_DB = {
+  H:  {symbol:"H",  name:"수소",   atomicNumber:1,  group:1,  period:1, valence:1, en:2.20, type:"nonmetal", hp:40, atk:70, def:20, flavor:"우주에서 가장 풍부한 원소. 최외각 전자 1개로 다른 원소와 쉽게 결합한다."},
+  He: {symbol:"He", name:"헬륨",  atomicNumber:2,  group:18, period:1, valence:2, en:0,    type:"nonmetal", hp:60, atk:20, def:60, flavor:"비활성기체. 이미 안정된 전자배치를 가져 다른 원소와 결합하지 않는다."},
+  Li: {symbol:"Li", name:"리튬",  atomicNumber:3,  group:1,  period:2, valence:1, en:0.98, type:"metal",    hp:50, atk:35, def:15, flavor:"가장 가벼운 금속. 전자를 쉽게 잃고 양이온이 된다."},
+  C:  {symbol:"C",  name:"탄소",   atomicNumber:6,  group:14, period:2, valence:4, en:2.55, type:"nonmetal", hp:70, atk:55, def:35, flavor:"생명체를 구성하는 핵심 원소. 4개의 결합손을 가진다."},
+  N:  {symbol:"N",  name:"질소",   atomicNumber:7,  group:15, period:2, valence:5, en:3.04, type:"nonmetal", hp:65, atk:60, def:30, flavor:"대기의 78%를 차지. 삼중결합으로 매우 안정적이다."},
+  O:  {symbol:"O",  name:"산소",   atomicNumber:8,  group:16, period:2, valence:6, en:3.44, type:"nonmetal", hp:60, atk:65, def:28, flavor:"호흡과 연소에 필수적인 원소. 전자를 강하게 끌어당긴다."},
+  F:  {symbol:"F",  name:"플루오린",atomicNumber:9, group:17, period:2, valence:7, en:3.98, type:"nonmetal", hp:55, atk:80, def:20, flavor:"전기음성도가 가장 큰 원소. 강력한 부식성을 가진다."},
+  Ne: {symbol:"Ne", name:"네온",  atomicNumber:10, group:18, period:2, valence:8, en:0,    type:"nonmetal", hp:75, atk:15, def:70, flavor:"완전한 옥텟을 가진 비활성기체. 절대 결합하지 않는다."},
+  Na: {symbol:"Na", name:"나트륨",atomicNumber:11, group:1,  period:3, valence:1, en:0.93, type:"metal",    hp:80, atk:30, def:12, flavor:"물과 격렬히 반응하는 알칼리금속. 전자 1개를 쉽게 내놓는다."},
+  Mg: {symbol:"Mg", name:"마그네슘",atomicNumber:12,group:2, period:3, valence:2, en:1.31, type:"metal",    hp:85, atk:32, def:22, flavor:"불꽃놀이에도 쓰이는 금속. 2개의 전자를 잃어 안정화된다."},
+  Al: {symbol:"Al", name:"알루미늄",atomicNumber:13,group:13,period:3, valence:3, en:1.61, type:"metal",    hp:90, atk:38, def:25, flavor:"가볍고 단단한 금속. 3가 양이온을 형성한다."},
+  Si: {symbol:"Si", name:"규소",   atomicNumber:14, group:14, period:3, valence:4, en:1.90, type:"metalloid",hp:78, atk:45, def:38, flavor:"반도체의 핵심 원소. 금속과 비금속 성질을 동시에 가진 준금속."},
+  P:  {symbol:"P",  name:"인",     atomicNumber:15, group:15, period:3, valence:5, en:2.19, type:"nonmetal", hp:72, atk:50, def:26, flavor:"생명체의 DNA를 구성하는 원소. 발화성이 강하다."},
+  S:  {symbol:"S",  name:"황",     atomicNumber:16, group:16, period:3, valence:6, en:2.58, type:"nonmetal", hp:70, atk:58, def:24, flavor:"화산 지대에서 발견되는 노란 원소. 강한 냄새를 가진 화합물을 만든다."},
+  Cl: {symbol:"Cl", name:"염소",   atomicNumber:17, group:17, period:3, valence:7, en:3.16, type:"nonmetal", hp:65, atk:75, def:18, flavor:"살균력이 강한 할로겐 원소. 금속과 만나면 강력한 이온결합을 만든다."},
+  Ar: {symbol:"Ar", name:"아르곤", atomicNumber:18, group:18, period:3, valence:8, en:0,    type:"nonmetal", hp:88, atk:18, def:75, flavor:"공기 중 세 번째로 많은 비활성기체. 완전한 옥텟 구조."}
+};
+
+/* ============================================================
+   화합물 레시피
+============================================================ */
+const RECIPES = [
+  {elements:["Na","Cl"], result:"NaCl", name:"염화나트륨(소금)", type:"ionic",
+    atkMul:1.1, defMul:1.8, ability:"결정 방벽 — 방어력 대폭 상승", flavor:"금속과 비금속의 대표적 이온결합. 전자를 완전히 주고받아 매우 안정하다."},
+  {elements:["H","H","O"], result:"H2O", name:"물", type:"covalent",
+    atkMul:1.3, defMul:1.2, ability:"정화의 물결 — 공격+방어 균형 상승", flavor:"수소 2개와 산소 1개가 전자쌍을 공유하는 굽은형 분자."},
+  {elements:["C","O","O"], result:"CO2", name:"이산화탄소", type:"covalent",
+    atkMul:1.5, defMul:0.9, ability:"질식 브레스 — 강력한 공격력", flavor:"탄소가 두 산소와 이중결합하는 직선형 분자."},
+  {elements:["H","Cl"], result:"HCl", name:"염화수소", type:"polar_covalent",
+    atkMul:1.4, defMul:1.0, ability:"부식산 — 방어 무시 공격", flavor:"전기음성도 차이로 극성을 띠는 공유결합 화합물."},
+  {elements:["Mg","O"], result:"MgO", name:"산화마그네슘", type:"ionic",
+    atkMul:1.2, defMul:1.6, ability:"불꽃 방벽 — 높은 내구도", flavor:"마그네슘이 연소하며 산소와 강하게 결합한다."},
+  {elements:["N","H","H","H"], result:"NH3", name:"암모니아", type:"covalent",
+    atkMul:1.25, defMul:1.25, ability:"자극의 기체 — 균형 상승", flavor:"질소 원자 하나에 수소 세 개가 공유결합한 화합물."},
+  {elements:["Al","O"], result:"Al2O3", name:"산화알루미늄", type:"ionic",
+    atkMul:1.15, defMul:1.9, ability:"강철 코팅 — 최고 방어력", flavor:"알루미늄 표면을 보호하는 매우 단단한 산화막."},
+  {elements:["Si","O"], result:"SiO2", name:"이산화규소", type:"covalent",
+    atkMul:1.3, defMul:1.5, ability:"수정 갑옷 — 공방 동시 강화", flavor:"모래와 유리의 주성분. 규소와 산소의 강한 공유결합 네트워크."}
+];
+
+/* ============================================================
+   던전 스테이지 구성
+============================================================ */
+const STAGES = [
+  {id:1, groupLabel:"1족 · 알칼리금속", title:"폭발의 방", desc:"물과 만나면 격렬히 반응하는 알칼리금속들이 지키는 첫 관문.",
+    elements:["Li","Na"], enemy:{name:"불안정한 이온체", hp:150, atk:25, def:10, symbol:"⚡"}, reward:["Mg"]},
+  {id:2, groupLabel:"17족 · 할로겐", title:"부식의 늪", desc:"강한 반응성을 가진 할로겐 원소들이 서식하는 늪지대.",
+    elements:["F","Cl"], enemy:{name:"부식 슬라임", hp:180, atk:30, def:15, symbol:"☠"}, reward:["Al","Si"]},
+  {id:3, groupLabel:"18족 · 비활성기체", title:"침묵의 회랑", desc:"이미 옥텟을 완성한 원소들의 영역. 이곳에서는 결합이 불가능하다.",
+    elements:["Ne","Ar"], enemy:{name:"침묵의 파수꾼", hp:200, atk:20, def:40, symbol:"◈"}, reward:["P","S"], noBond:true},
+  {id:4, groupLabel:"14족 · 탄소족", title:"생명의 정원", desc:"생명을 구성하는 탄소와 규소가 자라나는 정원.",
+    elements:["C","Si"], enemy:{name:"뒤틀린 결정체", hp:220, atk:35, def:25, symbol:"❖"}, reward:["N"]},
+  {id:5, groupLabel:"최종층 · 카오스 코어", title:"자유 라디칼", desc:"불안정한 전자를 가진 카오스의 핵. 최종 결전.",
+    elements:["O","H"], enemy:{name:"자유 라디칼", hp:320, atk:45, def:30, symbol:"☢"}, reward:["He"], isBoss:true}
+];
+
+/* ============================================================
+   게임 상태
+============================================================ */
+let state = {
+  statPoints: 0,
+  discovered: new Set(),
+  clearedStages: new Set(),
+  currentStage: null,
+  party: [],
+  enemy: null,
+  selected: [],
+  turn: 1
+};
+
+function loadState(){
+  const saved = localStorage.getItem('elementalEscapeSave');
+  if(saved){
+    const d = JSON.parse(saved);
+    state.statPoints = d.statPoints || 0;
+    state.discovered = new Set(d.discovered || []);
+    state.clearedStages = new Set(d.clearedStages || []);
+  }
+}
+function saveState(){
+  localStorage.setItem('elementalEscapeSave', JSON.stringify({
+    statPoints: state.statPoints,
+    discovered: [...state.discovered],
+    clearedStages: [...state.clearedStages]
+  }));
+}
+
+/* ============================================================
+   화면 전환
+============================================================ */
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.querySelectorAll('.nav-bar .nav-btn').forEach(b=>b.classList.remove('active'));
+  if(name==='map') renderMap();
+  if(name==='dex') renderDex();
+}
+
+function startGame(){
+  loadState();
+  showScreen('map');
+  updateHeader();
+}
+
+function updateHeader(){
+  document.getElementById('statPoints').textContent = state.statPoints;
+  document.getElementById('dexCount').textContent = `${state.discovered.size}/16`;
+}
+
+/* ============================================================
+   맵 렌더링
+============================================================ */
+function renderMap(){
+  const container = document.getElementById('mapContainer');
+  container.innerHTML = '';
+  STAGES.forEach((stage, idx)=>{
+    const locked = idx>0 && !state.clearedStages.has(STAGES[idx-1].id);
+    const cleared = state.clearedStages.has(stage.id);
+    const card = document.createElement('div');
+    card.className = 'stage-card' + (locked?' locked':'') + (cleared?' cleared':'');
+    card.onclick = ()=>{ if(!locked) enterStage(stage); };
+    card.innerHTML = `
+      <div class="stage-badge">${stage.groupLabel}</div>
+      <h3>${stage.title}</h3>
+      <p>${stage.desc}</p>
+      <div class="stage-elements">
+        ${stage.elements.map(e=>`<div class="mini-elem" style="color:var(--${ELEMENTS_DB[e].type})">${e}</div>`).join('')}
+        <div class="mini-elem" style="color:var(--danger)">${stage.enemy.symbol}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  updateHeader();
+}
+
+/* ============================================================
+   도감 렌더링
+============================================================ */
+function renderDex(){
+  const container = document.getElementById('dexContainer');
+  container.innerHTML = '';
+  Object.values(ELEMENTS_DB).forEach(el=>{
+    const discovered = state.discovered.has(el.symbol);
+    const card = document.createElement('div');
+    card.className = 'dex-card' + (discovered? '' : ' undiscovered');
+    card.onclick = ()=>{ if(discovered) showDexDetail(el); };
+    card.innerHTML = `
+      <div class="symbol" style="color:${discovered? `var(--${el.type})` : 'var(--text-dim)'}">${discovered? el.symbol : '?'}</div>
+      <div class="num">${discovered? el.name : '미발견'}</div>
+    `;
+    container.appendChild(card);
+  });
+  updateHeader();
+}
+
+function showDexDetail(el){
+  const box = document.getElementById('dexDetailBox');
+  const typeLabel = {metal:'금속', nonmetal:'비금속', metalloid:'준금속'}[el.type];
+  box.innerHTML = `
+    <h2 style="color:var(--${el.type})">${el.symbol}</h2>
+    <div class="sub">${el.name} · ${typeLabel} · 원자번호 ${el.atomicNumber}</div>
+    <div class="info-row"><span>족 / 주기</span><span>${el.group}족 / ${el.period}주기</span></div>
+    <div class="info-row"><span>최외각 전자</span><span>${el.valence}개</span></div>
+    <div class="info-row"><span>전기음성도</span><span>${el.en || '없음'}</span></div>
+    <div class="info-row"><span>HP / 공격 / 방어</span><span>${el.hp} / ${el.atk} / ${el.def}</span></div>
+    <div class="flavor">${el.flavor}</div>
+    <button class="btn btn-secondary" style="margin-top:16px;width:100%;" onclick="closeDexDetail()">닫기</button>
+  `;
+  document.getElementById('dexDetail').classList.add('show');
+}
+function closeDexDetail(){
+  document.getElementById('dexDetail').classList.remove('show');
+}
+
+/* ============================================================
+   전투 진입
+============================================================ */
+function enterStage(stage){
+  state.currentStage = stage;
+  state.party = stage.elements.map(sym=>createUnitInstance(sym));
+  state.enemy = {
+    name: stage.enemy.name,
+    symbol: stage.enemy.symbol,
+    hp: stage.enemy.hp, maxHp: stage.enemy.hp,
+    atk: stage.enemy.atk, def: stage.enemy.def
+  };
+  state.selected = [];
+  state.turn = 1;
+  showScreen('battle');
+  renderBattle();
+  logMessage(`${stage.title}에 입장했습니다. ${stage.enemy.name}이(가) 나타났다!`, 'info');
+  if(stage.noBond){
+    logMessage('⚠ 이 구역의 원소들은 이미 옥텟을 완성하여 결합할 수 없습니다.', 'fail');
+  }
+}
+
+function createUnitInstance(symbol){
+  const base = ELEMENTS_DB[symbol];
+  return {
+    ...base,
+    uid: symbol + '_' + Math.random().toString(36).slice(2,7),
+    curHp: base.hp, maxHp: base.hp,
+    stunned:false, dead:false, isCompound:false
+  };
+}
+
+/* ============================================================
+   전투 렌더링
+============================================================ */
+function renderBattle(){
+  const partyRow = document.getElementById('partyRow');
+  partyRow.innerHTML = '';
+  state.party.forEach(unit=>{
+    const card = document.createElement('div');
+    card.className = 'card' + (state.selected.includes(unit.uid)?' selected':'') +
+                      (unit.stunned?' stunned':'') + (unit.dead?' dead':'');
+    card.onclick = ()=> toggleSelect(unit);
+    const typeLabel = unit.isCompound ? '화합물' : {metal:'금속',nonmetal:'비금속',metalloid:'준금속'}[unit.type];
+    card.innerHTML = `
+      <div class="type-tag ${unit.isCompound?'':'type-'+unit.type}" style="${unit.isCompound?'background:rgba(224,180,90,.15);color:var(--gold)':''}">${typeLabel}</div>
+      <div class="symbol" style="color:${unit.isCompound? 'var(--gold)' : 'var(--'+unit.type+')'}">${unit.symbol}</div>
+      <div class="name">${unit.name}</div>
+      <div class="hpbar-bg"><div class="hpbar-fill" style="width:${(unit.curHp/unit.maxHp)*100}%"></div></div>
+      <div class="stats"><span>HP ${unit.curHp}</span><span>ATK ${unit.atk}</span></div>
+    `;
+    partyRow.appendChild(card);
+  });
+
+  const enemyRow = document.getElementById('enemyRow');
+  const e = state.enemy;
+  enemyRow.innerHTML = `
+    <div class="card enemy-unit">
+      <div class="type-tag" style="background:rgba(224,102,122,.15);color:var(--danger)">몬스터</div>
+      <div class="symbol">${e.symbol}</div>
+      <div class="name">${e.name}</div>
+      <div class="hpbar-bg"><div class="hpbar-fill" style="width:${(e.hp/e.maxHp)*100}%"></div></div>
+      <div class="stats"><span>HP ${e.hp}/${e.maxHp}</span><span>ATK ${e.atk}</span></div>
+    </div>
+  `;
+
+  updateCombineSlots();
+  document.getElementById('turnIndicator').textContent = `Turn ${state.turn}`;
+}
+
+function toggleSelect(unit){
+  if(unit.dead || unit.stunned) return;
+  const idx = state.selected.indexOf(unit.uid);
+  if(idx>=0){ state.selected.splice(idx,1); }
+  else {
+    if(state.selected.length>=2) state.selected.shift();
+    state.selected.push(unit.uid);
+  }
+  renderBattle();
+}
+
+function updateCombineSlots(){
+  const units = state.selected.map(uid=>state.party.find(u=>u.uid===uid));
+  const slotA = document.getElementById('slotA');
+  const slotB = document.getElementById('slotB');
+  const slotResult = document.getElementById('slotResult');
+
+  slotA.textContent = units[0]? units[0].symbol : '?';
+  slotA.className = 'slot' + (units[0]?' filled':'');
+  slotB.textContent = units[1]? units[1].symbol : '?';
+  slotB.className = 'slot' + (units[1]?' filled':'');
+
+  let previewRecipe = null;
+  if(units.length===2){
+    previewRecipe = findRecipe(units.map(u=>u.symbol));
+  }
+  slotResult.textContent = previewRecipe? previewRecipe.result : '?';
+  slotResult.className = 'slot' + (previewRecipe?' filled':'');
+
+  document.getElementById('bondBtn').disabled = !(units.length===2 && !state.currentStage.noBond);
+  document.getElementById('soloAttackBtn').disabled = !(units.length===1);
+}
+
+function clearSlots(){
+  state.selected = [];
+  renderBattle();
+}
+
+/* ============================================================
+   결합 판정 로직
+============================================================ */
+function findRecipe(symbols){
+  const sortedInput = [...symbols].sort().join(',');
+  return RECIPES.find(r=>{
+    const sortedRecipe = [...r.elements].sort().join(',');
+    return sortedRecipe === sortedInput;
+  });
+}
+
+function isMetal(el){ return el.type==='metal'; }
+function isNonmetal(el){ return el.type==='nonmetal' || el.type==='metalloid'; }
+
+function judgeBondType(u1,u2){
+  if(u1.en===0 || u2.en===0) return null; // 비활성기체는 결합불가
+  const enDiff = Math.abs(u1.en - u2.en);
+  if((isMetal(u1)&&isNonmetal(u2)) || (isMetal(u2)&&isNonmetal(u1))){
+    return enDiff>=1.7 ? 'ionic' : 'polar_covalent';
+  }
+  if(isNonmetal(u1)&&isNonmetal(u2)){
+    return enDiff>=0.5 ? 'polar_covalent' : 'covalent';
+  }
+  return null;
+}
+
+function attemptBond(){
+  const units = state.selected.map(uid=>state.party.find(u=>u.uid===uid));
+  if(units.length!==2) return;
+
+  const recipe = findRecipe(units.map(u=>u.symbol));
+
+  if(recipe){
+    // 결합 성공 -> 화합물로 변신
+    flashBond();
+    const compound = {
+      uid: recipe.result + '_' + Math.random().toString(36).slice(2,7),
+      symbol: recipe.result,
+      name: recipe.name,
+      type: recipe.type,
+      atk: Math.round((units[0].atk+units[1].atk)/2 * recipe.atkMul),
+      def: Math.round((units[0].def+units[1].def)/2 * recipe.defMul),
+      curHp: units[0].curHp + units[1].curHp,
+      maxHp: units[0].maxHp + units[1].maxHp,
+      stunned:false, dead:false, isCompound:true, ability:recipe.ability
+    };
+    // 기존 유닛 제거, 화합물 추가
+    state.party = state.party.filter(u=>!state.selected.includes(u.uid));
+    state.party.push(compound);
+    logMessage(`⚗ 결합 성공! ${units[0].symbol} + ${units[1].symbol} → ${recipe.result} (${recipe.name})! ${recipe.ability}`, 'success');
+    state.discovered.add(recipe.result);
+    state.selected = [];
+    enemyTurn(()=>{ renderBattle(); saveState(); updateHeader(); });
+  } else {
+    // 결합 실패 판정
+    const bondType = judgeBondType(units[0], units[1]);
+    if(!bondType){
+      logMessage(`✗ 결합 실패! ${units[0].symbol}와 ${units[1].symbol}은(는) 안정한 조합을 만들 수 없습니다. 두 원소가 스턴 상태에 빠졌습니다.`, 'fail');
+      units.forEach(u=>u.stunned=true);
+      state.selected = [];
+      enemyTurn(()=>{ renderBattle(); });
+    } else {
+      logMessage(`△ 미등록 조합입니다. ${units[0].symbol}+${units[1].symbol}은(는) 이론상 ${bondTypeLabel(bondType)} 가능하지만, 이 던전에서는 발현되지 않았습니다.`, 'fail');
+      state.selected = [];
+      renderBattle();
+    }
+  }
+}
+
+function bondTypeLabel(t){
+  return {ionic:'이온결합', covalent:'공유결합', polar_covalent:'극성공유결합'}[t] || t;
+}
+
+function flashBond(){
+  const flash = document.getElementById('bondFlash');
+  flash.classList.add('show');
+  setTimeout(()=>flash.classList.remove('show'), 300);
+}
+
+/* ============================================================
+   전투 액션
+============================================================ */
+function soloAttack(){
+  const unit = state.party.find(u=>u.uid===state.selected[0]);
+  if(!unit) return;
+  const dmg = Math.max(5, unit.atk - state.enemy.def);
+  state.enemy.hp = Math.max(0, state.enemy.hp - dmg);
+  logMessage(`${unit.symbol}이(가) ${state.enemy.name}에게 ${dmg}의 피해를 입혔습니다.`, 'info');
+  state.selected = [];
+
+  if(state.enemy.hp<=0){
+    renderBattle();
+    winBattle();
+    return;
+  }
+  enemyTurn(()=>{ renderBattle(); });
+}
+
+function enemyTurn(callback){
+  setTimeout(()=>{
+    const aliveUnits = state.party.filter(u=>!u.dead);
+    if(aliveUnits.length===0){ loseBattle(); return; }
+    const target = aliveUnits[Math.floor(Math.random()*aliveUnits.length)];
+    const dmg = Math.max(3, state.enemy.atk - (target.def||10));
+    target.curHp = Math.max(0, target.curHp - dmg);
+    if(target.curHp<=0){ target.dead = true; }
+    target.stunned = false; // 스턴은 1턴만 지속
+    logMessage(`${state.enemy.name}이(가) ${target.symbol}에게 ${dmg}의 피해를 입혔습니다.`, 'fail');
+
+    state.turn++;
+    if(state.party.every(u=>u.dead)){
+      callback();
+      loseBattle();
+    } else {
+      callback();
+    }
+  }, 500);
+}
+
+function logMessage(msg, cls){
+  const log = document.getElementById('battleLog');
+  const entry = document.createElement('div');
+  entry.className = 'entry-'+cls;
+  entry.textContent = msg;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
+}
+
+/* ============================================================
+   승패 처리
+============================================================ */
+function winBattle(){
+  const stage = state.currentStage;
+  state.clearedStages.add(stage.id);
+  state.statPoints += 50;
+  stage.reward.forEach(sym=>state.discovered.add(sym));
+  stage.elements.forEach(sym=>state.discovered.add(sym));
+  saveState();
+
+  const box = document.getElementById('resultBox');
+  box.className = 'result-box win';
+  box.innerHTML = `
+    <h2>🎉 승리!</h2>
+    <p>${stage.enemy.name}을(를) 물리쳤습니다. 안정도 포인트 +50</p>
+    <div class="reward-list">
+      ${stage.reward.map(sym=>`<div class="mini-elem" style="width:44px;height:44px;font-size:15px;color:var(--${ELEMENTS_DB[sym].type})">${sym}</div>`).join('')}
+    </div>
+    <button class="btn btn-primary" onclick="closeResult()">던전 맵으로</button>
+  `;
+  document.getElementById('resultOverlay').classList.add('show');
+}
+
+function loseBattle(){
+  const box = document.getElementById('resultBox');
+  box.className = 'result-box lose';
+  box.innerHTML = `
+    <h2>💥 패배</h2>
+    <p>파티가 전멸했습니다. 다시 도전해보세요.</p>
+    <button class="btn btn-primary" onclick="closeResult()">던전 맵으로</button>
+  `;
+  document.getElementById('resultOverlay').classList.add('show');
+}
+
+function closeResult(){
+  document.getElementById('resultOverlay').classList.remove('show');
+  document.getElementById('battleLog').innerHTML = '';
+  showScreen('map');
+}
+
+function fleeStage(){
+  document.getElementById('battleLog').innerHTML = '';
+  showScreen('map');
+}
+
+/* ============================================================
+   초기화
+============================================================ */
+loadState();
+</script>
+</body>
+</html>
