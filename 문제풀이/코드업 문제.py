@@ -1056,3 +1056,39 @@
 #     num_list[i - 1] += 1
 
 # print(*num_list)
+
+#1406
+# n = input()
+# if n == 'love':
+#     print("I love you.")
+
+#1408
+# n = input()
+# new_p1 = ''
+# new_p2 = ''
+
+# for i in range(len(n)):
+#     ask = ord(n[i])
+
+#     ask1 = ask +2
+#     new_p1 += chr(ask1)
+
+#     ask2 = (ask * 7) % 80 + 48
+#     new_p2 += chr(ask2)
+
+# print(f"{new_p1}\n{new_p2}")
+
+#1414
+# n = input().upper()
+# c_count = 0
+# cc_count = 0
+
+# for i in n:
+#     if i == 'C':
+#         c_count += 1
+
+# for j in range(len(n) -1):
+#     if n[j] == 'C' and n[j+1] == 'C':
+#         cc_count += 1
+
+# print(f"{c_count}\n{cc_count}")
