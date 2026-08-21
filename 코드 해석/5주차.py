@@ -84,3 +84,26 @@ while queue:
             queue.append(neighbor)
 
 print(visited[b])
+
+#10번
+N, K = map(int, input().split())
+
+results = []
+current = []
+
+def dfs(start):
+    if len(current) == K:
+        results.append(list(current))
+        return
+    
+    for i in range(start, N + 1):
+        current.append(i)
+        dfs(i + 1)
+        current.pop()
+
+dfs(1)
+
+print(len(results))
+
+for comb in results:
+    print(*comb)
