@@ -107,3 +107,24 @@ print(len(results))
 
 for comb in results:
     print(*comb)
+
+#11번
+n = int(input())
+
+nums = list(map(int, input().split()))
+
+if n == 1:
+	print(*nums)
+else:
+	while len(nums) > 1:
+		next_round = []
+		for i in range(0, len(nums), 2):
+			if nums[i] > nums[i+1]:
+				next_round.append(nums[i])
+			else:
+				next_round.append(nums[i+1])
+
+		print(*next_round)
+		nums = next_round
+
+#12번
