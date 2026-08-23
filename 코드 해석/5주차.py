@@ -128,3 +128,37 @@ else:
 		nums = next_round
 
 #12번
+h, w = map(int, input().split())
+
+maze = []
+
+for i in range(h):
+    # 각 글자를 숫자로 바꾸어 2차원 리스트로 저장합니다.
+    maze.append(list(map(int, list(input().strip()))))
+
+if maze[0][0] == 0 or maze[h - 1][w - 1] == 0:
+    print(-1)
+else:
+    dist = [[-1] * w for _ in range(h)]
+    
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    
+    queue = [(0, 0)]
+    dist[0][0] = 0
+    
+    head = 0
+    
+    while head < len(queue):
+        x, y = queue[head]
+        head += 1
+        
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            
+            if (0 <= nx < h and 0 <= ny < w) and maze[nx][ny] == 1 and dist[nx][ny] == -1:
+                dist[nx][ny] = dist[x][y] + 1
+                queue.append((nx, ny))
+
+    print(dist[h - 1][w - 1])
