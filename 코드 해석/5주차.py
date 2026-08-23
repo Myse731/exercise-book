@@ -162,3 +162,41 @@ else:
                 queue.append((nx, ny))
 
     print(dist[h - 1][w - 1])
+
+#7번 수정본
+n, m = map(int, input().split())
+money = list(map(int, input().split()))
+chose = []
+
+for _ in money:
+    if _ > 0 and m % _ == 0:
+        count = m // _
+        chose.append(count)
+
+if not chose:
+    print(-1)
+else:
+    low = chose[0]
+    for i in chose:
+        if i < low:
+            low = i
+    print(low)
+
+
+#10번 수정본
+n, k = map(int,input().split())
+
+nums = []
+
+for i in range(1, n+1):
+	for j in range(1, n+1):
+		nums.append([i, j])
+
+result = []
+for _ in nums:
+	if _[0] < _[1]:
+		result.append(_)
+		
+print(len(result))
+for j in result:
+	print(f"{j[0]} {j[1]}")
