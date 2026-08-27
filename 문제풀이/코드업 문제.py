@@ -1092,3 +1092,20 @@
 #         cc_count += 1
 
 # print(f"{c_count}\n{cc_count}")
+
+#1512
+n = int(input())
+x, y = map(int, input().split())
+
+mapp = [[0 for j in range(n)] for i in range(n)]
+mapp[x-1][y-1] = 1
+sx = x - 1
+sy = y - 1
+for i in range(n):
+    for j in range(n):
+        mapp[i][j] = abs(i - sx) + abs(j - sy) + 1
+
+for i in range(n):
+    for j in range(n):
+        print(f"{mapp[i][j]}", end = ' ')
+    print()
