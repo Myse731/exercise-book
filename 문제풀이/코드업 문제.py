@@ -1094,18 +1094,43 @@
 # print(f"{c_count}\n{cc_count}")
 
 #1512
+# n = int(input())
+# x, y = map(int, input().split())
+
+# mapp = [[0 for j in range(n)] for i in range(n)]
+# mapp[x-1][y-1] = 1
+# sx = x - 1
+# sy = y - 1
+# for i in range(n):
+#     for j in range(n):
+#         mapp[i][j] = abs(i - sx) + abs(j - sy) + 1
+
+# for i in range(n):
+#     for j in range(n):
+#         print(f"{mapp[i][j]}", end = ' ')
+#     print()
+
+#1093
+# n = int(input())
+# nums = list(map(int, input().split()))
+
+# numbers = [0] * 23
+
+# for i in nums:
+#     numbers[i-1] += 1
+
+# print(*numbers)
+
+#1405
 n = int(input())
-x, y = map(int, input().split())
-
-mapp = [[0 for j in range(n)] for i in range(n)]
-mapp[x-1][y-1] = 1
-sx = x - 1
-sy = y - 1
-for i in range(n):
-    for j in range(n):
-        mapp[i][j] = abs(i - sx) + abs(j - sy) + 1
+nums = list(map(int, input().split()))
 
 for i in range(n):
-    for j in range(n):
-        print(f"{mapp[i][j]}", end = ' ')
+    for j in range(i, n):
+        print(f"{nums[j]}", end =' ')
+    for k in range(-1, i):
+        if(k == -1):
+            continue
+        else:
+            print(f"{nums[k]}", end = ' ')
     print()
