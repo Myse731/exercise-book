@@ -1122,15 +1122,31 @@
 # print(*numbers)
 
 #1405
-n = int(input())
-nums = list(map(int, input().split()))
+# n = int(input())
+# nums = list(map(int, input().split()))
 
-for i in range(n):
-    for j in range(i, n):
-        print(f"{nums[j]}", end =' ')
-    for k in range(-1, i):
-        if(k == -1):
-            continue
-        else:
-            print(f"{nums[k]}", end = ' ')
-    print()
+# for i in range(n):
+#     for j in range(i, n):
+#         print(f"{nums[j]}", end =' ')
+#     for k in range(-1, i):
+#         if(k == -1):
+#             continue
+#         else:
+#             print(f"{nums[k]}", end = ' ')
+#     print()
+
+#1410
+# n = input()
+
+# sum1 = 0
+# sum2 = 0
+
+# for i in n:
+#     if(i == '('):
+#         sum1 += 1
+#     elif(i == ')'):
+#         sum2 += 1
+
+# print(f"{sum1} {sum2}")
+
+#1412
