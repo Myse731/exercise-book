@@ -1149,4 +1149,28 @@
 
 # print(f"{sum1} {sum2}")
 
-#1412
+#1416
+# n = int(input())
+
+# if(n == 0):
+#     print('0')
+# else:
+#     izin = []
+#     while(n > 0):
+#         izin_su = n % 2
+#         izin.append(str(izin_su))
+#         n //= 2
+#     izin.reverse()
+#     print("".join(izin))
+
+#1420
+# n = int(input())
+# scores = {}
+
+# for i in range(n):
+#     name, score = input().split()
+#     scores[name] = int(score)
+
+# sorted_score = sorted(scores.items(), key = lambda x:x[1], reverse = True)
+# third_name = sorted_score[2][0]
+# print(f"{third_name}")
