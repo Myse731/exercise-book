@@ -51,3 +51,47 @@ def fib(n):
 print("피보나치 수열")
 n = int(input("출력 항의 개수 입력 : "))
 print(fib(n))
+
+#일반-합 구하기
+def sum(n):
+  s = 0
+  for i in range(1, n+1):
+    s += i
+  return s
+n = int(input())
+print(sum(n))
+
+#합구하기 - 1씩 분할해 정복하기
+#분할 정복의첫 번쨰 단계는 문제의 성격은 같고 크기가 작은 문제로 분할하는 것
+def sum(n):
+  if n == 1:
+    return 1
+  return n + sum(n-1)
+
+print("n까지의 합 구하기")
+n = int(input("입력: "))
+print(f"합은 {sum(n)}")
+
+#합 구하기 - 절반으로 분할해 정복하기
+def sum(n):
+  if n == 1:
+    return 1
+  return (2 * sum(n // 2)) + ((n+1) // 2) * ((n+1) // 2)
+
+
+print("n까지의 합 구하기")
+n = int(input("입력: "))
+res = sum(n)
+print(f"1 ~ {n}의 합은 {res}")
+
+#합 구하기 - 절반으로 분할해 정복하기
+def sum(n):
+  if n == 1:
+    return 1
+  return (2 * sum(n // 2)) + ((n+1) // 2) ** 2
+
+
+print("n까지의 합 구하기")
+n = int(input("입력: "))
+res = sum(n)
+print(f"1 ~ {n}의 합은 {res}")
