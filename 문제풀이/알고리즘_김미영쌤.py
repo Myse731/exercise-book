@@ -37,4 +37,17 @@ n = int(input("출력 항의 개수 입력 : "))
 print(fib(n))
 
 #재귀-피보나치
+def fib(n):
+  if n <= 0:
+    return []
+  elif n == 1:
+    return [1]
+  elif n == 2:
+    return [1,1]
+  fibo = fib(n - 1)
+  fibo.append(fibo[-1] + fibo[-2])
+  return fibo
 
+print("피보나치 수열")
+n = int(input("출력 항의 개수 입력 : "))
+print(fib(n))
