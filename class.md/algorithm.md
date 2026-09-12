@@ -257,5 +257,73 @@ int *p = &a;
         - p는 int를 가리킬수있는 포인터 변수(선언)
     - *p = 30
         - p가 가리키는 대상에 접근 → 사용할때
+- 이중 포인터
+    - 포인터 변수의 주소를 저장하는 포인터
+    
+    ```c
+    int a = 10;
+    int *p = &a;
+    int **pp = &p;
+    
+    pp -> p -> a
+    ```
+    
+    | 표현 | 의미 |
+    | --- | --- |
+    | a | a의 값 |
+    | &a | a의 주소 |
+    | p | p가 가리키는 값의 주소 |
+    | *p | p가 가리키는 값의 원본(a = 10) |
+    | &p | p의 주소 |
+    | pp | pp가 가리키는 값의 주소 |
+    | *pp | pp가 가리키는 값이 가리키는 주소 |
+    | **pp | pp가 가리키는 값이 가리키는 값 |
+- <정리>
+    - 일반 변수 a를 함수에서 변경하려면 &a를 전달하고, int *p로 받는다
+    - 포인터 변수 p를 함수에서 변경하려면 &p를 전달하고 int **p로 받는다
 
 ## 구조체
+
+- 구조체
+    
+    ```c
+    struct Student{
+    	char name[20];
+    	int score;
+    };
+    
+    struct Student s;
+    s.score = 90;
+    ```
+    
+    - 서로 관련된 여러 데이터를 묶어 표현하는 사용자 정의 자료형
+    - s : struct Student형 변수
+    - s.score : 구조체 멤버에 접근
+- 구조체 포인터
+    
+    ```c
+    #include <stdio.h>
+    
+    struct Student{
+    	char name[20];
+    	int score;
+    };
+    
+    int main(){
+    	struct Student s = {"Kim", 80};
+    	addScore(&s);
+    	printf("%s %d\n", s.name, s.score);
+    	return();
+    }
+    ```
+    
+    | 코드 | 의미 |
+    | --- | --- |
+    | struct Student | 구조체 변수 |
+    | s.name | 구조체 변수의 멤버 접근 |
+    | s.score | 구조체 변수의 멤버 접근 |
+    | struct Student *p | 구조체 포인터 |
+    | p = &s | s의 주소 저장 |
+    | (*p).score | 포인터를 통해 멤버 접근 |
+    | p → score | 위와 같은 의미 |
+    | change(&s) | 구조체의 주소 전달 |
