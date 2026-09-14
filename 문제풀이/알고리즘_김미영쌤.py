@@ -95,3 +95,16 @@ print("n까지의 합 구하기")
 n = int(input("입력: "))
 res = sum(n)
 print(f"1 ~ {n}의 합은 {res}")
+
+#하노이 탑
+def harnoi(n, s, t, e):
+  if(n == 0):
+    return
+  harnoi(n-1, s, e, t)
+  print(f"{s} => {e}")
+  harnoi(n-1, t, s, e)
+
+print('하노이탑')
+n = int(input("n 입력: "))
+print(f"원반 개수: {n}개")
+harnoi(n, 'a', 'b', 'c')
