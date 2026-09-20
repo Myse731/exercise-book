@@ -1174,3 +1174,7 @@
 # sorted_score = sorted(scores.items(), key = lambda x:x[1], reverse = True)
 # third_name = sorted_score[2][0]
 # print(f"{third_name}")
+
+#1469
+n = int(input())
+nums = [[0] * n for i in range(n)]
