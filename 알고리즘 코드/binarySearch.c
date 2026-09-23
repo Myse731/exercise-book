@@ -88,6 +88,20 @@ int main(){
     }
     else{
         printf("Not found\n");
+        char answer;
+        printf("보실? Y/N : ");
+        scanf(" %c", &answer);
+        if(answer == 'Y' || answer == 'y'){
+            Node * current = head;
+            while(current != NULL){
+                printf("%d ", current -> data);
+                current = current -> next;
+            }
+            printf("\n");
+        }
+        else{
+            printf("ㅇㅋ\n");
+        }
     }
     freeList(head);
 
