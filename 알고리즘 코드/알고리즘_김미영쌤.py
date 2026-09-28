@@ -1,110 +1,138 @@
-#기본-팩토리얼
-def fac(n):
-  sum = 1
-  for i in range(1, n+1):
-    sum *= i
-  return sum
+# #기본-팩토리얼
+# def fac(n):
+#   sum = 1
+#   for i in range(1, n+1):
+#     sum *= i
+#   return sum
 
-print("팩토리얼 계산")
-n = int(input('n 입력 : '))
-res = fac(n)
-print(f"{n}!={res}")
+# print("팩토리얼 계산")
+# n = int(input('n 입력 : '))
+# res = fac(n)
+# print(f"{n}!={res}")
 
-#재귀-팩토리얼
-def fac(n):
+# #재귀-팩토리얼
+# def fac(n):
+#   if n == 1:
+#     return 1
+#   return fac(n-1) * n
+
+# print("팩토리얼 계산")
+# n = int(input('n 입력 : '))
+# res = fac(n)
+# print(f"{n}!={res}")
+
+# #일반-피보나치
+# def fib(n):
+#   if n <= 0:
+#     return []
+#   if n == 1:
+#     return [1]
+#   fibo = [1, 1]
+#   for i in range(2, n):
+#       fibo.append(fibo[i-1] + fibo[i-2])
+#   return fibo
+
+# print("피보나치 수열")
+# n = int(input("출력 항의 개수 입력 : "))
+# print(fib(n))
+
+# #재귀-피보나치
+# def fib(n):
+#   if n <= 0:
+#     return []
+#   elif n == 1:
+#     return [1]
+#   elif n == 2:
+#     return [1,1]
+#   fibo = fib(n - 1)
+#   fibo.append(fibo[-1] + fibo[-2])
+#   return fibo
+
+# print("피보나치 수열")
+# n = int(input("출력 항의 개수 입력 : "))
+# print(fib(n))
+
+# #일반-합 구하기
+# def sum(n):
+#   s = 0
+#   for i in range(1, n+1):
+#     s += i
+#   return s
+# n = int(input())
+# print(sum(n))
+
+# #합구하기 - 1씩 분할해 정복하기
+# #분할 정복의첫 번쨰 단계는 문제의 성격은 같고 크기가 작은 문제로 분할하는 것
+# def sum(n):
+#   if n == 1:
+#     return 1
+#   return n + sum(n-1)
+
+# print("n까지의 합 구하기")
+# n = int(input("입력: "))
+# print(f"합은 {sum(n)}")
+
+# #합 구하기 - 절반으로 분할해 정복하기
+# def sum(n):
+#   if n == 1:
+#     return 1
+#   return (2 * sum(n // 2)) + ((n+1) // 2) * ((n+1) // 2)
+
+
+# print("n까지의 합 구하기")
+# n = int(input("입력: "))
+# res = sum(n)
+# print(f"1 ~ {n}의 합은 {res}")
+
+# #합 구하기 - 절반으로 분할해 정복하기
+# def sum(n):
+#   if n == 1:
+#     return 1
+#   return (2 * sum(n // 2)) + ((n+1) // 2) ** 2
+
+
+# print("n까지의 합 구하기")
+# n = int(input("입력: "))
+# res = sum(n)
+# print(f"1 ~ {n}의 합은 {res}")
+
+# #하노이 탑
+# def harnoi(n, s, t, e):
+#   if(n == 0):
+#     return
+#   harnoi(n-1, s, e, t)
+#   print(f"{s} => {e}")
+#   harnoi(n-1, t, s, e)
+
+# print('하노이탑')
+# n = int(input("n 입력: "))
+# print(f"원반 개수: {n}개")
+# harnoi(n, 'a', 'b', 'c')
+
+ #재귀로 최대값 찾기
+def findMax(a, n):
+  max = 0
+  for i in range(0, n):
+    if max <= a[i]:
+      max = a[i]
+  return max
+
+
+print("최대값 찾기")
+a = list(map(int, input("n개의 숫자 입력 : ").split()))
+print("최대값은 ", findMax(a, len(a)))
+
+#재귀로 최대값 찾기
+def findMax(a, n):
   if n == 1:
-    return 1
-  return fac(n-1) * n
-
-print("팩토리얼 계산")
-n = int(input('n 입력 : '))
-res = fac(n)
-print(f"{n}!={res}")
-
-#일반-피보나치
-def fib(n):
-  if n <= 0:
-    return []
-  if n == 1:
-    return [1]
-  fibo = [1, 1]
-  for i in range(2, n):
-      fibo.append(fibo[i-1] + fibo[i-2])
-  return fibo
-
-print("피보나치 수열")
-n = int(input("출력 항의 개수 입력 : "))
-print(fib(n))
-
-#재귀-피보나치
-def fib(n):
-  if n <= 0:
-    return []
-  elif n == 1:
-    return [1]
-  elif n == 2:
-    return [1,1]
-  fibo = fib(n - 1)
-  fibo.append(fibo[-1] + fibo[-2])
-  return fibo
-
-print("피보나치 수열")
-n = int(input("출력 항의 개수 입력 : "))
-print(fib(n))
-
-#일반-합 구하기
-def sum(n):
-  s = 0
-  for i in range(1, n+1):
-    s += i
-  return s
-n = int(input())
-print(sum(n))
-
-#합구하기 - 1씩 분할해 정복하기
-#분할 정복의첫 번쨰 단계는 문제의 성격은 같고 크기가 작은 문제로 분할하는 것
-def sum(n):
-  if n == 1:
-    return 1
-  return n + sum(n-1)
-
-print("n까지의 합 구하기")
-n = int(input("입력: "))
-print(f"합은 {sum(n)}")
-
-#합 구하기 - 절반으로 분할해 정복하기
-def sum(n):
-  if n == 1:
-    return 1
-  return (2 * sum(n // 2)) + ((n+1) // 2) * ((n+1) // 2)
-
-
-print("n까지의 합 구하기")
-n = int(input("입력: "))
-res = sum(n)
-print(f"1 ~ {n}의 합은 {res}")
-
-#합 구하기 - 절반으로 분할해 정복하기
-def sum(n):
-  if n == 1:
-    return 1
-  return (2 * sum(n // 2)) + ((n+1) // 2) ** 2
-
-
-print("n까지의 합 구하기")
-n = int(input("입력: "))
-res = sum(n)
-print(f"1 ~ {n}의 합은 {res}")
-
-#하노이 탑
-def harnoi(n, s, t, e):
-  if(n == 0):
-    return
-  harnoi(n-1, s, e, t)
-  print(f"{s} => {e}")
-  harnoi(n-1, t, s, e)
-
-print('하노이탑')
-n = int(input("n 입력: "))
-print(f"원반 개수: {n}개")
-harnoi(n, 'a', 'b', 'c')
+    return a[0]
+  a2 = findMax(a, n-1)
+  if a2 <= a[n-1]:
+    return a[n-1]
+  else:
+    return a2
+  
+  
+print("최대값 찾기")
+a = list(map(int, input("n개의 숫자 입력 : ").split()))
+print("최대값은 ", findMax(a, len(a)))
