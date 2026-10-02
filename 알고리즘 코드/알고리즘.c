@@ -1,37 +1,38 @@
-// #include <stdio.h>
-// int linearSearch(int arr[], int size, int target){
-//     int bigo = 0;
-//     for(int i = 0; i < size; i++){
-//         if(arr[i] == target){
-//             bigo += 1;
-//             return bigo;
-//         }
-//         else{
-//             bigo += 1;
-//         }
-//     }
-//     return size;
-// }
-// int main(void){
-//     int arr[] = {13, 8, 27, 4, 19};
-//     int size = sizeof(arr) / sizeof(arr[0]);
-//     int target;
+#include <stdio.h>
+int linearSearch(int arr[], int size, int target){
+    int bigo = 0;
+    for(int i = 0; i < size; i++){
+        if(arr[i] == target){
+            bigo += 1;
+            return bigo;
+        }
+        else{
+            bigo += 1;
+        }
+    }
+    return size;
+}
 
-//     printf("찾을 숫자 입력: ");
-//     scanf("%d", &target);
+int main(void){
+    int arr[] = {13, 8, 27, 4, 19};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target;
 
-//     int result = linearSearch(arr, size, target);
+    printf("찾을 숫자 입력: ");
+    scanf("%d", &target);
 
-//     if(result == -1){
-//         printf("비교 횟수 : %d\n", result);
-//         printf("%d는 배열에 없습니다\n", target);
-//     }
-//     else{
-//         printf("비교 횟수 : %d\n", result);
-//         printf("%d은 %d번째 인덱스에서 찾았습니다.", target, result-1);
-//     }
-//     return 0;
-// }
+    int result = linearSearch(arr, size, target);
+
+    if(result == -1){
+        printf("비교 횟수 : %d\n", result);
+        printf("%d는 배열에 없습니다\n", target);
+    }
+    else{
+        printf("비교 횟수 : %d\n", result);
+        printf("%d은 %d번째 인덱스에서 찾았습니다.", target, result-1);
+    }
+    return 0;
+}
 
 // #include <stdio.h>
 // #include <stdlib.h>
