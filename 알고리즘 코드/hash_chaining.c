@@ -57,4 +57,17 @@ struct Node * delete(int key){
     free(current);
 }
 
+void freeTable(){
+    for(int i = 0; i < TABLE_SIZE; i++){
+        struct Node* current = table[i];
+        while(current != NULL){
+            struct Node* temp =current;
+            current = current -> next;
+            free(temp);
+        }
+        table[i] = NULL;
+    }
+}
+
 struct Node * table[TABLE_SIZE];
+
