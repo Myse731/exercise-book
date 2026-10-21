@@ -1,0 +1,591 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>스텔라 팩맨 - 별의 핵융합 여행</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #05050f;
+    color: #fff;
+    font-family: 'Malgun Gothic', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    overflow-x: hidden;
+  }
+  h1 {
+    margin: 10px 0;
+    background: linear-gradient(90deg, #ffcc00, #ff6600, #ff0066);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 26px;
+  }
+  #gameContainer { position: relative; }
+  #hud { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+  #tempBarWrap {
+    height: 24px; background: #222; border: 2px solid #555;
+    border-radius: 12px; overflow: hidden; margin-bottom: 8px; position: relative;
+  }
+  #tempBar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #3399ff, #ffcc00, #ff3300);
+    transition: width 0.3s;
+  }
+  #tempLabel {
+    position: absolute; top: 0; left: 0; right: 0;
+    text-align: center; line-height: 24px; font-size: 12px; text-shadow: 1px 1px 2px #000;
+  }
+  canvas { background: #000; display: block; border: 3px solid #444; border-radius: 8px; }
+  #stageInfo { text-align: center; margin-top: 8px; font-size: 15px; color: #ffcc00; min-height: 20px; }
+  #overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.95); display: none;
+    align-items: center; justify-content: center; z-index: 100;
+  }
+  #popupBox {
+    background: #12122a; border: 2px solid #ffcc00;
+    border-radius: 12px; padding: 30px; max-width: 520px; text-align: center;
+  }
+  #popupBox h2 { color: #ffcc00; margin-bottom: 12px; }
+  #popupBox p { line-height: 1.6; margin-bottom: 10px; font-size: 15px; }
+  #popupBox button {
+    margin-top: 15px; padding: 10px 25px; background: #ff6600;
+    border: none; border-radius: 6px; color: white; font-size: 16px; cursor: pointer;
+  }
+  #popupBox button:hover { background: #ff8800; }
+  #quizOptions { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
+  #quizOptions button { background: #223; border: 1px solid #556; }
+  #quizOptions button:hover { background: #334; }
+  #controls { margin-top: 10px; font-size: 13px; color: #999; text-align: center; }
+  #startBtn {
+    margin-top: 20px; padding: 15px 40px; font-size: 18px;
+    background: linear-gradient(90deg, #ff6600, #ffcc00);
+    border: none; border-radius: 30px; cursor: pointer; font-weight: bold;
+  }
+  #elementDex { margin-top: 10px; font-size: 12px; color: #aaa; text-align: center; }
+  .dexBadge {
+    display: inline-block; padding: 3px 8px; margin: 2px;
+    border-radius: 10px; background: #223; border: 1px solid #556;
+  }
+  .capturePopup { border-color: #ff3355 !important; }
+  .capturePopup h2 { color: #ff5577 !important; }
+  #soundToggle {
+    margin-top: 10px; padding: 8px 16px; background: #223;
+    border: 1px solid #556; color: #fff; border-radius: 6px; cursor: pointer; font-size: 13px;
+  }
+  #ghostCountInfo { margin-top: 6px; font-size: 13px; color: #ff8888; text-align: center; }
+</style>
+</head>
+<body>
+<h1>⭐ 스텔라 팩맨 : 별의 핵융합 여행</h1>
+<div id="gameContainer">
+  <div id="hud">
+    <div>❤️ 생명: <span id="lives">3</span></div>
+    <div>점수: <span id="score">0</span></div>
+    <div>단계: <span id="stageNum">1</span> / 5</div>
+  </div>
+  <div id="tempBarWrap"><div id="tempBar"></div><div id="tempLabel">1,000만 K</div></div>
+  <canvas id="gameCanvas"></canvas>
+  <div id="stageInfo">게임 시작 버튼을 눌러 시작하세요!</div>
+  <div id="ghostCountInfo"></div>
+  <div id="elementDex">획득한 원소: <span id="dexList"></span></div>
+</div>
+<div id="controls">방향키(← → ↑ ↓)로 이동 | 도트를 90% 모으면 다음 단계로 이동합니다</div>
+<button id="startBtn">게임 시작</button>
+<button id="soundToggle">🔊 배경음악 끄기</button>
+<div id="overlay">
+  <div id="popupBox">
+    <h2 id="popupTitle"></h2>
+    <p id="popupText"></p>
+    <div id="quizOptions"></div>
+    <button id="popupBtn">확인</button>
+  </div>
+</div>
+<script>
+const STAGES = [
+  { name:"수소 핵융합", tempLabel:"1,000만 K", dotColor:"#ffffff", dotElement:"H", dotName:"수소",
+    story:"별의 중심 온도가 1,000만 K에 도달했습니다! 수소 원자핵 4개가 융합하여 헬륨 원자핵이 만들어지는 '양성자-양성자 연쇄 반응'이 시작됩니다. 이것이 태양이 빛나는 이유입니다.",
+    captureDesc:"지금 태양은 수소를 헬륨으로 바꾸는 '주계열성' 단계입니다. 태양은 앞으로도 약 50억 년간 이 상태를 유지하며 안정적으로 빛날 것입니다.",
+    quizzes:[
+      {q:"태양이 주로 에너지를 만드는 핵융합 반응은?",options:["수소 → 헬륨","철 → 우라늄","산소 → 질소"],answer:0},
+      {q:"태양처럼 수소를 태우는 별을 무슨 단계라고 부를까요?",options:["백색왜성","주계열성","초신성"],answer:1},
+      {q:"수소 핵융합에 필요한 최소 온도는 대략 얼마일까요?",options:["1,000만 K","100 K","1,000 K"],answer:0}
+    ]},
+  { name:"헬륨 핵융합", tempLabel:"1억 K", dotColor:"#ffdd55", dotElement:"He", dotName:"헬륨",
+    story:"온도가 1억 K를 넘었습니다! 헬륨 원자핵 3개가 융합하는 '트리플 알파 과정'을 통해 탄소가 만들어집니다. 이어서 탄소와 헬륨이 결합해 산소도 만들어집니다.",
+    captureDesc:"지금 별은 수소를 다 쓰고 '적색거성'으로 부풀어 오른 상태입니다. 중심부는 헬륨을 태우며 탄소와 산소를 만들고 있습니다.",
+    quizzes:[
+      {q:"헬륨 원자핵 3개가 융합하면 무엇이 만들어질까요?",options:["질소","탄소","규소"],answer:1},
+      {q:"헬륨 핵융합이 시작될 때 별은 어떤 상태로 변할까요?",options:["적색거성으로 부풀어 오른다","블랙홀이 된다","작아져서 사라진다"],answer:0},
+      {q:"헬륨 핵융합 과정의 이름은?",options:["트리플 알파 과정","베타 붕괴 과정","감마선 폭발"],answer:0}
+    ]},
+  { name:"탄소·네온 핵융합", tempLabel:"5~10억 K", dotColor:"#88ccff", dotElement:"C/Ne", dotName:"탄소/네온",
+    story:"온도가 5억~10억 K까지 상승했습니다! 질량이 큰 별의 중심에서 탄소와 네온의 핵융합이 일어나 네온, 마그네슘 같은 원소가 만들어집니다. 이 단계는 태양보다 훨씬 무거운 별에서만 가능합니다.",
+    captureDesc:"지금 별은 태양 질량의 8배가 넘는 '초거성' 상태입니다. 양파처럼 여러 겹의 껍질에서 각각 다른 원소가 핵융합하고 있습니다.",
+    quizzes:[
+      {q:"탄소·네온 핵융합이 일어나려면 어떤 별이어야 할까요?",options:["태양과 비슷한 질량의 별","태양보다 훨씬 무거운 별","질량과 무관하다"],answer:1},
+      {q:"무거운 별의 내부 구조를 흔히 무엇에 비유할까요?",options:["양파 껍질 구조","완전히 균일한 구조","속이 텅 빈 구조"],answer:0},
+      {q:"탄소 핵융합으로 만들어질 수 있는 원소가 아닌 것은?",options:["네온","마그네슘","우라늄"],answer:2}
+    ]},
+  { name:"규소 핵융합 (철 생성)", tempLabel:"30억 K", dotColor:"#cccccc", dotElement:"Si→Fe", dotName:"규소/철",
+    story:"온도가 30억 K에 도달! 규소의 핵융합으로 마침내 '철(Fe)'이 만들어집니다. 그런데 철은 핵융합으로 만들 수 있는 가장 무거운 원소입니다. 철보다 무거운 원소를 만들려면 에너지를 방출하는 게 아니라 오히려 '흡수'해야 하기 때문입니다.",
+    captureDesc:"별의 중심에는 이제 철로 된 핵이 생겼습니다. 철은 더 이상 에너지를 내며 융합할 수 없어서, 별은 곧 붕괴 직전의 위태로운 상태입니다.",
+    quizzes:[
+      {q:"일반적인 핵융합으로 만들 수 있는 가장 무거운 원소는?",options:["철(Fe)","금(Au)","우라늄(U)"],answer:0},
+      {q:"철보다 무거운 원소를 만들려면 에너지를 어떻게 해야 할까요?",options:["방출해야 한다","흡수해야 한다","필요 없다"],answer:1},
+      {q:"별의 중심에 철핵이 생기면 별은 어떤 상태가 될까요?",options:["더 안정된다","붕괴 직전의 위태로운 상태가 된다","영원히 빛난다"],answer:1}
+    ]},
+  { name:"초신성 폭발", tempLabel:"초고온 폭발", dotColor:"#ff44aa", dotElement:"Au/U", dotName:"금/우라늄",
+    story:"별이 수명을 다하고 '초신성 폭발'을 일으켰습니다! 이 순간 발생하는 엄청난 에너지 덕분에 철보다 무거운 금, 은, 우라늄 같은 원소들이 비로소 만들어집니다. 우리 몸의 철분, 결혼반지의 금까지 - 모두 죽어가는 별이 남긴 선물입니다.",
+    captureDesc:"별이 초신성으로 폭발하는 마지막 순간입니다. 이 폭발이 우주 전역에 무거운 원소를 흩뿌려, 훗날 행성과 생명체의 재료가 됩니다.",
+    quizzes:[
+      {q:"금이나 우라늄 같은 무거운 원소는 언제 만들어질까요?",options:["별이 태어날 때","태양처럼 평범하게 빛날 때","초신성이 폭발할 때"],answer:2},
+      {q:"초신성 폭발이 우주에 남기는 것은 무엇일까요?",options:["무거운 원소들","아무것도 없음","수소만 남김"],answer:0},
+      {q:"우리 몸속 철분이나 반지 속 금은 어디서 왔을까요?",options:["지구에서 처음 생성됨","죽어가는 별에서 만들어짐","태양이 만들어 보내줌"],answer:1}
+    ]}
+];
+const TILE = 28;
+// ===================== 미로 생성: 루프 비율 대폭 증가 =====================
+function shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function generateMaze(cellRows, cellCols) {
+  const rows = cellRows*2+1;
+  const cols = cellCols*2+1;
+  const grid = Array.from({length:rows}, ()=>Array(cols).fill(1));
+  const visited = Array.from({length:cellRows}, ()=>Array(cellCols).fill(false));
+  // 재귀적 백트래킹으로 스패닝 트리 생성
+  function carve(cr, cc) {
+    visited[cr][cc] = true;
+    grid[cr*2+1][cc*2+1] = 0;
+    const dirs = shuffleArray([{dr:-1,dc:0},{dr:1,dc:0},{dr:0,dc:-1},{dr:0,dc:1}]);
+    for (const d of dirs) {
+      const nr=cr+d.dr, nc=cc+d.dc;
+      if (nr>=0&&nr<cellRows&&nc>=0&&nc<cellCols&&!visited[nr][nc]) {
+        grid[cr*2+1+d.dr][cc*2+1+d.dc]=0;
+        carve(nr,nc);
+      }
+    }
+  }
+  carve(0,0);
+  // ── 루프(순환 경로) 대폭 추가 ──
+  // 0.15 → 0.45: 기존 대비 3배, 벽 제거 조건도 완화 (인접 통로 2개 이상이면 뚫음)
+  const targetLoops = Math.floor(cellRows * cellCols * 0.45);
+  let added = 0, tries = 0;
+  while (added < targetLoops && tries < targetLoops * 10) {
+    tries++;
+    const r = 1 + Math.floor(Math.random()*(rows-2));
+    const c = 1 + Math.floor(Math.random()*(cols-2));
+    if (grid[r][c] !== 1) continue;
+    const adj = [
+      r>0      ? grid[r-1][c] : 1,
+      r<rows-1 ? grid[r+1][c] : 1,
+      c>0      ? grid[r][c-1] : 1,
+      c<cols-1 ? grid[r][c+1] : 1
+    ];
+    // 주변에 통로가 2개 이상이면 이 벽을 뚫어 교차로/T자로 생성
+    if (adj.filter(v=>v===0).length >= 2) {
+      grid[r][c] = 0;
+      added++;
+    }
+  }
+  // 테두리는 항상 벽
+  for (let c=0;c<cols;c++){grid[0][c]=1;grid[rows-1][c]=1;}
+  for (let r=0;r<rows;r++){grid[r][0]=1;grid[r][cols-1]=1;}
+  return grid.map(row=>row.join(''));
+}
+function verifyMazeConnectivity(mazeArr) {
+  const rows=mazeArr.length, cols=mazeArr[0].length;
+  let startR=-1, startC=-1, totalOpen=0;
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++) {
+    if(mazeArr[r][c]==='0'){totalOpen++;if(startR===-1){startR=r;startC=c;}}
+  }
+  if(startR===-1) return {connected:true,total:0,reached:0};
+  const vis=Array.from({length:rows},()=>Array(cols).fill(false));
+  const q=[[startR,startC]]; vis[startR][startC]=true; let reached=1;
+  while(q.length){
+    const[r,c]=q.shift();
+    for(const[nr,nc] of [[r-1,c],[r+1,c],[r,c-1],[r,c+1]]) {
+      if(nr>=0&&nr<rows&&nc>=0&&nc<cols&&!vis[nr][nc]&&mazeArr[nr][nc]==='0'){
+        vis[nr][nc]=true;reached++;q.push([nr,nc]);
+      }
+    }
+  }
+  return {connected:reached===totalOpen,total:totalOpen,reached};
+}
+function generateVerifiedMaze(cellRows, cellCols) {
+  for(let i=0;i<10;i++){
+    const m=generateMaze(cellRows,cellCols);
+    const r=verifyMazeConnectivity(m);
+    if(r.connected){console.log(`맵생성성공 ${cellRows}x${cellCols} ${r.total}칸 시도${i+1}회`);return m;}
+  }
+  return generateMaze(cellRows,cellCols);
+}
+let maze=[], dots=[], powerUpPos=null, ROWS=0, COLS=0;
+// cellSize 증가: 더 넓은 맵 → 이동 공간 확보
+const stageConfig=[
+  {cellSize:7, ghostCount:1},   // 15×15
+  {cellSize:9, ghostCount:2},   // 19×19
+  {cellSize:9, ghostCount:2},   // 19×19
+  {cellSize:11,ghostCount:3},   // 23×23
+  {cellSize:11,ghostCount:3}    // 23×23
+];
+let stageIndex=0, temperature=0, score=0, lives=3;
+let collectedElements=[], gameRunning=false;
+let invincible=false, invincibleTimer=0, currentQuiz=null;
+const CLEAR_RATIO=0.9, DOT_SCORE=50, STAGE_CLEAR_BONUS=1000;
+const QUIZ_CORRECT_BONUS=200, POWERUP_SCORE=200;
+const PLAYER_MOVE_FRAMES=9, GHOST_MOVE_FRAMES_BASE=14;
+let player={x:1,y:1,fromX:1,fromY:1,toX:1,toY:1,progress:1,dir:{x:0,y:0},nextDir:{x:0,y:0},mouth:0};
+let ghosts=[];
+const canvas=document.getElementById('gameCanvas');
+const ctx=canvas.getContext('2d');
+function setupCanvasSize(){
+  canvas.width=COLS*TILE; canvas.height=ROWS*TILE;
+  ['hud','tempBarWrap','stageInfo','elementDex','ghostCountInfo'].forEach(id=>{
+    document.getElementById(id).style.width=canvas.width+'px';
+  });
+}
+// ── 사운드 ──
+let audioCtx=null, bgmEnabled=true, bgmInterval=null, bgmStep=0;
+function initAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();}
+function playTone(freq,duration,type='sine',vol=0.08,delay=0){
+  if(!audioCtx||!bgmEnabled)return;
+  const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+  osc.type=type; osc.frequency.value=freq; gain.gain.value=vol;
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  const t=audioCtx.currentTime+delay;
+  gain.gain.setValueAtTime(vol,t);
+  gain.gain.exponentialRampToValueAtTime(0.001,t+duration);
+  osc.start(t); osc.stop(t+duration);
+}
+const melodyNotes=[220,261.63,293.66,329.63,392,329.63,293.66,261.63];
+const bassNotes=[110,110,130.81,130.81,98,98,110,110];
+function startBGM(){
+  if(bgmInterval)return; bgmStep=0;
+  bgmInterval=setInterval(()=>{
+    if(!bgmEnabled||!gameRunning)return;
+    playTone(melodyNotes[bgmStep%8],0.35,'triangle',0.06);
+    if(bgmStep%2===0)playTone(bassNotes[bgmStep%8],0.5,'sine',0.05);
+    bgmStep++;
+  },380);
+}
+function stopBGM(){if(bgmInterval){clearInterval(bgmInterval);bgmInterval=null;}}
+function playEatSound(){playTone(880,0.08,'square',0.05);}
+function playCaptureSound(){playTone(200,0.5,'sawtooth',0.15);playTone(150,0.6,'sawtooth',0.12,0.1);}
+function playStageClearSound(){playTone(523,0.15,'sine',0.1,0);playTone(659,0.15,'sine',0.1,0.15);playTone(784,0.3,'sine',0.1,0.3);}
+document.getElementById('soundToggle').addEventListener('click',()=>{
+  bgmEnabled=!bgmEnabled;
+  document.getElementById('soundToggle').textContent=bgmEnabled?'🔊 배경음악 끄기':'🔇 배경음악 켜기';
+  if(!bgmEnabled)stopBGM();else startBGM();
+});
+function pickRandomQuiz(stage){
+  const orig=stage.quizzes[Math.floor(Math.random()*stage.quizzes.length)];
+  const correct=orig.options[orig.answer];
+  const opts=shuffleArray(orig.options);
+  return{q:orig.q,options:opts,answer:opts.indexOf(correct)};
+}
+function loadMaze(tmpl){
+  ROWS=tmpl.length; COLS=tmpl[0].length;
+  maze=[]; dots=[];
+  for(let r=0;r<ROWS;r++){
+    let row=[];
+    for(let c=0;c<COLS;c++){
+      if(tmpl[r][c]==='1')row.push(1);
+      else{row.push(0);dots.push({x:c,y:r,eaten:false});}
+    }
+    maze.push(row);
+  }
+}
+function findOpenSpot(excl){
+  let spots=[];
+  for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++)
+    if(maze[r][c]===0&&!excl.some(e=>e.x===c&&e.y===r))spots.push({x:c,y:r});
+  spots.sort((a,b)=>(Math.abs(b.x-1)+Math.abs(b.y-1))-(Math.abs(a.x-1)+Math.abs(a.y-1)));
+  return spots[0]||{x:1,y:1};
+}
+function resetPlayerAndGhosts(ghostCount){
+  Object.assign(player,{x:1,y:1,fromX:1,fromY:1,toX:1,toY:1,progress:1,dir:{x:0,y:0},nextDir:{x:0,y:0}});
+  const gc=['#ff5555','#55aaff','#aa55ff'], gn=['중력','복사압','불안정'];
+  ghosts=[]; const placed=[{x:1,y:1}];
+  for(let i=0;i<ghostCount;i++){
+    const s=findOpenSpot(placed); placed.push(s);
+    ghosts.push({x:s.x,y:s.y,fromX:s.x,fromY:s.y,toX:s.x,toY:s.y,progress:1,
+      color:gc[i%3],name:gn[i%3],dir:{x:i%2===0?1:-1,y:0},frameDiv:GHOST_MOVE_FRAMES_BASE+i*2});
+  }
+}
+function stageDifficultyFactor(idx){return Math.max(6,GHOST_MOVE_FRAMES_BASE-idx);}
+function startStage(idx){
+  stageIndex=idx; temperature=0;
+  const cfg=stageConfig[idx];
+  loadMaze(generateVerifiedMaze(cfg.cellSize,cfg.cellSize));
+  setupCanvasSize();
+  resetPlayerAndGhosts(cfg.ghostCount);
+  const diff=stageDifficultyFactor(idx);
+  ghosts.forEach((g,i)=>g.frameDiv=diff+i*2);
+  updateHUD();
+  document.getElementById('stageInfo').textContent=
+    `${STAGES[idx].name} 단계 - ${STAGES[idx].dotName}(${STAGES[idx].dotElement}) 원소를 ${Math.round(CLEAR_RATIO*100)}% 모으면 다음 단계로!`;
+  document.getElementById('ghostCountInfo').textContent=
+    `👻 현재 유령(불안정 요인) 개수: ${cfg.ghostCount}개`;
+  if(idx===STAGES.length-1){
+    const et=dots.filter(d=>!d.eaten);
+    powerUpPos=et[Math.floor(et.length/2)];
+    powerUpPos.eaten=false;
+  } else powerUpPos=null;
+}
+function updateHUD(){
+  document.getElementById('lives').textContent=lives;
+  document.getElementById('score').textContent=score;
+  document.getElementById('stageNum').textContent=stageIndex+1;
+  const total=dots.length, eaten=dots.filter(d=>d.eaten).length;
+  const pct=total>0?Math.min(100,(eaten/total)*100):0;
+  temperature=pct;
+  document.getElementById('tempBar').style.width=pct+'%';
+  document.getElementById('tempLabel').textContent=STAGES[stageIndex].tempLabel;
+  document.getElementById('dexList').innerHTML=
+    collectedElements.length?collectedElements.map(e=>`<span class="dexBadge">${e}</span>`).join(''):'없음';
+}
+// ── 팝업 ──
+function showStagePopup(stage,cb){
+  gameRunning=false;
+  document.getElementById('popupBox').classList.remove('capturePopup');
+  document.getElementById('overlay').style.display='flex';
+  document.getElementById('popupTitle').textContent=`🔥 ${stage.name} 단계 돌입!`;
+  document.getElementById('popupText').textContent=stage.story;
+  document.getElementById('quizOptions').innerHTML='';
+  const btn=document.getElementById('popupBtn');
+  btn.style.display='block'; btn.textContent='확인 (퀴즈 풀기)';
+  btn.onclick=()=>{currentQuiz=pickRandomQuiz(stage);showQuiz(currentQuiz,cb);};
+}
+function showQuiz(quiz,cb){
+  document.getElementById('popupTitle').textContent='🧠 미니 퀴즈';
+  document.getElementById('popupText').textContent=quiz.q;
+  const qd=document.getElementById('quizOptions'); qd.innerHTML='';
+  document.getElementById('popupBtn').style.display='none';
+  quiz.options.forEach((opt,i)=>{
+    const b=document.createElement('button'); b.textContent=opt;
+    b.onclick=()=>{
+      if(i===quiz.answer){score+=QUIZ_CORRECT_BONUS;document.getElementById('popupTitle').textContent='✅ 정답입니다!';document.getElementById('popupText').textContent=`보너스 ${QUIZ_CORRECT_BONUS}점 획득! 다음 단계로 이동합니다.`;}
+      else{document.getElementById('popupTitle').textContent='❌ 오답입니다';document.getElementById('popupText').textContent=`정답은 "${quiz.options[quiz.answer]}" 였습니다. 다음 단계로 이동합니다.`;}
+      qd.innerHTML='';
+      const fb=document.getElementById('popupBtn'); fb.style.display='block'; fb.textContent='계속하기';
+      fb.onclick=()=>{document.getElementById('overlay').style.display='none';cb();};
+    };
+    qd.appendChild(b);
+  });
+}
+function showEnding(){
+  gameRunning=false; stopBGM();
+  document.getElementById('popupBox').classList.remove('capturePopup');
+  document.getElementById('overlay').style.display='flex';
+  document.getElementById('popupTitle').textContent='🌟 별의 일생 완주!';
+  document.getElementById('popupText').innerHTML=
+    '축하합니다! 별의 탄생부터 초신성 폭발까지 전 과정을 완주했습니다.<br><br>'+
+    '<b>수소 → 헬륨 → 탄소/산소 → 네온/마그네슘 → 철 → (초신성) → 금/우라늄</b><br><br>'+
+    '지금 당신 몸속의 철분, 반지 속의 금 모두 이렇게 별에서 만들어졌습니다!<br><br>'+
+    `최종 점수: ${score}점`;
+  document.getElementById('quizOptions').innerHTML='';
+  const btn=document.getElementById('popupBtn'); btn.style.display='block'; btn.textContent='다시 시작하기';
+  btn.onclick=()=>{document.getElementById('overlay').style.display='none';document.getElementById('startBtn').style.display='inline-block';};
+}
+function showLifeLostPopup(cb){
+  gameRunning=false; playCaptureSound();
+  const stage=STAGES[stageIndex];
+  document.getElementById('popupBox').classList.add('capturePopup');
+  document.getElementById('overlay').style.display='flex';
+  document.getElementById('popupTitle').textContent='💥 불안정한 반응 발생!';
+  document.getElementById('popupText').innerHTML=
+    `유령과 충돌하여 생명력이 감소했습니다.<br><br><b>현재 별의 상태 (${stage.name})</b><br>${stage.captureDesc}<br><br>`+
+    `<b>현재 온도 도달 목표:</b> ${stage.tempLabel}<br><b>현재 점수:</b> ${score}점<br><b>남은 생명:</b> ${lives}개`;
+  document.getElementById('quizOptions').innerHTML='';
+  const btn=document.getElementById('popupBtn'); btn.style.display='block'; btn.textContent='계속하기';
+  btn.onclick=()=>{document.getElementById('overlay').style.display='none';document.getElementById('popupBox').classList.remove('capturePopup');cb();};
+}
+function showGameOver(){
+  gameRunning=false; stopBGM();
+  const stage=STAGES[stageIndex];
+  document.getElementById('popupBox').classList.add('capturePopup');
+  document.getElementById('overlay').style.display='flex';
+  document.getElementById('popupTitle').textContent='💀 게임 오버';
+  document.getElementById('popupText').innerHTML=
+    `핵융합이 중단되어 별이 붕괴했습니다.<br><br><b>마지막 별의 상태 (${stage.name})</b><br>${stage.captureDesc}<br><br><b>최종 점수:</b> ${score}점`;
+  document.getElementById('quizOptions').innerHTML='';
+  const btn=document.getElementById('popupBtn'); btn.style.display='block'; btn.textContent='다시 시작하기';
+  btn.onclick=()=>{document.getElementById('overlay').style.display='none';document.getElementById('popupBox').classList.remove('capturePopup');document.getElementById('startBtn').style.display='inline-block';};
+}
+// ── 입력 ──
+document.addEventListener('keydown',(e)=>{
+  if(!gameRunning)return;
+  if(e.key==='ArrowUp'){player.nextDir={x:0,y:-1};e.preventDefault();}
+  else if(e.key==='ArrowDown'){player.nextDir={x:0,y:1};e.preventDefault();}
+  else if(e.key==='ArrowLeft'){player.nextDir={x:-1,y:0};e.preventDefault();}
+  else if(e.key==='ArrowRight'){player.nextDir={x:1,y:0};e.preventDefault();}
+});
+document.getElementById('startBtn').addEventListener('click',()=>{
+  initAudio(); document.getElementById('startBtn').style.display='none'; resetGame();
+});
+function resetGame(){
+  score=0; lives=3; collectedElements=[];
+  startStage(0);
+  showStagePopup(STAGES[0],()=>{gameRunning=true;lastTime=performance.now();startBGM();requestAnimationFrame(gameLoop);});
+}
+// ── 이동 헬퍼 ──
+function tryStartMove(ent,dir,frames){
+  if(!dir.x&&!dir.y)return false;
+  let nx=ent.x+dir.x, ny=ent.y+dir.y;
+  if(nx<0)nx=COLS-1; if(nx>=COLS)nx=0;
+  if(ny<0||ny>=ROWS)return false;
+  if(maze[ny][nx]===1)return false;
+  ent.fromX=ent.x; ent.fromY=ent.y; ent.toX=nx; ent.toY=ny; ent.progress=0; ent.dir=dir;
+  return true;
+}
+function stepEntity(ent,frames){
+  if(ent.progress<1){
+    ent.progress+=1/frames;
+    if(ent.progress>=1){ent.progress=1;ent.x=ent.toX;ent.y=ent.toY;}
+  }
+}
+function getPixelPos(ent){
+  return{px:(ent.fromX+(ent.toX-ent.fromX)*ent.progress)*TILE,
+         py:(ent.fromY+(ent.toY-ent.fromY)*ent.progress)*TILE};
+}
+// ── 게임 루프 ──
+let lastTime=0;
+function gameLoop(ts){if(!gameRunning)return;update();draw();requestAnimationFrame(gameLoop);}
+function update(){
+  if(player.progress>=1){
+    let moved=false;
+    if(player.nextDir.x||player.nextDir.y)moved=tryStartMove(player,player.nextDir,PLAYER_MOVE_FRAMES);
+    if(!moved)tryStartMove(player,player.dir,PLAYER_MOVE_FRAMES);
+  }
+  stepEntity(player,PLAYER_MOVE_FRAMES);
+  player.mouth+=0.2;
+  const cx=player.progress>=1?player.x:(player.progress>0.5?player.toX:player.fromX);
+  const cy=player.progress>=1?player.y:(player.progress>0.5?player.toY:player.fromY);
+  dots.forEach(d=>{
+    if(!d.eaten&&d.x===cx&&d.y===cy){
+      d.eaten=true; score+=DOT_SCORE; playEatSound();
+      const st=STAGES[stageIndex];
+      if(!collectedElements.includes(st.dotElement))collectedElements.push(st.dotElement);
+      updateHUD();
+    }
+  });
+  if(powerUpPos&&!powerUpPos.eaten&&powerUpPos.x===cx&&powerUpPos.y===cy){
+    powerUpPos.eaten=true; invincible=true; invincibleTimer=300; score+=POWERUP_SCORE; updateHUD();
+  }
+  if(invincible&&--invincibleTimer<=0)invincible=false;
+  const total=dots.length, eaten=dots.filter(d=>d.eaten).length;
+  if(eaten>=Math.ceil(total*CLEAR_RATIO)&&gameRunning){
+    gameRunning=false; score+=STAGE_CLEAR_BONUS; playStageClearSound();
+    if(stageIndex<STAGES.length-1){
+      setTimeout(()=>{showStagePopup(STAGES[stageIndex+1],()=>{startStage(stageIndex+1);gameRunning=true;lastTime=performance.now();requestAnimationFrame(gameLoop);});},300);
+    } else setTimeout(showEnding,300);
+    return;
+  }
+  ghosts.forEach(g=>{
+    if(g.progress>=1){
+      const dirs=[{x:1,y:0},{x:-1,y:0},{x:0,y:1},{x:0,y:-1}];
+      let valid=dirs.filter(d=>{
+        let nx=g.x+d.x, ny=g.y+d.y;
+        if(nx<0)nx=COLS-1; if(nx>=COLS)nx=0;
+        if(ny<0||ny>=ROWS)return false;
+        return maze[ny][nx]!==1;
+      });
+      let cands=valid.filter(d=>!(d.x===-g.dir.x&&d.y===-g.dir.y));
+      if(!cands.length)cands=valid;
+      if(cands.length){
+        let chosen;
+        if(Math.random()<0.5){
+          let md=Infinity;
+          cands.forEach(d=>{const dist=Math.abs(g.x+d.x-player.x)+Math.abs(g.y+d.y-player.y);if(dist<md){md=dist;chosen=d;}});
+        } else chosen=cands[Math.floor(Math.random()*cands.length)];
+        tryStartMove(g,chosen,g.frameDiv);
+      }
+    }
+    stepEntity(g,g.frameDiv);
+  });
+  if(!invincible){
+    const pp=getPixelPos(player);
+    for(const g of ghosts){
+      const gp=getPixelPos(g);
+      if(Math.abs(gp.px-pp.px)<TILE*0.6&&Math.abs(gp.py-pp.py)<TILE*0.6){
+        lives--; updateHUD();
+        if(lives<=0){gameRunning=false;setTimeout(showGameOver,100);}
+        else{
+          gameRunning=false;
+          setTimeout(()=>{showLifeLostPopup(()=>{
+            const cfg=stageConfig[stageIndex];
+            resetPlayerAndGhosts(cfg.ghostCount);
+            const diff=stageDifficultyFactor(stageIndex);
+            ghosts.forEach((g,i)=>g.frameDiv=diff+i*2);
+            gameRunning=true; lastTime=performance.now(); requestAnimationFrame(gameLoop);
+          });},100);
+        }
+        return;
+      }
+    }
+  }
+}
+// ── 그리기 ──
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) {
+    if(maze[r][c]===1){
+      ctx.fillStyle='#1a1a4a'; ctx.fillRect(c*TILE,r*TILE,TILE,TILE);
+      ctx.strokeStyle='#3355aa'; ctx.strokeRect(c*TILE,r*TILE,TILE,TILE);
+    }
+  }
+  const stage=STAGES[stageIndex];
+  dots.forEach(d=>{
+    if(!d.eaten){ctx.beginPath();ctx.fillStyle=stage.dotColor;ctx.arc(d.x*TILE+TILE/2,d.y*TILE+TILE/2,4,0,Math.PI*2);ctx.fill();}
+  });
+  if(powerUpPos&&!powerUpPos.eaten){
+    ctx.beginPath(); ctx.fillStyle='#ff00ff';
+    ctx.arc(powerUpPos.x*TILE+TILE/2,powerUpPos.y*TILE+TILE/2,7+Math.sin(Date.now()/150)*3,0,Math.PI*2);
+    ctx.fill();
+  }
+  const pp=getPixelPos(player);
+  ctx.save(); ctx.translate(pp.px+TILE/2,pp.py+TILE/2);
+  let angle=0;
+  if(player.dir.x===1)angle=0;
+  else if(player.dir.x===-1)angle=Math.PI;
+  else if(player.dir.y===-1)angle=-Math.PI/2;
+  else if(player.dir.y===1)angle=Math.PI/2;
+  ctx.rotate(angle);
+  const mo=Math.abs(Math.sin(player.mouth))*0.3+0.05;
+  ctx.beginPath(); ctx.fillStyle=invincible?'#00ffff':'#ffdd00';
+  ctx.arc(0,0,TILE/2-1,mo*Math.PI,(2-mo)*Math.PI); ctx.lineTo(0,0); ctx.fill();
+  ctx.restore();
+  ghosts.forEach(g=>{
+    const gp=getPixelPos(g);
+    ctx.fillStyle=invincible?'#3333ff':g.color; ctx.beginPath();
+    ctx.arc(gp.px+TILE/2,gp.py+TILE/2-2,TILE/2-2,Math.PI,0);
+    ctx.lineTo(gp.px+TILE-2,gp.py+TILE-2);
+    for(let i=0;i<3;i++){
+      ctx.lineTo(gp.px+TILE-2-(i+0.5)*(TILE-4)/3,gp.py+TILE-6);
+      ctx.lineTo(gp.px+TILE-2-(i+1)*(TILE-4)/3,gp.py+TILE-2);
+    }
+    ctx.lineTo(gp.px+2,gp.py+TILE/2-2); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.beginPath();
+    ctx.arc(gp.px+TILE/2-4,gp.py+TILE/2-4,3,0,Math.PI*2);
+    ctx.arc(gp.px+TILE/2+4,gp.py+TILE/2-4,3,0,Math.PI*2);
+    ctx.fill();
+  });
+}
+// 초기 렌더링
+loadMaze(generateVerifiedMaze(7,7));
+setupCanvasSize(); resetPlayerAndGhosts(1); draw();
+</script>
+</body>
+</html>
