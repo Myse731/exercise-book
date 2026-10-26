@@ -136,3 +136,32 @@ def findMax(a, n):
 print("최대값 찾기")
 a = list(map(int, input("n개의 숫자 입력 : ").split()))
 print("최대값은 ", findMax(a, len(a)))
+
+#격자판의 최소 비용 - 동적 계산법
+#동적 표를 사용하여 중복 계산을 피하는것이 동적 계획법의 본질이자 핵심
+# 첫 칸 : 리스트에서 가져와 바로 해결
+# 첫 행 : dt의 왼쪽 값과 리스트 값 더하기
+# 첫 열 : dt의 위쪽값과 리스트 값 더하기
+# 나머지 : dt의 위쪽과 왼쪽 중 작은 값과 더하기 -> 마지막 칸이 최소 비용
+
+def dfs(x, y):
+  if dt[x][y] != 0:
+    return dt[x][y]
+  if x == 0 and y == 0:
+    dt[x][y] = a[0][0]
+    return dt[x][y]
+  if y == 0:
+    dt[x][y] = a[x][y] + dfs(x-1, y)
+    return dt[x][y]
+  if x == 0:
+    dt[x][y] = a[x][y] + dfs(x, y-1)
+    return dt[x][y]
+  dt[x][y] = min(dfs(x-1, y), dfs(x, y-1)) + a[x][y]
+  return dt[x][y]
+
+
+n = int(input("격자 크기 n을 입력하세요: "))
+a = [list(map(int, input().split())) for _ in range(n)]
+dt = [[0] * n for _ in range(n)]
+print("최소 비용 : ", dfs(n-1, n-1))
+print("동적 테이블 : ", dt)
