@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-5" style="max-width: 600px;">
+    <h1 class="text-center">온습도계</h1>
+    <div class="text-center my-4">
+        <input id="now" value="now" class="btn btn-primary btn-lg">
+        <input id="now" value="now" class="btn btn-success btn-lg">
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>시각</th>
+                <th>온도</th>
+                <th>습도</th>
+            </tr>
+        </thead>
+        <tbody id="table"></tbody>
+    </table>
+    </div>
+    <script src="/static/index.js"></script>
+</body>
+
+</html>
