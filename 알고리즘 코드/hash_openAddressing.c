@@ -1,5 +1,6 @@
 #define TABLE_SIZE 7
 #define EMPTY -1
+#define DELETED -2
 
 int table[TABLE_SIZE];
 
@@ -13,7 +14,7 @@ void insert(int key){
     int index = hash(key);
     int count = 0;
     while(count < TABLE_SIZE){
-        if(table[index] == EMPTY){
+        if(table[index] == EMPTY || table[index] == DELETED){
             table[index] = key;
             return;
         }
@@ -38,3 +39,20 @@ int search(int key){
     }
     return -1;
 }
+
+void delete(int key){
+    int index = hash(key);
+    int count = 0;
+    while(count < TABLE_SIZE){
+        if(table[index] == key){
+            table[index] = DELETED;
+            return;
+        }
+        if(table[index] == EMPTY){
+            return;
+        }
+        index = (index + 1) % TABLE_SIZE;
+        count++;
+    }
+}
+
