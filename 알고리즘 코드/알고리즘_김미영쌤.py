@@ -144,24 +144,47 @@ print("최대값은 ", findMax(a, len(a)))
 # 첫 열 : dt의 위쪽값과 리스트 값 더하기
 # 나머지 : dt의 위쪽과 왼쪽 중 작은 값과 더하기 -> 마지막 칸이 최소 비용
 
-def dfs(x, y):
-  if dt[x][y] != 0:
-    return dt[x][y]
-  if x == 0 and y == 0:
-    dt[x][y] = a[0][0]
-    return dt[x][y]
-  if y == 0:
-    dt[x][y] = a[x][y] + dfs(x-1, y)
-    return dt[x][y]
-  if x == 0:
-    dt[x][y] = a[x][y] + dfs(x, y-1)
-    return dt[x][y]
-  dt[x][y] = min(dfs(x-1, y), dfs(x, y-1)) + a[x][y]
-  return dt[x][y]
+# def dfs(x, y):
+#   if dt[x][y] != 0:
+#     return dt[x][y]
+#   if x == 0 and y == 0:
+#     dt[x][y] = a[0][0]
+#     return dt[x][y]
+#   if y == 0:
+#     dt[x][y] = a[x][y] + dfs(x-1, y)
+#     return dt[x][y]
+#   if x == 0:
+#     dt[x][y] = a[x][y] + dfs(x, y-1)
+#     return dt[x][y]
+#   dt[x][y] = min(dfs(x-1, y), dfs(x, y-1)) + a[x][y]
+#   return dt[x][y]
 
 
-n = int(input("격자 크기 n을 입력하세요: "))
-a = [list(map(int, input().split())) for _ in range(n)]
-dt = [[0] * n for _ in range(n)]
-print("최소 비용 : ", dfs(n-1, n-1))
-print("동적 테이블 : ", dt)
+# n = int(input("격자 크기 n을 입력하세요: "))
+# a = [list(map(int, input().split())) for _ in range(n)]
+# dt = [[0] * n for _ in range(n)]
+# print("최소 비용 : ", dfs(n-1, n-1))
+# print("동적 테이블 : ", dt)
+
+#연속되지 않은 부분 수열의 최대 합
+
+def Max_sum(index, hap, choose_check):
+  global mx
+  #끝까지 탐색, 최댓값 갱신
+  if index >= n:
+    mx = max(mx, hap)
+    return
+  #선택하는 경우
+  if choose_check == True: 
+    Max_sum(index+2, hap + a[index], False)
+  #선택하지 않는 경우
+  if choose_check == False:
+    Max_sum(index+2, hap + a[index], False)
+    Max_sum(index+1, hap, False)
+
+a = list(map(int, input().split()))
+n = len(a)
+mx = 0
+
+Max_sum(0, 0, False)
+print(mx)
