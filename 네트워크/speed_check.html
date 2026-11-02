@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반응속도 측정기</title>
+    <!-- Chart.js 라이브러리 로드 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .text-center {
+            text-align: center;
+        }
+
+        .input-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-start,
+        .btn-end {
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-start {
+            background-color: blue;
+        }
+
+        .btn-end {
+            background-color: gray;
+        }
+
+        .btn-end:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">반응속도 측정기</h1>
+        <h3 class="text-center">시작을 누르고 LED가 켜지면 버튼을 누르세요!</h3>
+        <div class="input-wrapper">
+            <input type="button" id="start" value="시작" class="btn-start">
+            <input type="button" id="end" value="종료" class="btn-end" disabled>
+        </div>
+        
+        <canvas id="chart"></canvas>
+    </div>
+    <script>
+        const chart = new Chart(document.getElementById("chart"), {
+            type: "line",
+            data: {
+                labels: [],                                     // x축
+                datasets: [{ label: "반응 시간(ms)", data: [] }]  // y축
+            }
+        });
+
+        // 점 하나 추가 : 값을 넣은 뒤 update() 하면 다시 그려짐
+        chart.data.labels.push("1회");
+        chart.data.datasets[0].data.push(350);
+        chart.update();
+    </script>
+</body>
+
+</html>
