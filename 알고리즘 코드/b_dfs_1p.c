@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int visited[100];
+int visited[100] = {0};
 
 void initvisited(int n){
     for(int i = 0; i < n; i++){
