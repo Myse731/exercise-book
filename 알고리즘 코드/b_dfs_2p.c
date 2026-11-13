@@ -29,15 +29,6 @@ int main(){
         }
     }
 
-    printf("==Map==\n");
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            printf("%d ", map[i][j]);
-        }
-        printf("\n");
-    }
-
-
     int count = 0;
     for(int i = 0; i < n; i++){
         for(int j = 0; j < m; j++){

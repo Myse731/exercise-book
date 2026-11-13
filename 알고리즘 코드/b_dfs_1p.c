@@ -2,12 +2,6 @@
 
 int visited[100] = {0};
 
-void initvisited(int n){
-    for(int i = 0; i < n; i++){
-        visited[i] = 0;
-    }
-}
-
 void inittable(int n, int table[n][n]){
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
@@ -42,7 +36,6 @@ int main(){
     int w1, w2;
     scanf("%d %d", &w1, &w2);
 
-    initvisited(n);
     dfs(w1, n, table);
     if(visited[w1] && visited[w2]){
         printf("YES");
