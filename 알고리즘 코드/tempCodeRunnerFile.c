@@ -1,68 +1,65 @@
 #include <stdio.h>
-int q_r[10000], q_c[10000];
-int front = 0, rear = 0;
 
-int visited[100][100];
+#define INF 999999
+#define N 6
 
-void initvisit(void){
-    for(int i = 0; i < 100; i++){
-        for(int j = 0; j < 100; j++){
-            visited[i][j] = -1;
+int graph[N][N] = {
+    {0, 2, 4, INF, INF, INF},
+    {2, 0, 3, 3, INF, INF},
+    {4, 3, 0, 2, INF, INF},
+    {INF, 3, 2, 0, 5, 8},
+    {INF, INF, INF, 5, 0, 4},
+    {INF, INF, INF, 8, 4, 0},
+};
+
+int dist[N];
+int visited[N];
+
+int findMinVertex(int dist[N], int visited[N]){
+    int min = INF;
+    int minIndex = -1;
+
+    for(int i = 0; i < N; i++){
+        if(min > dist[i] && visited[i] == 0){
+            min = dist[i];
+            minIndex = i;
         }
     }
+    return minIndex;
 }
 
-void bfs(int n, int m, int map[n][m]){
-    visited[0][0] = 0;
-    q_r[rear] = 0;
-    q_c[rear] = 0;
-    rear++;
-
-    while(front < rear){
-        int r = q_r[front];
-        int c = q_c[front];
-        front++;
-
-        int mr[4] = {-1, 1, 0, 0};
-        int mc[4] = {0, 0, -1, 1};
-
-        for(int i = 0; i < 4; i++){
-            int nr = r + mr[i];
-            int nc = c + mc[i];
-
-            if(((0 <= nr && nr < n) && (0 <= nc && nc < m)) && visited[nr][nc] == -1 && map[nr][nc] == 0){
-                visited[nr][nc] = visited[r][c] + 1;
-
-                q_r[rear] = nr;
-                q_c[rear] = nc;
-
-                rear++;
+void Dijkstra(int start){
+    for(int i = 0; i < N; i++){
+        dist[i] = INF;
+        visited[i] = 0;
+    }
+    dist[start] = 0;
+    for(int count = 0; count < N; count++){
+        int u = findMinVertex(dist, visited);
+        if(u == -1) break;
+        visited[u] = 1;
+        for(int v = 0; v < N; v++){
+            if(graph[u][v] != INF && visited[v] == 0){
+                if(dist[u] + graph[u][v] < dist[v]){
+                    dist[v] = dist[u] + graph[u][v];
+                }
             }
         }
     }
 }
 
 int main(){
-    int n, m;
-    scanf("%d %d", &n, &m);
+    int start = 0;
+    Dijkstra(start);
+    char *places[N] = {"부산역", "초량 이바구길", "영도 흰여울 문화마을", "남포동 비프마을", "감천문화마을", "광안리 해수욕장"};
     
-    int map[n][m];
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            scanf("%d", &map[i][j]);
+    printf("출발 장소: %s\n\n", places[start]);
+    for(int i = 0; i < N; i++){
+        if(dist[i] == INF){
+            printf("%s : INF\n",  places[i]);
+        }
+        else{
+            printf("%s : %d분\n", places[i], dist[i] * 10);
         }
     }
-
-    printf("==Map==\n");
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < m; j++){
-            printf("%d",map[i][j]);
-        }
-        printf("\n");
-    }
-
-    initvisit();
-
-    bfs(n, m, map);
-    printf("최소 이동 횟수 : %d", visited[n-1][m-1]);
 }

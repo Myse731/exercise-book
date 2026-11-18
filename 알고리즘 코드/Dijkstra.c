@@ -4,12 +4,12 @@
 #define N 6
 
 int graph[N][N] = {
-    {0, 7, 4, 9, INF, INF},
-    {7, 0, INF, 2, 6, INF},
-    {4, INF, 0, 3, INF, 8},
-    {9, 2, 3, 0, 4, INF},
-    {INF, 6, INF, 4, 0, 2},
-    {INF, INF, 8, INF, 2, 0},
+    {0, 2, 4, INF, INF, INF},
+    {2, 0, 3, 3, INF, INF},
+    {4, 3, 0, 2, INF, INF},
+    {INF, 3, 2, 0, 5, 8},
+    {INF, INF, INF, 5, 0, 4},
+    {INF, INF, INF, 8, 4, 0},
 };
 
 int dist[N];
@@ -36,26 +36,30 @@ void Dijkstra(int start){
     dist[start] = 0;
     for(int count = 0; count < N; count++){
         int u = findMinVertex(dist, visited);
-            visited[u] = 1;
-            for(int v = 0; v < N; v++){
-                if(graph[u][v] != INF && visited[v] == 0){
-                    if(dist[u] + graph[u][v] < dist[v]){
-                        dist[v] = dist[u] + graph[u][v];
-                    }
+        if(u == -1) break;
+        visited[u] = 1;
+        for(int v = 0; v < N; v++){
+            if(graph[u][v] != INF && visited[v] == 0){
+                if(dist[u] + graph[u][v] < dist[v]){
+                    dist[v] = dist[u] + graph[u][v];
                 }
             }
         }
     }
+}
 
 int main(){
     int start = 0;
     Dijkstra(start);
-    printf("시작 정점 %d번으로부터 각 정점까지의 최단 거리:\n", start);
-    for (int i = 0; i < N; i++) {
-        if (dist[i] == INF) {
-            printf("정점 %d : 도달 불가\n", i);
-        } else {
-            printf("정점 %d : %d\n", i, dist[i]);
+    char *places[N] = {"부산역", "초량 이바구길", "영도 흰여울 문화마을", "남포동 비프마을", "감천문화마을", "광안리 해수욕장"};
+    
+    printf("출발 장소: %s\n\n", places[start]);
+    for(int i = 0; i < N; i++){
+        if(dist[i] == INF){
+            printf("%s : INF\n",  places[i]);
+        }
+        else{
+            printf("%s : %d분\n", places[i], dist[i] * 10);
         }
     }
 }
